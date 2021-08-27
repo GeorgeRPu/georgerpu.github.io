@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    
+    
+    <title>Conflict Free Replicated Data Types</title>
+    <meta name="description" content="Back in 2017, I used Atom as my primary text editor. It was pretty and customizable—some features like GitHub integration, running Python code inline, or syntax tree based highlighting still have no counterpart in other popular text editors—but very slow. It is an Electron1 app and not a particularly efficient one. A single Atom window would routinely consume 1GB or more of memory. So I was excited when I heard about Xray, a new project on GitHub by GitHub that might serve as a replacement for Atom. The codebase was primarily in Rust, giving it the speed and lightness Atom lacked. People on the forums thought it might become Atom 2.0. Inside Xray, text is represented as a conflict-free replicated data type (CRDT). Each machine keeps its own version or replica of the data structure on which users make local changes. Differing replicas can then be merged in a consistent manner without relying a central coordinating server. There is no conflict having multiple differing replicas. Since merges may be performed with as few as 2 replicas, we can consider it a binary operation $+$, albeit one that is mostly used in place. For the merge operation to be invariant to operation order, $+$ should be associative and commutative (hence the use of additive notation). Suppose we have $a, b, c$ replicas that should merge consistently in any order. That is, we want to be able to rearrange $(a + b) + c$ without changing the value of the expression. If $+$ is commutative, we can swap the replicas within the parentheses as is. \[(a + b) + c = (b + a) + c \qquad\text{commutative property}\] To swap across parentheses, we need to be about to shift the parentheses. \[\begin{align*} (a + b) + c &amp;amp;= a + (b + c) &amp;amp;&amp;amp;\text{associative property} \\ &amp;amp;= a + (c + b) &amp;amp;&amp;amp;\text{commutative property} \\ &amp;amp;= (a + c) + b &amp;amp;&amp;amp;\text{associative property} \end{align*}\] With enough pairwise swaps, we can arbitrarily reorder this expression. After Microsoft’s purchase of GitHub, it now owned Atom along with the more popular and performant VSCode. Atom was redundant. Over the course of year, updates became smaller and less frequent. By mid-2019, posts on https://blog.atom.io/ stopped. The Xray project was archived on GitHub. Development effort was redirected to VSCode where it soon surpassed Atom in overall features. I switched to VSCode permanently in Fall 2019. While Xray/Atom 2.0 may have failed, CRDTs have just started to succeed, seeing usage in applications from databases to chat messages to text editors. Perhaps their greatest feature is equality; no replica is privileged over others. In a computing ecosystem that is all to centralized, CRDTs could help power the more distributed apps of the future. Basic CRDTs Counters The most basic CRDT is the grow only counter which can only be incremented. Suppose we have nodes $1, \dots, n$​​ in a computer network. A grow only counter $A$​​ is an $n$​​-tuple where $A_i$​​ counts the number of increases by node $i$​​. The value of the grow-only counter is the sum of all entries $A_1 + \dots + A_n$​​. Merges with another grow-only counter $B$​​ are performed by setting $A_i = \max(A_i, B_i)$​​ for each $1 \leq i \leq n$​​. Why do we need to track increments individually for each node? Why couldn’t we use a single register whose value is the total number of increments? Suppose we have 3 counters $a, b, c$​​ connected over the Internet. Replica $a$​​ wants to merge with replicas $b$​​ and $c$​​, but replica $c$​​ has already merged with replica $b$​​. So replica $a$​​ effectively merges with replica $b$​​​​ two times, but this should have no effect on the final result. \(a + b = a + b + b\) Merges should be idempotent. The addition of integers is not idempotent. The $\max(\cdot, \cdot)$​​​ of integers is however; repeated elements do not change the maximum of a set. \[\max(\max(a, b), b) = \max(a, b)\] Since only node $i$​ can increment its entry in the grow-only counter, its replica will have the largest $i$​th entry in the system. Merges with every other replica are guaranteed to produce an accurate grow only counter. class GCounter { private: int n; // number of nodes int id; // unique node identifier between 0 and n - 1 int* inc; // number of incremements for each node public: GCounter(int id, int n) { assert(id &amp;lt; n); this-&amp;gt;id = id; this-&amp;gt;n = n; inc = new int[n]; } void increment() { inc[id] += 1; } int value() { int value = 0; for (int i = 0; i &amp;lt; n; i++) { value += inc[i]; } return value; } void merge(GCounter* other) { for (int i = 0; i &amp;lt; n; i++) { inc[i] = inc[i] &amp;gt; other-&amp;gt;inc[i] ? inc[i] : other-&amp;gt;inc[i]; } } }; We can create a positive-negative counter out of two grow-only counters. One tracks the number of increments for each node in the system. The other tracks the number of decrements for each node in the system. Why can’t we just allow decrements on a grow-only counter? Consider two grow-only counters $A = (0, 0), B = (0, 0)$ in a system containing two machines. Order Action A B 1 Node 1 increments $A$ $(1, 0)$ $(0, 0)$ 2 Node 2 merges with $B$ with $A$ $(1,0)$ $(1, 0)$ 3 Node 1 decrements $A$ $(0, 0)$ $(1, 0)$ Now if node 2 tries to perform another merger, it will not accept the decrement: $B$​ will remain $(1, 0)$​. In fact, there is no merger rule that will work, because $A$​ could have any value from any number of increments and decrements. One solutions might be to trust $A$​’s first entry over $B$​​​​’s but now certain replicas have higher status than others. They are unequal. class PNCounter { private: int n; // number of nodes int id; // unique node identifier between 0 and n GCounter* inc; // increment gcounter GCounter* dec; // decrement gcounter public: PNCounter(int id, int n) { inc = new GCounter(id, n); dec = new GCounter(id, n); } void increment() { inc-&amp;gt;increment(); } void decrement() { dec-&amp;gt;increment(); } int value() { return inc-&amp;gt;value() - dec-&amp;gt;value(); } void merge(PNCounter* other) { inc-&amp;gt;merge(other-&amp;gt;inc); dec-&amp;gt;merge(other-&amp;gt;dec); } }; Sets The most basic collection is a set. Elements are either members or they are not. The simplest set CRDT is the grow-only set where only additions are allowed. Replicas are merged by taking the union. \[A = A \cup B\] The union in akin to the $\max$ operation used for the grow only counter. We can order sets by inclusion. That is, $A \leq B$ if and only if $A \subseteq B$. The union is then the smallest set that is greater than $A$ and $B$, just as $\max(a, b)$ is the smallest element that is greater than the two numbers $a$ and $b$. However, because inclusion is a partial order (not every pair of sets are comparable), the union is generally not $A$ or $B$​. Arrows indicate greater than relationships. #include &amp;lt;unordered_set&amp;gt; template &amp;lt;class T&amp;gt; class GSet { private: std::unordered_set&amp;lt;T&amp;gt; set; public: GSet() {} void add(T el) { set.insert(el); } bool has(T el) { return set.find(el) != set.end(); } void merge(GSet&amp;lt;T&amp;gt;* other) { for (T el : other-&amp;gt;set) { set.insert(el); } } }; Like the positive-negative counter, we can construct a full set CRDT from a pair of grow-only sets. One grow-only set $A$ records all the elements added. The other grow-only set $R$ records all the elements removed. If an element $x \in A$ but $x \notin R$ or vica-versa, $x$’s membership in the set is clear. If $x \in A$ and $x \in R$, we need a mechanism to break the tie. One option is to resolve the tie by preferring removals over additions (or additions over removals). If $x \in A$ and $x \in R$, we could say $x$ is not in the set. How $x$ be removed from the set if it was not first made a member? The removal is assumed to have occured last. We can explicitly determine which operation was last if we record the time each addition/removal took place. For each element in $A$​ or $R$​, we store the timestamp in a hashmap2. To determine set membership in the case $x \in A, x \in R$​, we check the timestamp of the addition/removal, with the last one winning. For this reason, this CRDT is called a last write wins set. To merge the hashmaps, we just use the later timestamp. #include &amp;lt;chrono&amp;gt; #include &amp;lt;unordered_map&amp;gt; using time_point = std::chrono::time_point&amp;lt;std::chrono::system_clock&amp;gt;; template&amp;lt;class T&amp;gt; class LWWSet { private: GSet&amp;lt;T&amp;gt;* add_set; // element additions GSet&amp;lt;T&amp;gt;* rm_set; // element removals std::unordered_map&amp;lt;T, time_point&amp;gt; add_times; // timestamps for element additions std::unordered_map&amp;lt;T, time_point&amp;gt; rm_times; // timestamps for element removals public: LWWSet() { add_set = new GSet&amp;lt;T&amp;gt;(); rm_set = new GSet&amp;lt;T&amp;gt;(); } void add(T el) { add_set-&amp;gt;add(el); add_times[el] = std::chrono::system_clock::now(); } void remove(T el) { rm_set-&amp;gt;add(el); rm_times[el] = std::chrono::system_clock::now(); } bool has(T el) { if (!add_set-&amp;gt;has(el)) { return false; // add_set must have el } else if (!rm_set-&amp;gt;has(el)) { return true; // both add_set and rm_set have el } else { // favors removes if timestamps are identical return add_times[el] &amp;gt; rm_times[el] ? true : false; } } void merge(LWWSet&amp;lt;T&amp;gt;* other) { add_set-&amp;gt;merge(other-&amp;gt;add_set); rm_set-&amp;gt;merge(other-&amp;gt;rm_set); for (std::pair&amp;lt;T, time_point&amp;gt; x : other-&amp;gt;add_times) { T el = x.first; time_point timestamp = x.second; if (add_times.find(el) == add_times.end() || el &amp;gt; add_times[timestamp]) { add_times[el] = timestamp; } } for (std::pair&amp;lt;T, time_point&amp;gt; x : other-&amp;gt;rm_times) { T el = x.first; time_point timestamp = x.second; if (rm_times.find(el) == rm_times.end() || timestamp &amp;gt; rm_times[el]) { rm_times[el] = timestamp; } } } }; Building a collaborative text editor We can represent text as a variable length sequence of characters2. In order to read/write to the text, we need the following operations. char get(int i). Returns the character at position $i$. void insert(int i, char c). Inserts a character $c$ after position $i$. void remove(int i). Marks the character at position $i$ as a tombstone (deleted). void update(int i, char c). Set the character at position $i$ to $c$. Note that we could accomplish an update by removing the existing character at position $i$ and inserting $c$ after position $i - 1$. Replicated growable array (RGA) is a CRDT that supports these operations [1]. Ironically it is a linked list of nodes. Each node has an insertion timestamp, a last update/remove timestamp, a character, and a pointer to the next node. #include &amp;lt;chrono&amp;gt; #include &amp;lt;unordered_map&amp;gt; using time_point = std::chrono::time_point&amp;lt;std::chrono::system_clock&amp;gt;; struct Node { time_point insertion_time; time_point last_updated_time; // updates or removes char c; Node* next; Node(char c, Node* next) { insertion_time = std::chrono::system_clock::now(); last_updated_time = std::chrono::system_clock::now(); this-&amp;gt;c = c; this-&amp;gt;next = next; } }; The get, insert, and update operations work identically to their regular linked list counterparts. For convenience we define a Node* node_at(int i) method that grabs the $i$th item in the RGA by looping through next pointers. We can get character $i$ by returning the character field of the node_at(i). We can insert a new character $c$ at the front by assigning the head pointer to a new node. The new node points to the old head. We can insert a new character $c$ after position $i$ by assigning node_at(i)-&amp;gt;next to a new node. The new node points to the old node_at(i)-&amp;gt;next. We can update a character by setting node_at(i)-&amp;gt;c to the new character $c$​. We also refresh the last_updated_time. Instead of actually removing nodes, we set them to a special, 0 byte, tombstone character. Tombstones will not be included when displaying the RGA. const char TOMBSTONE = &#39;\0&#39;; class RGA { private: Node* head; Node* node_at(int i) { Node* node = head; for (int counter = 0; counter &amp;lt; i; counter++) { node = node-&amp;gt;next; } return node; } public: RGA() { head = nullptr; } char get(int i) { return node_at(i)-&amp;gt;c; } void insert(int i, char c) { if (i == 0) { head = new Node(c, head); return; } else { Node* node = node_at(i); node-&amp;gt;next = new Node(c, node-&amp;gt;next); } } void remove(int i) { Node* node = node_at(i); node-&amp;gt;c = TOMBSTONE; node-&amp;gt;last_updated_time = std::chrono::system_clock::now(); } void update(int i, char c) { Node* node = node_at(i); node-&amp;gt;c = c; node-&amp;gt;last_updated_time = std::chrono::system_clock::now(); } std::string as_string() { std::string s = &quot;&quot;; for (Node* node = head; node != nullptr; node = node-&amp;gt;next) { if (node-&amp;gt;c != TOMBSTONE) { s += node-&amp;gt;c; } } return s; } }; Note that a single RGA replica’s node, before any mergers, are ordered by their insertion_time. To merge RGA replicas, we combine the lists into a single list sorted by insertion order. If two nodes have the same insertion time, we assume they’re the same node. This assumption is safe so long as our clock has high precision and insertions are uniformly distributed. If neither are true, we can use a more advanced timekeeping scheme like a vector clock. When two nodes share the same insertion time, we use the node with the most recent last_updated_time. Beyond shared documents CRDTs are a young invention. WOOT—”the first CRDT algorithm proposed for group editing”—was published in 2006. The first CRDTs were a reaction to an older technology operation transform (OT). OT would transform successive operations to be compatibile with preceding operations. Many OT algorithms turned out to be incorrect. One of the few that was—and ended up powering Google docs—required all traffic go through a central server. And while their origins might revolve around collaborative editing a la Google docs, their future does not have to be. CRDTs allow for decentralized versions of many webapps, but CRDTs could be used in multi-threaded programs to maximize usage of multiple cores. this was how CRDTs would be used in X-ray, allowing multiple extensions to tamper with the text simultaneously without fear of inconsistency. CRDTs are seeing increasing use in a variety of very popular applications. Engineers are improving available open source implementations, making them smaller and faster. Researchers are working on expanding the scope of CRDTs, such as to all JSON objects[2]. CRDTs are getting better and better. I do not think this will stop anytime soon. References [1] Replicated abstract data types: Building blocks for collaborative applications. Hyun-Gul Roha, Myeongjae Jeonb, Jin-Soo Kimc, Joonwon Lee. [2] A Conflict Free Replicated JSON Datatype. Martin Kleppmann, Alastair R. Beresford. Electron was originally named Atom Shell because it was built for the Atom editor. Because the electrons orbiting atoms in pictures form a kind of shell, Electron was chosen as the new name. &amp;#8617; In a distributed system, there may not be an agreed upon time. That is, multiple computers’ clocks give different times. In this case, the sum of the vector clock can be used. A vector clock tracks the time of each machine in the system, updated by regular time messages. However, most modern computers can get an accurate time with millisecond level precision, so long as they’re connected to the Internet to receive regular synchronization messages. &amp;#8617; &amp;#8617;2">
+    
+
+    <link rel="stylesheet" href="/assets/main.css">
+    <link rel="canonical" href="https://georgerpu.github.io/2020/07/20/crdt/">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="George Pu" href="https://georgerpu.github.io/feed.xml">
+
+    
+
+    
+    <meta property="og:title" content="Conflict Free Replicated Data Types">
+    <meta property="og:site_name" content="George Pu">
+    <meta property="og:url" content="https://georgerpu.github.io/2020/07/20/crdt/">
+    <meta property="og:description" content="Back in 2017, I used Atom as my primary text editor. It was pretty and customizable—some features like GitHub integration, running Python code inline, or syntax tree based highlighting still have no counterpart in other popular text editors—but very slow. It is an Electron1 app and not a particularly efficient one. A single Atom window would routinely consume 1GB or more of memory. So I was excited when I heard about Xray, a new project on GitHub by GitHub that might serve as a replacement for Atom. The codebase was primarily in Rust, giving it the speed and lightness Atom lacked. People on the forums thought it might become Atom 2.0. Inside Xray, text is represented as a conflict-free replicated data type (CRDT). Each machine keeps its own version or replica of the data structure on which users make local changes. Differing replicas can then be merged in a consistent manner without relying a central coordinating server. There is no conflict having multiple differing replicas. Since merges may be performed with as few as 2 replicas, we can consider it a binary operation $+$, albeit one that is mostly used in place. For the merge operation to be invariant to operation order, $+$ should be associative and commutative (hence the use of additive notation). Suppose we have $a, b, c$ replicas that should merge consistently in any order. That is, we want to be able to rearrange $(a + b) + c$ without changing the value of the expression. If $+$ is commutative, we can swap the replicas within the parentheses as is. \[(a + b) + c = (b + a) + c \qquad\text{commutative property}\] To swap across parentheses, we need to be about to shift the parentheses. \[\begin{align*} (a + b) + c &amp;amp;= a + (b + c) &amp;amp;&amp;amp;\text{associative property} \\ &amp;amp;= a + (c + b) &amp;amp;&amp;amp;\text{commutative property} \\ &amp;amp;= (a + c) + b &amp;amp;&amp;amp;\text{associative property} \end{align*}\] With enough pairwise swaps, we can arbitrarily reorder this expression. After Microsoft’s purchase of GitHub, it now owned Atom along with the more popular and performant VSCode. Atom was redundant. Over the course of year, updates became smaller and less frequent. By mid-2019, posts on https://blog.atom.io/ stopped. The Xray project was archived on GitHub. Development effort was redirected to VSCode where it soon surpassed Atom in overall features. I switched to VSCode permanently in Fall 2019. While Xray/Atom 2.0 may have failed, CRDTs have just started to succeed, seeing usage in applications from databases to chat messages to text editors. Perhaps their greatest feature is equality; no replica is privileged over others. In a computing ecosystem that is all to centralized, CRDTs could help power the more distributed apps of the future. Basic CRDTs Counters The most basic CRDT is the grow only counter which can only be incremented. Suppose we have nodes $1, \dots, n$​​ in a computer network. A grow only counter $A$​​ is an $n$​​-tuple where $A_i$​​ counts the number of increases by node $i$​​. The value of the grow-only counter is the sum of all entries $A_1 + \dots + A_n$​​. Merges with another grow-only counter $B$​​ are performed by setting $A_i = \max(A_i, B_i)$​​ for each $1 \leq i \leq n$​​. Why do we need to track increments individually for each node? Why couldn’t we use a single register whose value is the total number of increments? Suppose we have 3 counters $a, b, c$​​ connected over the Internet. Replica $a$​​ wants to merge with replicas $b$​​ and $c$​​, but replica $c$​​ has already merged with replica $b$​​. So replica $a$​​ effectively merges with replica $b$​​​​ two times, but this should have no effect on the final result. \(a + b = a + b + b\) Merges should be idempotent. The addition of integers is not idempotent. The $\max(\cdot, \cdot)$​​​ of integers is however; repeated elements do not change the maximum of a set. \[\max(\max(a, b), b) = \max(a, b)\] Since only node $i$​ can increment its entry in the grow-only counter, its replica will have the largest $i$​th entry in the system. Merges with every other replica are guaranteed to produce an accurate grow only counter. class GCounter { private: int n; // number of nodes int id; // unique node identifier between 0 and n - 1 int* inc; // number of incremements for each node public: GCounter(int id, int n) { assert(id &amp;lt; n); this-&amp;gt;id = id; this-&amp;gt;n = n; inc = new int[n]; } void increment() { inc[id] += 1; } int value() { int value = 0; for (int i = 0; i &amp;lt; n; i++) { value += inc[i]; } return value; } void merge(GCounter* other) { for (int i = 0; i &amp;lt; n; i++) { inc[i] = inc[i] &amp;gt; other-&amp;gt;inc[i] ? inc[i] : other-&amp;gt;inc[i]; } } }; We can create a positive-negative counter out of two grow-only counters. One tracks the number of increments for each node in the system. The other tracks the number of decrements for each node in the system. Why can’t we just allow decrements on a grow-only counter? Consider two grow-only counters $A = (0, 0), B = (0, 0)$ in a system containing two machines. Order Action A B 1 Node 1 increments $A$ $(1, 0)$ $(0, 0)$ 2 Node 2 merges with $B$ with $A$ $(1,0)$ $(1, 0)$ 3 Node 1 decrements $A$ $(0, 0)$ $(1, 0)$ Now if node 2 tries to perform another merger, it will not accept the decrement: $B$​ will remain $(1, 0)$​. In fact, there is no merger rule that will work, because $A$​ could have any value from any number of increments and decrements. One solutions might be to trust $A$​’s first entry over $B$​​​​’s but now certain replicas have higher status than others. They are unequal. class PNCounter { private: int n; // number of nodes int id; // unique node identifier between 0 and n GCounter* inc; // increment gcounter GCounter* dec; // decrement gcounter public: PNCounter(int id, int n) { inc = new GCounter(id, n); dec = new GCounter(id, n); } void increment() { inc-&amp;gt;increment(); } void decrement() { dec-&amp;gt;increment(); } int value() { return inc-&amp;gt;value() - dec-&amp;gt;value(); } void merge(PNCounter* other) { inc-&amp;gt;merge(other-&amp;gt;inc); dec-&amp;gt;merge(other-&amp;gt;dec); } }; Sets The most basic collection is a set. Elements are either members or they are not. The simplest set CRDT is the grow-only set where only additions are allowed. Replicas are merged by taking the union. \[A = A \cup B\] The union in akin to the $\max$ operation used for the grow only counter. We can order sets by inclusion. That is, $A \leq B$ if and only if $A \subseteq B$. The union is then the smallest set that is greater than $A$ and $B$, just as $\max(a, b)$ is the smallest element that is greater than the two numbers $a$ and $b$. However, because inclusion is a partial order (not every pair of sets are comparable), the union is generally not $A$ or $B$​. Arrows indicate greater than relationships. #include &amp;lt;unordered_set&amp;gt; template &amp;lt;class T&amp;gt; class GSet { private: std::unordered_set&amp;lt;T&amp;gt; set; public: GSet() {} void add(T el) { set.insert(el); } bool has(T el) { return set.find(el) != set.end(); } void merge(GSet&amp;lt;T&amp;gt;* other) { for (T el : other-&amp;gt;set) { set.insert(el); } } }; Like the positive-negative counter, we can construct a full set CRDT from a pair of grow-only sets. One grow-only set $A$ records all the elements added. The other grow-only set $R$ records all the elements removed. If an element $x \in A$ but $x \notin R$ or vica-versa, $x$’s membership in the set is clear. If $x \in A$ and $x \in R$, we need a mechanism to break the tie. One option is to resolve the tie by preferring removals over additions (or additions over removals). If $x \in A$ and $x \in R$, we could say $x$ is not in the set. How $x$ be removed from the set if it was not first made a member? The removal is assumed to have occured last. We can explicitly determine which operation was last if we record the time each addition/removal took place. For each element in $A$​ or $R$​, we store the timestamp in a hashmap2. To determine set membership in the case $x \in A, x \in R$​, we check the timestamp of the addition/removal, with the last one winning. For this reason, this CRDT is called a last write wins set. To merge the hashmaps, we just use the later timestamp. #include &amp;lt;chrono&amp;gt; #include &amp;lt;unordered_map&amp;gt; using time_point = std::chrono::time_point&amp;lt;std::chrono::system_clock&amp;gt;; template&amp;lt;class T&amp;gt; class LWWSet { private: GSet&amp;lt;T&amp;gt;* add_set; // element additions GSet&amp;lt;T&amp;gt;* rm_set; // element removals std::unordered_map&amp;lt;T, time_point&amp;gt; add_times; // timestamps for element additions std::unordered_map&amp;lt;T, time_point&amp;gt; rm_times; // timestamps for element removals public: LWWSet() { add_set = new GSet&amp;lt;T&amp;gt;(); rm_set = new GSet&amp;lt;T&amp;gt;(); } void add(T el) { add_set-&amp;gt;add(el); add_times[el] = std::chrono::system_clock::now(); } void remove(T el) { rm_set-&amp;gt;add(el); rm_times[el] = std::chrono::system_clock::now(); } bool has(T el) { if (!add_set-&amp;gt;has(el)) { return false; // add_set must have el } else if (!rm_set-&amp;gt;has(el)) { return true; // both add_set and rm_set have el } else { // favors removes if timestamps are identical return add_times[el] &amp;gt; rm_times[el] ? true : false; } } void merge(LWWSet&amp;lt;T&amp;gt;* other) { add_set-&amp;gt;merge(other-&amp;gt;add_set); rm_set-&amp;gt;merge(other-&amp;gt;rm_set); for (std::pair&amp;lt;T, time_point&amp;gt; x : other-&amp;gt;add_times) { T el = x.first; time_point timestamp = x.second; if (add_times.find(el) == add_times.end() || el &amp;gt; add_times[timestamp]) { add_times[el] = timestamp; } } for (std::pair&amp;lt;T, time_point&amp;gt; x : other-&amp;gt;rm_times) { T el = x.first; time_point timestamp = x.second; if (rm_times.find(el) == rm_times.end() || timestamp &amp;gt; rm_times[el]) { rm_times[el] = timestamp; } } } }; Building a collaborative text editor We can represent text as a variable length sequence of characters2. In order to read/write to the text, we need the following operations. char get(int i). Returns the character at position $i$. void insert(int i, char c). Inserts a character $c$ after position $i$. void remove(int i). Marks the character at position $i$ as a tombstone (deleted). void update(int i, char c). Set the character at position $i$ to $c$. Note that we could accomplish an update by removing the existing character at position $i$ and inserting $c$ after position $i - 1$. Replicated growable array (RGA) is a CRDT that supports these operations [1]. Ironically it is a linked list of nodes. Each node has an insertion timestamp, a last update/remove timestamp, a character, and a pointer to the next node. #include &amp;lt;chrono&amp;gt; #include &amp;lt;unordered_map&amp;gt; using time_point = std::chrono::time_point&amp;lt;std::chrono::system_clock&amp;gt;; struct Node { time_point insertion_time; time_point last_updated_time; // updates or removes char c; Node* next; Node(char c, Node* next) { insertion_time = std::chrono::system_clock::now(); last_updated_time = std::chrono::system_clock::now(); this-&amp;gt;c = c; this-&amp;gt;next = next; } }; The get, insert, and update operations work identically to their regular linked list counterparts. For convenience we define a Node* node_at(int i) method that grabs the $i$th item in the RGA by looping through next pointers. We can get character $i$ by returning the character field of the node_at(i). We can insert a new character $c$ at the front by assigning the head pointer to a new node. The new node points to the old head. We can insert a new character $c$ after position $i$ by assigning node_at(i)-&amp;gt;next to a new node. The new node points to the old node_at(i)-&amp;gt;next. We can update a character by setting node_at(i)-&amp;gt;c to the new character $c$​. We also refresh the last_updated_time. Instead of actually removing nodes, we set them to a special, 0 byte, tombstone character. Tombstones will not be included when displaying the RGA. const char TOMBSTONE = &#39;\0&#39;; class RGA { private: Node* head; Node* node_at(int i) { Node* node = head; for (int counter = 0; counter &amp;lt; i; counter++) { node = node-&amp;gt;next; } return node; } public: RGA() { head = nullptr; } char get(int i) { return node_at(i)-&amp;gt;c; } void insert(int i, char c) { if (i == 0) { head = new Node(c, head); return; } else { Node* node = node_at(i); node-&amp;gt;next = new Node(c, node-&amp;gt;next); } } void remove(int i) { Node* node = node_at(i); node-&amp;gt;c = TOMBSTONE; node-&amp;gt;last_updated_time = std::chrono::system_clock::now(); } void update(int i, char c) { Node* node = node_at(i); node-&amp;gt;c = c; node-&amp;gt;last_updated_time = std::chrono::system_clock::now(); } std::string as_string() { std::string s = &quot;&quot;; for (Node* node = head; node != nullptr; node = node-&amp;gt;next) { if (node-&amp;gt;c != TOMBSTONE) { s += node-&amp;gt;c; } } return s; } }; Note that a single RGA replica’s node, before any mergers, are ordered by their insertion_time. To merge RGA replicas, we combine the lists into a single list sorted by insertion order. If two nodes have the same insertion time, we assume they’re the same node. This assumption is safe so long as our clock has high precision and insertions are uniformly distributed. If neither are true, we can use a more advanced timekeeping scheme like a vector clock. When two nodes share the same insertion time, we use the node with the most recent last_updated_time. Beyond shared documents CRDTs are a young invention. WOOT—”the first CRDT algorithm proposed for group editing”—was published in 2006. The first CRDTs were a reaction to an older technology operation transform (OT). OT would transform successive operations to be compatibile with preceding operations. Many OT algorithms turned out to be incorrect. One of the few that was—and ended up powering Google docs—required all traffic go through a central server. And while their origins might revolve around collaborative editing a la Google docs, their future does not have to be. CRDTs allow for decentralized versions of many webapps, but CRDTs could be used in multi-threaded programs to maximize usage of multiple cores. this was how CRDTs would be used in X-ray, allowing multiple extensions to tamper with the text simultaneously without fear of inconsistency. CRDTs are seeing increasing use in a variety of very popular applications. Engineers are improving available open source implementations, making them smaller and faster. Researchers are working on expanding the scope of CRDTs, such as to all JSON objects[2]. CRDTs are getting better and better. I do not think this will stop anytime soon. References [1] Replicated abstract data types: Building blocks for collaborative applications. Hyun-Gul Roha, Myeongjae Jeonb, Jin-Soo Kimc, Joonwon Lee. [2] A Conflict Free Replicated JSON Datatype. Martin Kleppmann, Alastair R. Beresford. Electron was originally named Atom Shell because it was built for the Atom editor. Because the electrons orbiting atoms in pictures form a kind of shell, Electron was chosen as the new name. &amp;#8617; In a distributed system, there may not be an agreed upon time. That is, multiple computers’ clocks give different times. In this case, the sum of the vector clock can be used. A vector clock tracks the time of each machine in the system, updated by regular time messages. However, most modern computers can get an accurate time with millisecond level precision, so long as they’re connected to the Internet to receive regular synchronization messages. &amp;#8617; &amp;#8617;2">
+    
+    
+    <meta name="twitter:card" content="summary">
+    
+    <meta name="twitter:title" content="Conflict Free Replicated Data Types">
+    <meta name="twitter:description" content="Back in 2017, I used Atom as my primary text editor. It was pretty and customizable—some features like GitHub integration, running Python code inline, or syntax tree based highlighting still have n...">
+    
+    
+
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+    
+
+
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+       <script type="text/x-mathjax-config">
+         MathJax.Hub.Config({
+           tex2jax: {
+             inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+             processEscapes: true
+           }
+         });
+       </script>
+       <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+       <!-- Mermaid -->
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js"></script>
+       <script>mermaid.initialize({startOnLoad:true});</script>
+  </head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">George Pu</a>
+
+    <nav class="site-nav">
+      
+        
+        <a class="page-link" href="/about/">About</a>
+      
+        
+        <a class="page-link" href="/publications/">Publications</a>
+      
+        
+        <a class="page-link" href="/teaching/">Teaching</a>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">Conflict Free Replicated Data Types</h1>
+    
+    <p class="post-meta"><time datetime="2020-07-20T00:00:00+00:00" itemprop="datePublished">Jul 20, 2020</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Back in 2017, I used Atom as my primary text editor. It was pretty and customizable—some features like <a href="https://github.atom.io/">GitHub integration</a>, <a href="https://atom.io/packages/hydrogen">running Python code inline</a>, or <a href="https://github.blog/2018-10-31-atoms-new-parsing-system/">syntax tree based highlighting</a> still have no counterpart in other popular text editors—but very slow. It is an Electron<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> app and not a particularly efficient one. A single Atom window would routinely consume 1GB or more of memory. So I was excited when I heard about <a href="https://github.com/atom-archive/xray">Xray</a>, a new project on GitHub by GitHub that might serve as a replacement for Atom. The codebase was primarily in Rust, giving it the speed and lightness Atom lacked. People on the <atom.io> forums thought it might become Atom 2.0.</atom.io></p>
+
+<p>Inside Xray, text is represented as a <strong>conflict-free replicated data type</strong> (CRDT). Each machine keeps its own version or <strong>replica</strong> of the data structure on which users make local changes. Differing replicas can then be merged in a consistent manner without relying a central coordinating server. There is no conflict having multiple differing replicas. Since merges may be performed with as few as 2 replicas, we can consider it a binary operation $+$, albeit one that is mostly used in place. For the merge operation to be invariant to operation order, $+$ should be associative and commutative (hence the use of additive notation).</p>
+
+<p><img src="https://github.com/atom-archive/xray/blob/master/docs/images/crdt.png?raw=true" alt="RGA split" /></p>
+
+<p>Suppose we have $a, b, c$ replicas that should merge consistently in any order. That is, we want to be able to rearrange $(a + b) + c$ without changing the value of the expression. If $+$ is commutative, we can swap the replicas within the parentheses as is.</p>
+
+\[(a + b) + c = (b + a) + c \qquad\text{commutative property}\]
+
+<p>To swap across parentheses, we need to be about to shift the parentheses.</p>
+
+\[\begin{align*}
+(a + b) + c &amp;= a + (b + c) &amp;&amp;\text{associative property} \\
+&amp;= a + (c + b) &amp;&amp;\text{commutative property} \\
+&amp;= (a + c) + b &amp;&amp;\text{associative property}
+\end{align*}\]
+
+<p>With enough pairwise swaps, we can arbitrarily reorder this expression.</p>
+
+<p>After Microsoft’s purchase of GitHub, it now owned Atom along with the more popular and performant VSCode. Atom was redundant. Over the course of year, updates became smaller and less frequent. By mid-2019, posts on <a href="https://blog.atom.io/">https://blog.atom.io/</a> stopped. The Xray project was <a href="https://github.com/atom-archive/xray/pull/183">archived</a> on GitHub. Development effort was redirected to VSCode where it soon surpassed Atom in overall features. I switched to VSCode permanently in Fall 2019. While Xray/Atom 2.0 may have failed, CRDTs have just started to succeed, seeing usage in applications from <a href="https://crdt.tech/implementations">databases to chat messages to text editors</a>. Perhaps their greatest feature is equality; no replica is privileged over others. In a computing ecosystem that is all to centralized, CRDTs could help power the more distributed apps of the future.</p>
+
+<h2>Basic CRDTs</h2>
+
+<h3>Counters</h3>
+
+<p>The most basic CRDT is the <strong>grow only counter</strong> which can only be incremented. Suppose we have nodes $1, \dots, n$​​ in a computer network. A grow only counter $A$​​ is an $n$​​-tuple where $A_i$​​ counts the number of increases by node $i$​​. The value of the grow-only counter is the sum of all entries $A_1 + \dots + A_n$​​. Merges with another grow-only counter $B$​​ are performed by setting $A_i = \max(A_i, B_i)$​​ for each $1 \leq i \leq n$​​.</p>
+
+<p>Why do we need to track increments individually for each node? Why couldn’t we use a single register whose value is the total number of increments? Suppose we have 3 counters $a, b, c$​​ connected over the Internet. Replica $a$​​ wants to merge with replicas $b$​​ and $c$​​, but replica $c$​​ has already merged with replica $b$​​. So replica $a$​​ effectively merges with replica $b$​​​​ two times, but this should have no effect on the final result.
+\(a + b = a + b + b\)</p>
+
+<p>Merges should be idempotent. The addition of integers is not idempotent. The $\max(\cdot, \cdot)$​​​ of integers is however; repeated elements do not change the maximum of a set.</p>
+
+\[\max(\max(a, b), b) = \max(a, b)\]
+
+<p>Since only node $i$​ can increment its entry in the grow-only counter, its replica will have the largest $i$​th entry in the system. Merges with every other replica are guaranteed to produce an accurate grow only counter.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">GCounter</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>     <span class="c1">// number of nodes</span>
+    <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>    <span class="c1">// unique node identifier between 0 and n - 1</span>
+    <span class="kt">int</span><span class="o">*</span> <span class="n">inc</span><span class="p">;</span>  <span class="c1">// number of incremements for each node</span>
+<span class="nl">public:</span>
+    <span class="n">GCounter</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">id</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">);</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+        <span class="n">inc</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">inc</span><span class="p">[</span><span class="n">id</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">value</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">value</span> <span class="o">+=</span> <span class="n">inc</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+    	<span class="k">return</span> <span class="n">value</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">merge</span><span class="p">(</span><span class="n">GCounter</span><span class="o">*</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">inc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">inc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">-&gt;</span><span class="n">inc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">?</span> <span class="n">inc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">:</span> <span class="n">other</span><span class="o">-&gt;</span><span class="n">inc</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>We can create a <strong>positive-negative counter</strong> out of two grow-only counters. One tracks the number of increments for each node in the system. The other tracks the number of decrements for each node in the system. Why can’t we just allow decrements on a grow-only counter? Consider two grow-only counters $A = (0, 0), B = (0, 0)$ in a system containing two machines.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>Action</th>
+      <th>A</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Node 1 increments $A$</td>
+      <td>$(1, 0)$</td>
+      <td>$(0, 0)$</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Node 2 merges with $B$ with $A$</td>
+      <td>$(1,0)$</td>
+      <td>$(1, 0)$</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Node 1 decrements $A$</td>
+      <td>$(0, 0)$</td>
+      <td>$(1, 0)$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now if node 2 tries to perform another merger, it will not accept the decrement: $B$​ will remain $(1, 0)$​. In fact, there is no merger rule that will work, because $A$​ could have any value from any number of increments and decrements. One solutions might be to trust $A$​’s first entry over $B$​​​​’s but now certain replicas have higher status than others. They are unequal.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">PNCounter</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>          <span class="c1">// number of nodes</span>
+    <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>         <span class="c1">// unique node identifier between 0 and n</span>
+    <span class="n">GCounter</span><span class="o">*</span> <span class="n">inc</span><span class="p">;</span>  <span class="c1">// increment gcounter</span>
+    <span class="n">GCounter</span><span class="o">*</span> <span class="n">dec</span><span class="p">;</span>  <span class="c1">// decrement gcounter</span>
+<span class="nl">public:</span>
+    <span class="n">PNCounter</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">inc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GCounter</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    	<span class="n">dec</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GCounter</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">inc</span><span class="o">-&gt;</span><span class="n">increment</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">decrement</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">dec</span><span class="o">-&gt;</span><span class="n">increment</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">value</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">inc</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">()</span> <span class="o">-</span> <span class="n">dec</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">merge</span><span class="p">(</span><span class="n">PNCounter</span><span class="o">*</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">inc</span><span class="o">-&gt;</span><span class="n">merge</span><span class="p">(</span><span class="n">other</span><span class="o">-&gt;</span><span class="n">inc</span><span class="p">);</span>
+    	<span class="n">dec</span><span class="o">-&gt;</span><span class="n">merge</span><span class="p">(</span><span class="n">other</span><span class="o">-&gt;</span><span class="n">dec</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3>Sets</h3>
+
+<p>The most basic collection is a set. Elements are either members or they are not. The simplest set CRDT is the <strong>grow-only set</strong> where only additions are allowed. Replicas are merged by taking the union.</p>
+
+\[A = A \cup B\]
+
+<p>The union in akin to the $\max$ operation used for the grow only counter. We can order sets by inclusion. That is, $A \leq B$ if and only if $A \subseteq B$. The union is then the smallest set that is greater than $A$ and $B$, just as $\max(a, b)$ is the smallest element that is greater than the two numbers $a$ and $b$. However, because inclusion is a partial order (not every pair of sets are comparable), the union is generally not $A$ or $B$​.</p>
+
+<figure>
+    <img src="https://georgerpu.github.io/assets/images/2020-07-20/partial-total-order.png" alt="Partial vs. Total Order" class="centerImage" />
+    <figcaption>Arrows indicate greater than relationships.</figcaption>
+</figure>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;unordered_set&gt;
+</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">&gt;</span>
+<span class="k">class</span> <span class="nc">GSet</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_set</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">set</span><span class="p">;</span>
+<span class="nl">public:</span>
+    <span class="n">GSet</span><span class="p">()</span> <span class="p">{}</span>
+
+    <span class="kt">void</span> <span class="n">add</span><span class="p">(</span><span class="n">T</span> <span class="n">el</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">set</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">el</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">has</span><span class="p">(</span><span class="n">T</span> <span class="n">el</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">set</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="o">!=</span> <span class="n">set</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">merge</span><span class="p">(</span><span class="n">GSet</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;*</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">T</span> <span class="n">el</span> <span class="o">:</span> <span class="n">other</span><span class="o">-&gt;</span><span class="n">set</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">set</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">el</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Like the positive-negative counter, we can construct a full set CRDT from a pair of grow-only sets. One grow-only set $A$ records all the elements added. The other grow-only set $R$ records all the elements removed. If an element $x \in A$ but $x \notin R$ or vica-versa, $x$’s membership in the set is clear. If $x \in A$ <em>and</em> $x \in R$, we need a mechanism to break the tie. One option is to resolve the tie by preferring removals over additions (or additions over removals). If $x \in A$ <em>and</em> $x \in R$, we could say $x$ is not in the set. How $x$ be removed from the set if it was not first made a member? The removal is assumed to have occured last.</p>
+
+<p>We can explicitly determine which operation was last if we record the time each addition/removal took place. For each element in $A$​ or $R$​, we store the timestamp in a hashmap<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>. To determine set membership in the case $x \in A, x \in R$​, we check the timestamp of the addition/removal, with the last one winning. For this reason, this CRDT is called a <strong>last write wins set</strong>. To merge the hashmaps, we just use the later timestamp.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;chrono&gt;
+#include &lt;unordered_map&gt;
+</span>
+<span class="k">using</span> <span class="n">time_point</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">&gt;</span>
+<span class="k">class</span> <span class="nc">LWWSet</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">GSet</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;*</span> <span class="n">add_set</span><span class="p">;</span>                             <span class="c1">// element additions</span>
+    <span class="n">GSet</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;*</span> <span class="n">rm_set</span><span class="p">;</span>                              <span class="c1">// element removals</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">time_point</span><span class="o">&gt;</span> <span class="n">add_times</span><span class="p">;</span>  <span class="c1">// timestamps for element additions</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">time_point</span><span class="o">&gt;</span> <span class="n">rm_times</span><span class="p">;</span>   <span class="c1">// timestamps for element removals</span>
+<span class="nl">public:</span>
+    <span class="n">LWWSet</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">add_set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GSet</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="n">rm_set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GSet</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">add</span><span class="p">(</span><span class="n">T</span> <span class="n">el</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">add_set</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">el</span><span class="p">);</span>
+        <span class="n">add_times</span><span class="p">[</span><span class="n">el</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">remove</span><span class="p">(</span><span class="n">T</span> <span class="n">el</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">rm_set</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">el</span><span class="p">);</span>
+        <span class="n">rm_times</span><span class="p">[</span><span class="n">el</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">has</span><span class="p">(</span><span class="n">T</span> <span class="n">el</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">add_set</span><span class="o">-&gt;</span><span class="n">has</span><span class="p">(</span><span class="n">el</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="c1">// add_set must have el</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rm_set</span><span class="o">-&gt;</span><span class="n">has</span><span class="p">(</span><span class="n">el</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="c1">// both add_set and rm_set have el</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// favors removes if timestamps are identical</span>
+            <span class="k">return</span> <span class="n">add_times</span><span class="p">[</span><span class="n">el</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">rm_times</span><span class="p">[</span><span class="n">el</span><span class="p">]</span> <span class="o">?</span> <span class="nb">true</span> <span class="o">:</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">merge</span><span class="p">(</span><span class="n">LWWSet</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;*</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">add_set</span><span class="o">-&gt;</span><span class="n">merge</span><span class="p">(</span><span class="n">other</span><span class="o">-&gt;</span><span class="n">add_set</span><span class="p">);</span>
+        <span class="n">rm_set</span><span class="o">-&gt;</span><span class="n">merge</span><span class="p">(</span><span class="n">other</span><span class="o">-&gt;</span><span class="n">rm_set</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">time_point</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">:</span> <span class="n">other</span><span class="o">-&gt;</span><span class="n">add_times</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">T</span> <span class="n">el</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+            <span class="n">time_point</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">add_times</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="o">==</span> <span class="n">add_times</span><span class="p">.</span><span class="n">end</span><span class="p">()</span> <span class="o">||</span> <span class="n">el</span> <span class="o">&gt;</span> <span class="n">add_times</span><span class="p">[</span><span class="n">timestamp</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">add_times</span><span class="p">[</span><span class="n">el</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestamp</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">time_point</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">:</span> <span class="n">other</span><span class="o">-&gt;</span><span class="n">rm_times</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">T</span> <span class="n">el</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+            <span class="n">time_point</span> <span class="n">timestamp</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">rm_times</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="o">==</span> <span class="n">rm_times</span><span class="p">.</span><span class="n">end</span><span class="p">()</span> <span class="o">||</span> <span class="n">timestamp</span> <span class="o">&gt;</span> <span class="n">rm_times</span><span class="p">[</span><span class="n">el</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">rm_times</span><span class="p">[</span><span class="n">el</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestamp</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2>Building a collaborative text editor</h2>
+
+<p>We can represent text as a variable length sequence of characters<sup id="fnref:2:1" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>. In order to read/write to the text, we need the following operations.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">char get(int i)</code>. Returns the character at position $i$.</li>
+  <li><code class="language-plaintext highlighter-rouge">void insert(int i, char c)</code>. Inserts a character $c$ after position $i$.</li>
+  <li><code class="language-plaintext highlighter-rouge">void remove(int i)</code>. Marks the character at position $i$ as a tombstone (deleted).</li>
+  <li><code class="language-plaintext highlighter-rouge">void update(int i, char c)</code>. Set the character at position $i$ to $c$. Note that we could accomplish an update by removing the existing character at position $i$ and inserting $c$ after position $i - 1$.</li>
+</ul>
+
+<p><strong>Replicated growable array (RGA)</strong> is a CRDT that supports these operations [1]. Ironically it is a linked list of nodes. Each node has an insertion timestamp, a last update/remove timestamp, a character, and a pointer to the next node.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;chrono&gt;
+#include &lt;unordered_map&gt;
+</span>
+<span class="k">using</span> <span class="n">time_point</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">Node</span> <span class="p">{</span>
+    <span class="n">time_point</span> <span class="n">insertion_time</span><span class="p">;</span>
+    <span class="n">time_point</span> <span class="n">last_updated_time</span><span class="p">;</span>  <span class="c1">// updates or removes</span>
+    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+    <span class="n">Node</span><span class="o">*</span> <span class="n">next</span><span class="p">;</span>
+
+    <span class="n">Node</span><span class="p">(</span><span class="kt">char</span> <span class="n">c</span><span class="p">,</span> <span class="n">Node</span><span class="o">*</span> <span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">insertion_time</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">last_updated_time</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">c</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>The get, insert, and update operations work identically to their regular linked list counterparts. For convenience we define a <code class="language-plaintext highlighter-rouge">Node* node_at(int i)</code> method that grabs the $i$th item in the RGA by looping through <code class="language-plaintext highlighter-rouge">next</code> pointers.</p>
+
+<ul>
+  <li>We can get character $i$ by returning the character field of the <code class="language-plaintext highlighter-rouge">node_at(i)</code>.</li>
+  <li>We can insert a new character $c$ at the front by assigning the <code class="language-plaintext highlighter-rouge">head</code> pointer to a new node. The new node points to the old head. We can insert a new character $c$ after position $i$ by assigning <code class="language-plaintext highlighter-rouge">node_at(i)-&gt;next</code> to a new node. The new node points to the old <code class="language-plaintext highlighter-rouge">node_at(i)-&gt;next</code>.</li>
+  <li>We can update a character by setting <code class="language-plaintext highlighter-rouge">node_at(i)-&gt;c</code> to the new character $c$​. We also refresh the <code class="language-plaintext highlighter-rouge">last_updated_time</code>.</li>
+</ul>
+
+<p>Instead of actually removing nodes, we set them to a special, 0 byte, tombstone character. Tombstones will not be included when displaying the RGA.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="kt">char</span> <span class="n">TOMBSTONE</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">RGA</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">Node</span><span class="o">*</span> <span class="n">head</span><span class="p">;</span>
+
+    <span class="n">Node</span><span class="o">*</span> <span class="n">node_at</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Node</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">;</span> <span class="n">counter</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">node</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="nl">public:</span>
+    <span class="n">RGA</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">char</span> <span class="n">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">node_at</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">c</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">char</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">head</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">head</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">Node</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">node_at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+            <span class="n">node</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">remove</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Node</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">node_at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="n">node</span><span class="o">-&gt;</span><span class="n">c</span> <span class="o">=</span> <span class="n">TOMBSTONE</span><span class="p">;</span>
+        <span class="n">node</span><span class="o">-&gt;</span><span class="n">last_updated_time</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">update</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">char</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Node</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">node_at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="n">node</span><span class="o">-&gt;</span><span class="n">c</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+        <span class="n">node</span><span class="o">-&gt;</span><span class="n">last_updated_time</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">as_string</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">Node</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span> <span class="n">node</span> <span class="o">!=</span> <span class="nb">nullptr</span><span class="p">;</span> <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">c</span> <span class="o">!=</span> <span class="n">TOMBSTONE</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">c</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Note that a single RGA replica’s node, before any mergers, are ordered by their <code class="language-plaintext highlighter-rouge">insertion_time</code>. To merge RGA replicas, we combine the lists into a single list sorted by insertion order. If two nodes have the same insertion time, we assume they’re the same node. This assumption is safe so long as our clock has high precision and insertions are uniformly distributed. If neither are true, we can use a more advanced timekeeping scheme like a vector clock. When two nodes share the same <code class="language-plaintext highlighter-rouge">insertion time</code>, we use the node with the most recent <code class="language-plaintext highlighter-rouge">last_updated_time</code>.</p>
+
+<h2>Beyond shared documents</h2>
+
+<p>CRDTs are a young invention. WOOT—”the first CRDT algorithm proposed for group editing”—was published in 2006. The first CRDTs were a reaction to an older technology <strong>operation transform</strong> (OT). OT would transform successive operations to be compatibile with preceding operations. Many OT algorithms turned out to be incorrect. One of the few that was—and ended up powering Google docs—required all traffic go through a central server. And while their origins might revolve around collaborative editing a la Google docs, their future does not have to be. CRDTs allow for decentralized versions of many webapps, but CRDTs could be used in multi-threaded programs to maximize usage of multiple cores. this was how CRDTs would be used in X-ray, allowing multiple extensions to tamper with the text simultaneously without fear of inconsistency.</p>
+
+<iframe width="550" height="315" src="https://www.youtube.com/embed/x7drE24geUw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<p>CRDTs are seeing increasing use in a variety of <a href="https://crdt.tech/implementations">very popular applications</a>. Engineers are improving available open source implementations, making them smaller and faster. Researchers are working on expanding the scope of CRDTs, such as to all JSON objects[2]. CRDTs are getting better and better. I do not think this will stop anytime soon.</p>
+
+<h2>References</h2>
+
+<p>[1] <a href="http://csl.skku.edu/papers/jpdc11.pdf">Replicated abstract data types: Building blocks for collaborative applications</a>. Hyun-Gul Roha, Myeongjae Jeonb, Jin-Soo Kimc, Joonwon Lee.
+[2] <a href="https://arxiv.org/abs/1608.03960">A Conflict Free Replicated JSON Datatype</a>. Martin Kleppmann, Alastair R. Beresford.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Electron was originally named <a href="https://www.electronjs.org/blog/electron">Atom Shell</a> because it was built for the Atom editor. Because the electrons orbiting atoms in pictures form a kind of shell, Electron was chosen as the new name. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>In a distributed system, there may not be an agreed upon time. That is, multiple computers’ clocks give different times. In this case, the sum of the <a href="https://en.wikipedia.org/wiki/Vector_clock">vector clock</a> can be used. A vector clock tracks the time of each machine in the system, updated by regular time messages. However, most modern computers can get an accurate time with millisecond level precision, so long as they’re connected to the Internet to receive regular synchronization messages. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:2:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+  </ol>
+</div>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; George Pu - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="https://georgerpu.github.io/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

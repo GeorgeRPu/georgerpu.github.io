@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    
+    
+    <title>Writing Code for (Machine Learning) Research</title>
+    <meta name="description" content="Writing code is an essential task in much of today’s scientific research. In fields such as astronomy, chemistry, economics, and sociology, scientists are writing code in languages such as MATLAB, Python, R, and Fortran to perform simulations and analyze experimental results. These scientists, however, have minimal training as software engineers. The codebase is often nothing more than a disorganized collection of scripts, sometimes not even under source control. No doubt much contemporary research is bottlenecked by poor code quality. While scientists would be well served to read a software engineering book or two, writing code for business is not like writing code for research. The problems, constraints, and therefore solutions are different. Business code is expected to run for years, sometimes continuously, serving up to billions of users. The code will be updated throughout its lifetime. Research code is run primarily by its author, secondarily by others who wish to build on the author’s work. Thus the best research code can be easily adapted into unrelated projects. In contrast, many software engineering design patterns seek to hide implementations behind various interfaces. Business code is expected to run on a variety of standard hardware without change in behavior. Research code often runs in unusual specialized environments such as supercomputers or embedded devices. I have spent the last 3 years doing machine learning research, where code is both a tool and the artifact being studied. After 3 years, you tend to notice what works and what doesn’t. Here is my advice. Advice 1. Use Python Python has the most extensive ecosystem of scientific packages and tools, too numerous to list here. Some are widely known, like NumPy (linear algebra) or Pandas (dataframes), but many are field specific, like Astropy (astronomy). Many libraries are Python exclusives, such as the 3 previously mentioned. Others, such as PyTorch or Tensorflow have frontends in other languages, but these are not as complete as the Python interface. Beyond the deep pool of great packages are tools like Jupyter or the VSCode Python extension that make programming and viewing results easy. The language itself has a concise syntax that prevents unnecessary key strokes by the programmer. This dramatically reduces the time needed to complete first drafts of programs. Just compare the length of Hello World programs between Python, C++, and Java—the 3 most common introductory programming languages. Python’s version is only one line compared to the 5+ lines needed by C++ and Java. In C++, printing to the screen requires an include (import) statement1. Compared to specialized scientific languages like MATLAB or R, Python has the advantage of being a general purpose programming language. Python can be used for your machine learning or computational biology research but it can also be used to download files off the internet or set up a website with the same ease. print(&#39;Hello World!&#39;) #include &amp;lt;iostream&amp;gt; int main() { std::cout &amp;lt;&amp;lt; &quot;Hello World!&quot; &amp;lt;&amp;lt; std::endl; return 0; } public class HelloWorld { public static void main(str[] args) { System.out.println(&quot;Hello World!&quot;); } } When should Python not be used? Often for certain applications, certain languages must be used. Interactive educational web apps: JavaScript Utilizing Nvidia GPU kernels for machine learning: C++ and CUDA Mobile apps: Swift for iOS and Java/Kotlin for Android (unless you use a cross-platform UI framework like React Native or Flutter) Climate change simulations on supercomputers: Fortran High performance code, in general, should not be written in Python. Python is an interpreted language; each line is processed right before it runs. This precludes a number of optimizations that can be made in compiled languages. Because the compiler can see the entire file, it can perform a number of optimizations to make it run faster or consume less memory. Furthermore, Python has a Global Interpreter Lock which prevents multi-threading. While there has been discussion about its removal, that is unlikely to happen. Unfortunately, since the GIL exists, other features have grown to depend on the guarantees that it enforces. This makes it hard to remove the GIL without breaking many official and unofficial Python packages and modules. 2. Track Dependencies Nearly every program relies on code authored by external parties. These are dependencies. Importantly, changes to dependencies can break your code. This is unlikely for many of the older, more popular packages. NumPy is not going to suddenly change how np.array works. But for younger packages, instability should be expected. A machine learning example is torchtext which migrated its datasets from subclassing torchtext.data.Dataset in version 0.8 to subclassing torch.utils.data.Dataset in version 0.9. After upgrading torchtext, much of my NLP code crashed in the process. The solution is to specify the compatible versions of your dependencies. For Python programs, this can be done in a requirements.txt file. These packages and their versions can be installed in a new environment with a single command. An environment is an isolated set of dependencies which can be swapped in or out for different projects. torch==1.7.0 torchvision==0.8.0 torchaudio==0.7.0 torchtext==0.8.0 pip install -r requirements.txt 3. Use Hydra At least in machine learning, computational experiments may contain a number of hyperparameters2 that influence the result. Some may be experimental hyperparameters such as the choice of model or learning algorithm which vary for the sake of comparison. Others, such as the learning rate, may need to be tuned to the correct value for the experiment to work. Researchers are interested in the result under the best-case value for these parameters. Tracking which trials used what parameter values can be tricky when launching them in batches across multiple machines. Hydra solves this problem. Using Hydra is as simple as inserting a single decorator around your main function. Hydra will create a config object from a group of YAML files accessible inside main. Hyperparameters can be accessed as object properties: cfg.prop1, cfg.prop2, etc. Parameter values can be overridden by in the command line using the syntax prop1=value1 prop2=value2 when the program is launched. This makes it easy to, say, start several experiments using different learning rates. This config object can be passed to different functions in classes as one argument, irrespective of the number of hyperparameters they access. Each program run creates a new folder outputs/yyyy-MM-dd/hh-mm-ss (date and time of launch) that becomes the current working directory. Plots, tables, and data saved to relative paths (those not starting with ~, /, or C:/ on Windows) will be placed inside this new folder. Inside, Hydra will save a copy of your config object as config.yaml and create a main.log file. Loggers are automatically configured to write to this file. import hydra import logging import os log = logging.getLogger(__name__) # __name__ is the name of the module @hydra.main(config_path=&#39;config_folder&#39;, config_name=&#39;config_file.yaml&#39;) def main(cfg): function_which_uses_2_properties(cfg) print(os.getcwd()) # current working directory is outputs/yyyy-MM-dd log.info(&quot;Writing INFO level message to main.log&quot;) 4. Document but Don’t Test In Python and most programming languages, allow explanatory comments to be placed beside confusing code. A special type of comment is a doc comment placed above a class/function definition. In Python, these are triple-quote strings, hence the name docstring, which go below the class/function definition. Docstring provide invaluable context to other researchers looking to build on top of your work. Others will need to understand the inner workings of your code before they can modify it. Docstrings also jog the memory when you revisit your code in the future as a stranger. Docstrings can be formatted however, but I prefer to use Google’s docstring style. The first section is reserved for a description of the class/function; succeeding sections provide more information about arguments, return values, exceptions, and properties. If you use VSCode, I recommend installing the Python Docstring Generator extension which can create a docstring template upon typing &quot;&quot;&quot;. VSCode will display the docstring when hovering over a function call. def function(arg1, arg2): &quot;&quot;&quot;[summary] Args: arg1 (type): [description] arg2 (typd): [description] Returns: [description] Raises: [exception]: [description] &quot;&quot;&quot; While its it important to write docstrings, writing unit/integration tests are a waste of time. The test code will call sections of the source code to check its correctness. Usually, the author of the section will write the tests. This doubles the effort required to implement a certain feature. That may already be a deal breaker but, since research is a messy process of diving into the unknown, research code has a short lifetime. There is no point writing tests for code which might be abandoned or revised in a few days. Moreover, the presence of bugs is not necessarily a problem. Research code is often narrow in scope, not designed to work without flaw in every circumstance. 5. Release Your Code Whenever possible, code should be made public. The code to generate the plots are as important as the plots themselves. If the latter can be included in a publication, the former can be distributed as well. In many cases, such as in machine learning, the code itself is the labor of your research, developing this algorithm that does $X$ or solves $Y$. To withhold the code is like a withholding a proof in to a theorem. Stating that a statement is proven is not as interesting as the actual mechanics of proving it. Such a central artifact should be shared. There is also a more selfish motive for open sourcing code. Other researcher using it will cite your papers. See Also https://da-data.blogspot.com/2016/04/stealing-googles-coding-practices-for.html https://github.com/allenai/writing-code-for-nlp-research-emnlp2018/ You can use printf to output the the console, but it is not recommended over using std::cout. &amp;#8617; Machine learning models contain a number of parameters which are adjusted during training. The hyper in hyperparameter distinguishes values, like learning rate, which do not change over the course of training from model parameters. &amp;#8617;">
+    
+
+    <link rel="stylesheet" href="/assets/main.css">
+    <link rel="canonical" href="https://georgerpu.github.io/2021/05/25/research-code/">
+    
+    
+    <link rel="alternate" type="application/rss+xml" title="George Pu" href="https://georgerpu.github.io/feed.xml">
+
+    
+
+    
+    <meta property="og:title" content="Writing Code for (Machine Learning) Research">
+    <meta property="og:site_name" content="George Pu">
+    <meta property="og:url" content="https://georgerpu.github.io/2021/05/25/research-code/">
+    <meta property="og:description" content="Writing code is an essential task in much of today’s scientific research. In fields such as astronomy, chemistry, economics, and sociology, scientists are writing code in languages such as MATLAB, Python, R, and Fortran to perform simulations and analyze experimental results. These scientists, however, have minimal training as software engineers. The codebase is often nothing more than a disorganized collection of scripts, sometimes not even under source control. No doubt much contemporary research is bottlenecked by poor code quality. While scientists would be well served to read a software engineering book or two, writing code for business is not like writing code for research. The problems, constraints, and therefore solutions are different. Business code is expected to run for years, sometimes continuously, serving up to billions of users. The code will be updated throughout its lifetime. Research code is run primarily by its author, secondarily by others who wish to build on the author’s work. Thus the best research code can be easily adapted into unrelated projects. In contrast, many software engineering design patterns seek to hide implementations behind various interfaces. Business code is expected to run on a variety of standard hardware without change in behavior. Research code often runs in unusual specialized environments such as supercomputers or embedded devices. I have spent the last 3 years doing machine learning research, where code is both a tool and the artifact being studied. After 3 years, you tend to notice what works and what doesn’t. Here is my advice. Advice 1. Use Python Python has the most extensive ecosystem of scientific packages and tools, too numerous to list here. Some are widely known, like NumPy (linear algebra) or Pandas (dataframes), but many are field specific, like Astropy (astronomy). Many libraries are Python exclusives, such as the 3 previously mentioned. Others, such as PyTorch or Tensorflow have frontends in other languages, but these are not as complete as the Python interface. Beyond the deep pool of great packages are tools like Jupyter or the VSCode Python extension that make programming and viewing results easy. The language itself has a concise syntax that prevents unnecessary key strokes by the programmer. This dramatically reduces the time needed to complete first drafts of programs. Just compare the length of Hello World programs between Python, C++, and Java—the 3 most common introductory programming languages. Python’s version is only one line compared to the 5+ lines needed by C++ and Java. In C++, printing to the screen requires an include (import) statement1. Compared to specialized scientific languages like MATLAB or R, Python has the advantage of being a general purpose programming language. Python can be used for your machine learning or computational biology research but it can also be used to download files off the internet or set up a website with the same ease. print(&#39;Hello World!&#39;) #include &amp;lt;iostream&amp;gt; int main() { std::cout &amp;lt;&amp;lt; &quot;Hello World!&quot; &amp;lt;&amp;lt; std::endl; return 0; } public class HelloWorld { public static void main(str[] args) { System.out.println(&quot;Hello World!&quot;); } } When should Python not be used? Often for certain applications, certain languages must be used. Interactive educational web apps: JavaScript Utilizing Nvidia GPU kernels for machine learning: C++ and CUDA Mobile apps: Swift for iOS and Java/Kotlin for Android (unless you use a cross-platform UI framework like React Native or Flutter) Climate change simulations on supercomputers: Fortran High performance code, in general, should not be written in Python. Python is an interpreted language; each line is processed right before it runs. This precludes a number of optimizations that can be made in compiled languages. Because the compiler can see the entire file, it can perform a number of optimizations to make it run faster or consume less memory. Furthermore, Python has a Global Interpreter Lock which prevents multi-threading. While there has been discussion about its removal, that is unlikely to happen. Unfortunately, since the GIL exists, other features have grown to depend on the guarantees that it enforces. This makes it hard to remove the GIL without breaking many official and unofficial Python packages and modules. 2. Track Dependencies Nearly every program relies on code authored by external parties. These are dependencies. Importantly, changes to dependencies can break your code. This is unlikely for many of the older, more popular packages. NumPy is not going to suddenly change how np.array works. But for younger packages, instability should be expected. A machine learning example is torchtext which migrated its datasets from subclassing torchtext.data.Dataset in version 0.8 to subclassing torch.utils.data.Dataset in version 0.9. After upgrading torchtext, much of my NLP code crashed in the process. The solution is to specify the compatible versions of your dependencies. For Python programs, this can be done in a requirements.txt file. These packages and their versions can be installed in a new environment with a single command. An environment is an isolated set of dependencies which can be swapped in or out for different projects. torch==1.7.0 torchvision==0.8.0 torchaudio==0.7.0 torchtext==0.8.0 pip install -r requirements.txt 3. Use Hydra At least in machine learning, computational experiments may contain a number of hyperparameters2 that influence the result. Some may be experimental hyperparameters such as the choice of model or learning algorithm which vary for the sake of comparison. Others, such as the learning rate, may need to be tuned to the correct value for the experiment to work. Researchers are interested in the result under the best-case value for these parameters. Tracking which trials used what parameter values can be tricky when launching them in batches across multiple machines. Hydra solves this problem. Using Hydra is as simple as inserting a single decorator around your main function. Hydra will create a config object from a group of YAML files accessible inside main. Hyperparameters can be accessed as object properties: cfg.prop1, cfg.prop2, etc. Parameter values can be overridden by in the command line using the syntax prop1=value1 prop2=value2 when the program is launched. This makes it easy to, say, start several experiments using different learning rates. This config object can be passed to different functions in classes as one argument, irrespective of the number of hyperparameters they access. Each program run creates a new folder outputs/yyyy-MM-dd/hh-mm-ss (date and time of launch) that becomes the current working directory. Plots, tables, and data saved to relative paths (those not starting with ~, /, or C:/ on Windows) will be placed inside this new folder. Inside, Hydra will save a copy of your config object as config.yaml and create a main.log file. Loggers are automatically configured to write to this file. import hydra import logging import os log = logging.getLogger(__name__) # __name__ is the name of the module @hydra.main(config_path=&#39;config_folder&#39;, config_name=&#39;config_file.yaml&#39;) def main(cfg): function_which_uses_2_properties(cfg) print(os.getcwd()) # current working directory is outputs/yyyy-MM-dd log.info(&quot;Writing INFO level message to main.log&quot;) 4. Document but Don’t Test In Python and most programming languages, allow explanatory comments to be placed beside confusing code. A special type of comment is a doc comment placed above a class/function definition. In Python, these are triple-quote strings, hence the name docstring, which go below the class/function definition. Docstring provide invaluable context to other researchers looking to build on top of your work. Others will need to understand the inner workings of your code before they can modify it. Docstrings also jog the memory when you revisit your code in the future as a stranger. Docstrings can be formatted however, but I prefer to use Google’s docstring style. The first section is reserved for a description of the class/function; succeeding sections provide more information about arguments, return values, exceptions, and properties. If you use VSCode, I recommend installing the Python Docstring Generator extension which can create a docstring template upon typing &quot;&quot;&quot;. VSCode will display the docstring when hovering over a function call. def function(arg1, arg2): &quot;&quot;&quot;[summary] Args: arg1 (type): [description] arg2 (typd): [description] Returns: [description] Raises: [exception]: [description] &quot;&quot;&quot; While its it important to write docstrings, writing unit/integration tests are a waste of time. The test code will call sections of the source code to check its correctness. Usually, the author of the section will write the tests. This doubles the effort required to implement a certain feature. That may already be a deal breaker but, since research is a messy process of diving into the unknown, research code has a short lifetime. There is no point writing tests for code which might be abandoned or revised in a few days. Moreover, the presence of bugs is not necessarily a problem. Research code is often narrow in scope, not designed to work without flaw in every circumstance. 5. Release Your Code Whenever possible, code should be made public. The code to generate the plots are as important as the plots themselves. If the latter can be included in a publication, the former can be distributed as well. In many cases, such as in machine learning, the code itself is the labor of your research, developing this algorithm that does $X$ or solves $Y$. To withhold the code is like a withholding a proof in to a theorem. Stating that a statement is proven is not as interesting as the actual mechanics of proving it. Such a central artifact should be shared. There is also a more selfish motive for open sourcing code. Other researcher using it will cite your papers. See Also https://da-data.blogspot.com/2016/04/stealing-googles-coding-practices-for.html https://github.com/allenai/writing-code-for-nlp-research-emnlp2018/ You can use printf to output the the console, but it is not recommended over using std::cout. &amp;#8617; Machine learning models contain a number of parameters which are adjusted during training. The hyper in hyperparameter distinguishes values, like learning rate, which do not change over the course of training from model parameters. &amp;#8617;">
+    
+    
+    <meta name="twitter:card" content="summary">
+    
+    <meta name="twitter:title" content="Writing Code for (Machine Learning) Research">
+    <meta name="twitter:description" content="Writing code is an essential task in much of today’s scientific research. In fields such as astronomy, chemistry, economics, and sociology, scientists are writing code in languages such as MATLAB, ...">
+    
+    
+
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+    
+
+
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+       <script type="text/x-mathjax-config">
+         MathJax.Hub.Config({
+           tex2jax: {
+             inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+             processEscapes: true
+           }
+         });
+       </script>
+       <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+       <!-- Mermaid -->
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js"></script>
+       <script>mermaid.initialize({startOnLoad:true});</script>
+  </head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">George Pu</a>
+
+    <nav class="site-nav">
+      
+        
+        <a class="page-link" href="/about/">About</a>
+      
+        
+        <a class="page-link" href="/publications/">Publications</a>
+      
+        
+        <a class="page-link" href="/teaching/">Teaching</a>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">Writing Code for (Machine Learning) Research</h1>
+    
+    <p class="post-meta"><time datetime="2021-05-25T00:00:00+00:00" itemprop="datePublished">May 25, 2021</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Writing code is an essential task in much of today’s scientific research. In fields such as astronomy, chemistry, economics, and sociology, scientists are writing code in languages such as MATLAB, Python, R, and Fortran to perform simulations and analyze experimental results. These scientists, however, have minimal training as software engineers. The codebase is often nothing more than a disorganized collection of scripts, sometimes not even under source control. No doubt much contemporary research is bottlenecked by poor code quality. While scientists would be well served to read a software engineering book or two, writing code for business is not like writing code for research.</p>
+
+<p>The problems, constraints, and therefore solutions are different. Business code is expected to run for years, sometimes continuously, serving up to billions of users. The code will be updated throughout its lifetime. Research code is run primarily by its author, secondarily by others who wish to build on the author’s work. Thus the best research code can be easily adapted into unrelated projects. In contrast, many software engineering design patterns seek to hide implementations behind various interfaces. Business code is expected to run on a variety of standard hardware without change in behavior. Research code often runs in unusual specialized environments such as supercomputers or embedded devices.</p>
+
+<p>I have spent the last 3 years doing machine learning research, where code is both a tool and the artifact being studied. After 3 years, you tend to notice what works and what doesn’t. Here is my advice.</p>
+
+<h2>Advice</h2>
+
+<h3>1. Use Python</h3>
+
+<p>Python has the most extensive ecosystem of scientific packages and tools, too numerous to list here. Some are widely known, like <a href="https://numpy.org/">NumPy</a> (linear algebra) or <a href="https://pandas.pydata.org/">Pandas</a> (dataframes), but many are field specific, like <a href="https://www.astropy.org/">Astropy</a> (astronomy). Many libraries are Python exclusives, such as the 3 previously mentioned. Others, such as <a href="https://pytorch.org/">PyTorch</a> or <a href="https://www.tensorflow.org/">Tensorflow</a> have frontends in other languages, but these are not as complete as the Python interface. Beyond the deep pool of great packages are tools like <a href="https://www.jupyter.org/">Jupyter</a> or the VSCode <a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python extension</a> that make programming and viewing results easy.</p>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/31/NumPy_logo_2020.svg" width="200" hspace="20" /> <img src="https://pandas.pydata.org/static/img/pandas.svg" width="200" hspace="20" /> <img src="https://www.astropy.org/images/astropy_project_logo.svg" width="200" hspace="20" /></p>
+
+<p>The language itself has a concise syntax that prevents unnecessary key strokes by the programmer. This dramatically reduces the time needed to complete first drafts of programs. Just compare the length of Hello World programs between Python, C++, and Java—the 3 most common introductory programming languages. Python’s version is only one line compared to the 5+ lines needed by C++ and Java. In C++, printing to the screen requires an include (import) statement<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. Compared to specialized scientific languages like MATLAB or R, Python has the advantage of being a general purpose programming language. Python can be used for your machine learning or computational biology research but it can also be used to download files off the internet or set up a website with the same ease.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'Hello World!'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello World!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">str</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Hello World!"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>When should Python not be used? Often for certain applications, certain languages must be used.</p>
+
+<ul>
+  <li>Interactive educational web apps: JavaScript</li>
+  <li>Utilizing Nvidia GPU kernels for machine learning: C++ and CUDA</li>
+  <li>Mobile apps: Swift for iOS and Java/Kotlin for Android (unless you use a cross-platform UI framework like React Native or Flutter)</li>
+  <li>Climate change simulations on supercomputers: Fortran</li>
+</ul>
+
+<p>High performance code, in general, should not be written in Python. Python is an interpreted language; each line is processed right before it runs. This precludes a number of optimizations that can be made in compiled languages. Because the compiler can see the entire file, it can perform a number of optimizations to make it run faster or consume less memory. Furthermore, Python has a Global Interpreter Lock which prevents multi-threading. While there has been discussion about its removal, that is unlikely to happen.</p>
+
+<blockquote>
+  <p>Unfortunately, since the GIL exists, other features have grown to depend on the guarantees that it enforces. This makes it hard to remove the GIL without breaking many official and unofficial Python packages and modules.</p>
+</blockquote>
+
+<h3>2. Track Dependencies</h3>
+
+<p>Nearly every program relies on code authored by external parties. These are <strong>dependencies</strong>. Importantly, changes to dependencies can break your code. This is unlikely for many of the older, more popular packages. NumPy is not going to suddenly change how <code class="language-plaintext highlighter-rouge">np.array</code> works. But for younger packages, instability should be expected. A machine learning example is <a href="https://pytorch.org/text/stable/index.html">torchtext</a> which migrated its datasets from subclassing <code class="language-plaintext highlighter-rouge">torchtext.data.Dataset</code> in version 0.8 to subclassing <code class="language-plaintext highlighter-rouge">torch.utils.data.Dataset</code> in version 0.9. After upgrading torchtext, much of my NLP code crashed in the process.</p>
+
+<p>The solution is to specify the compatible versions of your dependencies. For Python programs, this can be done in a <code class="language-plaintext highlighter-rouge">requirements.txt</code> file. These packages and their versions can be installed in a new environment with a single command. An <strong>environment</strong> is an isolated set of dependencies which can be swapped in or out for different projects.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">torch</span><span class="o">==</span><span class="mf">1.7</span><span class="p">.</span><span class="mi">0</span>
+<span class="n">torchvision</span><span class="o">==</span><span class="mf">0.8</span><span class="p">.</span><span class="mi">0</span>
+<span class="n">torchaudio</span><span class="o">==</span><span class="mf">0.7</span><span class="p">.</span><span class="mi">0</span>
+<span class="n">torchtext</span><span class="o">==</span><span class="mf">0.8</span><span class="p">.</span><span class="mi">0</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+</code></pre></div></div>
+
+<h3>3. Use Hydra</h3>
+
+<p>At least in machine learning, computational experiments may contain a number of hyperparameters<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> that influence the result. Some may be experimental hyperparameters such as the choice of model or learning algorithm which vary for the sake of comparison. Others, such as the learning rate, may need to be tuned to the correct value for the experiment to work. Researchers are interested in the result under the best-case value for these parameters. Tracking which trials used what parameter values can be tricky when launching them in batches across multiple machines. <a href="https://hydra.cc/">Hydra</a> solves this problem.</p>
+
+<p><img src="https://hydra.cc/img/logo.svg" alt="Hydra" width="300" class="centerImage" /></p>
+
+<p>Using Hydra is as simple as inserting a single decorator around your <code class="language-plaintext highlighter-rouge">main</code> function. Hydra will create a config object from a group of YAML files accessible inside <code class="language-plaintext highlighter-rouge">main</code>. Hyperparameters can be accessed as object properties: <code class="language-plaintext highlighter-rouge">cfg.prop1</code>, <code class="language-plaintext highlighter-rouge">cfg.prop2</code>, etc. Parameter values can be overridden by in the command line using the syntax <code class="language-plaintext highlighter-rouge">prop1=value1 prop2=value2</code> when the program is launched. This makes it easy to, say, start several experiments using different learning rates. This config object can be passed to different functions in classes as one argument, irrespective of the number of hyperparameters they access.</p>
+
+<p>Each program run creates a new folder <code class="language-plaintext highlighter-rouge">outputs/yyyy-MM-dd/hh-mm-ss</code> (date and time of launch) that becomes the current working directory. Plots, tables, and data saved to relative paths (those not starting with ~, /, or C:/ on Windows) will be placed inside this new folder. Inside, Hydra will save a copy of your config object as <code class="language-plaintext highlighter-rouge">config.yaml</code> and create a <code class="language-plaintext highlighter-rouge">main.log</code> file. Loggers are automatically configured to write to this file.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">hydra</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>  <span class="c1"># __name__ is the name of the module
+</span>
+<span class="o">@</span><span class="n">hydra</span><span class="p">.</span><span class="n">main</span><span class="p">(</span><span class="n">config_path</span><span class="o">=</span><span class="s">'config_folder'</span><span class="p">,</span> <span class="n">config_name</span><span class="o">=</span><span class="s">'config_file.yaml'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">cfg</span><span class="p">):</span>
+    <span class="n">function_which_uses_2_properties</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">())</span>  <span class="c1"># current working directory is outputs/yyyy-MM-dd
+</span>    <span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Writing INFO level message to main.log"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3>4. Document but Don’t Test</h3>
+
+<p>In Python and most programming languages, allow explanatory comments to be placed beside confusing code. A special type of comment is a <strong>doc comment</strong> placed above a class/function definition. In Python, these are triple-quote strings, hence the name <strong>docstring</strong>, which go below the class/function definition. Docstring provide invaluable context to other researchers looking to build on top of your work. Others will need to understand the inner workings of your code before they can modify it. Docstrings also jog the memory when you revisit your code in the future as a stranger.</p>
+
+<p>Docstrings can be formatted however, but I prefer to use <a href="https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings">Google’s docstring style</a>. The first section is reserved for a description of the class/function; succeeding sections provide more information about arguments, return values, exceptions, and properties. If you use VSCode, I recommend installing the <a href="https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring">Python Docstring Generator</a> extension which can create a docstring template upon typing <code class="language-plaintext highlighter-rouge">"""</code>. VSCode will display the docstring when hovering over a function call.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def function(arg1, arg2):
+    """[summary]
+
+    Args:
+        arg1 (type): [description]
+        arg2 (typd): [description]
+
+    Returns:
+        [description]
+
+    Raises:
+        [exception]: [description]
+    """
+</code></pre></div></div>
+
+<p>While its it important to write docstrings, writing unit/integration tests are a waste of time. The test code will call sections of the source code to check its correctness. Usually, the author of the section will write the tests. This doubles the effort required to implement a certain feature. That may already be a deal breaker but, since research is a messy process of diving into the unknown, research code has a short lifetime. There is no point writing tests for code which might be abandoned or revised in a few days. Moreover, the presence of bugs is not necessarily a problem. Research code is often narrow in scope, not designed to work without flaw in every circumstance.</p>
+
+<h3>5. Release Your Code</h3>
+
+<p>Whenever possible, code should be made public. The code to generate the plots are as important as the plots themselves. If the latter can be included in a publication, the former can be distributed as well. In many cases, such as in machine learning, the code itself is the labor of your research, developing this algorithm that does $X$ or solves $Y$. To withhold the code is like a withholding a proof in to a theorem. Stating that a statement is proven is not as interesting as the actual mechanics of proving it. Such a central artifact should be shared. There is also a more selfish motive for open sourcing code. Other researcher using it will cite your papers.</p>
+
+<h2>See Also</h2>
+
+<p><a href="https://da-data.blogspot.com/2016/04/stealing-googles-coding-practices-for.html">https://da-data.blogspot.com/2016/04/stealing-googles-coding-practices-for.html</a></p>
+
+<p><a href="https://github.com/allenai/writing-code-for-nlp-research-emnlp2018/">https://github.com/allenai/writing-code-for-nlp-research-emnlp2018/</a></p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>You can use <code class="language-plaintext highlighter-rouge">printf</code> to output the the console, but it is not recommended over using <code class="language-plaintext highlighter-rouge">std::cout</code>. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Machine learning models contain a number of parameters which are adjusted during training. The hyper in hyperparameter distinguishes values, like learning rate, which do not change over the course of training from model parameters. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+  </div>
+
+  
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+&copy; George Pu - Powered by <a href="https://jekyllrb.com">Jekyll</a> &amp; <a href="https://github.com/yous/whiteglass">whiteglass</a> - Subscribe via <a href="https://georgerpu.github.io/feed.xml">RSS</a>
+
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

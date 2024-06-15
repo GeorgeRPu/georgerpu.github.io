@@ -3,6 +3,12 @@ layout: post
 title: "How To Control For Confounding Variables"
 date: 2022-02-12
 description: "Seperating signal from noise"
+giscus_comments: true
+mermaid:
+  enabled: true
+  zoomable: false
+toc:
+  sidebar: left
 tags: mathematics
 ---
 

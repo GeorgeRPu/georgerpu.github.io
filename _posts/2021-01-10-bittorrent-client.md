@@ -4,6 +4,9 @@ title: "Implementing a BitTorrent-like P2P File Sharing Protocol"
 date: 2021-01-10
 description: "A lesson in software design"
 giscus_comments: true
+mermaid:
+  enabled: true
+  zoomable: false
 toc:
   sidebar: left
 tags: computing

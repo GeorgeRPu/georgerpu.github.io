@@ -6,7 +6,7 @@ date: 2023-09-28
 giscus_comments: true
 toc:
   sidebar: left
-tags: blog
+tags: writing
 ---
 
 # Blogging for 4 Years
@@ -31,6 +31,13 @@ As for me, I have tried posting once every 2 months, 6 times a year, for the pas
 #### Computer Scientists
 
 - https://jxyzabc.blogspot.com
+- https://maheshba.bitbucket.io/blog/
+- https://martin.kleppmann.com/archive.html
+
+#### Data Scientists
+
+- https://cduvallet.github.io
+  - https://claireduvallet.substack.com/archive?sort=new
 
 #### Mathematicians
 
@@ -53,11 +60,8 @@ As for me, I have tried posting once every 2 months, 6 times a year, for the pas
 #### Researchers
 
 - https://karpathy.github.io
-
 - https://danieltakeshi.github.io
-
 - https://lilianweng.github.io
-
 - https://sebastianraschka.com
 
 #### University Groups/Labs
@@ -66,12 +70,13 @@ As for me, I have tried posting once every 2 months, 6 times a year, for the pas
 - http://www.offconvex.org/
 - https://thegradient.pub/
 
-### Software Engineering & Adjacent
+### Software Engineering
 
 - https://blog.pragmaticengineer.com
+- https://brooker.co.za/blog/
 - https://jvns.ca
-- https://maggieappleton.com
 - https://mhlakhani.com
+- https://newsletter.techleadmentor.com
 - https://ntietz.com/blog/
 - https://substack.com/@thecaringtechie
 

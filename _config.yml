@@ -264,7 +264,7 @@ jekyll-archives:
     tag: '/blog/tag/:name/'
     category: '/blog/category/:name/'
 
-display_tags: ['artificial-intelligence', 'basketball' , 'blog', 'books', 'computer-science', 'economics', 'film', 'mathematics'] # this tags will be dispalyed on the front page of your blog
+display_tags: ['artificial-intelligence', 'basketball', 'books', 'computing', 'economics', 'film-tv', 'mathematics', 'writing'] # this tags will be dispalyed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar

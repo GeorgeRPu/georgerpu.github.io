@@ -6,7 +6,7 @@ description: "Guide to setting up an ARM Mac for software development"
 giscus_comments: true
 toc:
   sidebar: left
-tags: computer-science
+tags: computing
 ---
 
 In late 2021, I switched my personal computer from a Surface Book 2 to a new M1 Pro Macbook Pro. It has been quite an experience switching OSes. To help, I created this setup guide.

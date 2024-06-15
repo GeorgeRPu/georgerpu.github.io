@@ -1,8 +1,8 @@
 ---
+layout: post
 title: "Notes From a Conversion About the Aesthetics of Music"
-type: post
-date: 2021-03-31
 description: "A mathematical theory of the aesthetics of music"
+date: 2021-03-31
 giscus_comments: true
 toc:
   sidebar: left
@@ -20,9 +20,11 @@ Notes from a conversation with a friend, during a long car ride, about how to ev
 **Average**. Instead, we use the averaged emotional response (AER) from a proper listen of a recorded version of a song (for consistency) across a population at a given time.
 
 **L1 norm**. The AER is a signal $f\colon \text{Emotion Space} \to [0, \infty)$. We can take the L1 norm of the signal by weighting the intensity with a super-linear function $w\colon [0, \infty) \to [0, \infty)$. For example, $w(x) = x \log(x)$,
+
 $$
 \| f \|_1 = \int_{\text{Emotion Space}} w(f(e)) \mathop{de}
 $$
+
 A greater L1 norm is a better song.
 
 ## Corollaries

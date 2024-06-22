@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Quasi-Newton Methods: SR1 (Part 1)"
+title: "Quasi-Newton Methods (1/2): SR1"
 date: 2023-02-14
 description: "An introduction to quasi-Newton methods."
 giscus_comments: true

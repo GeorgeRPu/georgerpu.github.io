@@ -25,7 +25,7 @@ plt.ylim(0, np.exp(5))
 plt.show()
 ```
 
-{% include figure.html path="assets/img/2024-01-06/2024-01-06-exp-inflection-point_1_0.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+{% include figure.html path="assets/img/2024-01-06/2024-01-06-exp-inflection-point_1_0.png" class="img-fluid" %}
 
 ## The "Inflection Point"
 
@@ -43,7 +43,7 @@ plt.ylim(0, np.exp(10))
 plt.show()
 ```
 
-{% include figure.html path="assets/img/2024-01-06/2024-01-06-exp-inflection-point_3_0.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+{% include figure.html path="assets/img/2024-01-06/2024-01-06-exp-inflection-point_3_0.png" class="img-fluid" %}
 
 Now it looks like the "inflection point" is at $x = 8$. If we zoomed in instead of zooming out, the "inflection point" would shift to the left.
 
@@ -57,7 +57,7 @@ plt.ylim(0, np.exp(2))
 plt.show()
 ```
 
-{% include figure.html path="assets/img/2024-01-06/2024-01-06-exp-inflection-point_5_0.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+{% include figure.html path="assets/img/2024-01-06/2024-01-06-exp-inflection-point_5_0.png" class="img-fluid" %}
 
 Now it looks like the "inflection point" is at $x = 1$. The "inflection point" is not a real feature of exponentials but a artifact of the way we plot them. Changing our perspective changes the location of the "inflection".
 
@@ -85,7 +85,7 @@ plt.ylim(1, np.exp(10))
 plt.show()
 ```
 
-{% include figure.html path="assets/img/2024-01-06/2024-01-06-exp-inflection-point_7_0.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+{% include figure.html path="assets/img/2024-01-06/2024-01-06-exp-inflection-point_7_0.png" class="img-fluid" %}
 
 The exponential has an inflection point no more than a straight line has an inflection point. As long as the original function is always positive, the sign of the derivative in log-scale is the same as normal scale.
 

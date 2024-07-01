@@ -30,7 +30,7 @@ Only one of these predictions has been met.
 3. No country in the world is close to a 15 hour work week. Some Western European countries are close to 1300 annual hours worked, which averages to 25 hours per week across an entire year. The decline in annual working hours has plateaued in many countries as the 35-40 hour workweek has remained the norm. In the US, annual working hours have stabilized around 1800 for decades.
 4. US culture has not let go of the Protestant work ethic over the past 100 years. If anything, secularization and the deterioration of civil society in America[^1] has led work to become more central to people's identities. European work culture is much more inline with Keynes' predictions.
 
-{% include figure.html path="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Annual_working_time_in_OECD.svg/2560px-Annual_working_time_in_OECD.svg.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+{% include figure.html path="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Annual_working_time_in_OECD.svg/2560px-Annual_working_time_in_OECD.svg.png" class="img-fluid rounded" %}
 
 ## What Happened?
 
@@ -40,7 +40,7 @@ Keynes accurately predicted the degree of economic growth over the coming centur
 
 The struggle of sustenance, i.e. poverty, has remained in the lives of those in advanced economies. In fact, [the poverty rate is decoupled from GDP growth](https://www.nytimes.com/2014/06/05/upshot/growth-has-been-good-for-decades-so-why-hasnt-poverty-declined.html). The US poverty rate has oscillated between 10% to 15% for decades, with only 1 big reduction due to the Great Society programs of the 1960s. Keynes' assumption that GDP growth therefore less poverty is false.
 
-{% include figure.html path="assets/img/2023-09-10/us-poverty-rate.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+{% include figure.html path="assets/img/2023-09-10/us-poverty-rate.png" class="img-fluid" %}
 
 If the US is richer than in 1970 on a per person basis, the stable poverty rate is failure of distribution. Indeed, US incomes are highly unequal. The history of income inequality reveals that it is affected by policy, union strength, and modes of production more than GDP growth. Inequality was high in the 1920s, declined in the mid 20th century, and then rose after ~1980. The causes are hotly debated.
 
@@ -52,7 +52,7 @@ Since the 1950s, the US tax code has become less progressive as taxes on the ric
 
 At the same time, the US safety net is weaker than in other developed countries. [In 2019, US spending on social spending was 18.7%, below the OECD average of 20%](https://www.weforum.org/agenda/2021/02/social-spending-highest-lowest-country-comparison-oecd-france-economics-politics-welfare/). Most Western European states had social spending as >25% of GDP. The US doesn't provide universal health care like in pretty much every other OECD country. Based on data gathered from the [OECD](https://data.oecd.org/inequality/poverty-rate.htm) and [World Economic Forum](https://www.weforum.org/agenda/2021/02/social-spending-highest-lowest-country-comparison-oecd-france-economics-politics-welfare/), social spending is correlated with lower poverty rates.
 
-{% include figure.html path="assets/img/2023-09-10/social-spending-vs-poverty-rate.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+{% include figure.html path="assets/img/2023-09-10/social-spending-vs-poverty-rate.png" class="img-fluid" %}
 
 Economic growth has made the elimination of poverty possible or near possible. This elimination requires a progressive tax system and comprehensive social safety net which many developed countries lack. The solution to the economic problem is within our grasp.
 
@@ -81,7 +81,7 @@ In Europe, things are closer to Keynes' predictions. In general, Europeans work 
 
 However the difference started, decades of reduced working hours has ingrained work-life balance in the European worldview. [Europeans feel less guilty than Americans when taking vacations](https://getyournewview.com/vacation-guilt-america-vs-europe-pto/). In the same survey, Europeans take more vacations days than Americans when they have unlimited PTO. While Americans and Europeans work off hours at equal rates, [European countries are passing laws banning work email after hours](https://fortune.com/2017/01/01/french-right-to-disconnect-law/) in an attempt to maintain a right to disconnect. Nothing of this sort is happening in the US.
 
-{% include figure.html path="https://getyournewview.com/wp-content/uploads/2022/05/New-View-Strategies-Vacation-Guilt_Graphic-4.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+{% include figure.html path="https://getyournewview.com/wp-content/uploads/2022/05/New-View-Strategies-Vacation-Guilt_Graphic-4.png" class="img-fluid" %}
 
 ## The Importance of Politics
 

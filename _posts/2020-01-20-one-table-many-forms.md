@@ -6,7 +6,7 @@ description: "Why we have so many normal forms for relations"
 giscus_comments: true
 toc:
   sidebar: left
-tags: computing
+tags: computer-science
 ---
 
 A **relation**[^1] is a table. It is made up of rows, or tuples, $(x_1, \dots, x_n)$ whose members $x_i$ are single values of a data type $D_i$. A column is a list of components from each row. The header of each column is an **attribute**. The name of the relation and the set of attributes are the **relation schema**.

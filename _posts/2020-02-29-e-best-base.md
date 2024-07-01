@@ -6,7 +6,7 @@ description: "And why we don't use it"
 giscus_comments: true
 toc:
   sidebar: left
-tags: computing
+tags: computer-science
 ---
 
 Suppose we have $N$ small LED lights. We can arrange these lights in a rectange to represent a number. Each column is a single digit. Only 1 light is ever on to signify which digit it is. The number of lights in a column $B$ is the base of the number. The table below represents the number 55 in base 3.

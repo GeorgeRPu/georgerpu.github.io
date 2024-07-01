@@ -6,7 +6,7 @@ description: "Lessons from 1 year as a software engineer"
 giscus_comments: true
 toc:
   sidebar: left
-tags: computing
+tags: computer-science
 ---
 
 Update 2023-03-25: Added more points and new section on documents.

@@ -9,7 +9,7 @@ mermaid:
   zoomable: false
 toc:
   sidebar: left
-tags: computing
+tags: computer-science
 ---
 
 A common project in computer networking classes is implementing the peer-to-peer (P2P) file transfer protocol BitTorrent[^1]. Like many students, the design was hastily conceived and the code shabbily written. After all, I just needed to produce a working implementation, which would never be revisited. However, I thought it would be an instructive exercise to rewrite my project code, seeing where I went wrong and what could be done to fix it. The GitHub repo containing all 3 implementations is <https://github.com/GeorgeRPu/BitTorrent-like>. Snippets will be reproduced here. For the sake of brevity, the implementation for many functions are omitted along with import statements.

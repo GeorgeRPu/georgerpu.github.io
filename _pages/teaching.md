@@ -2,11 +2,13 @@
 layout: page
 permalink: /teaching/
 title: teaching
-description: Materials for courses you taught. Replace this text with your description.
+description: Courses I have taught.
 nav: true
 nav_order: 6
 ---
 
-For now, this page is assumed to be a static description of your courses. You can convert it to a collection similar to `_projects/` so that you can have a dedicated page for each course.
+I served as an Undegrad TA (UF uses the term Peer Mentor) for the following classes.
 
-Organize your courses by years, topics, or universities, however you like!
+- **Spring 2021:** CIS4930 NLP with Python (helped write assignments and exam questions for course)
+- **Fall 2020:** COT3100 Discrete Structures
+- **Spring 2020:** CIS4301 Information and Database Systems I

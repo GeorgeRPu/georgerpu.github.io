@@ -51,6 +51,13 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
+        },{id: "nav-bookshelf",
+          title: "bookshelf",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/books/";
+          },
         },{id: "post-the-inflection-point-of-the-exponential-function",
       
         title: "The Inflection Point of the Exponential Function",

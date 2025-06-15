@@ -58,7 +58,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/books/";
           },
-        },{id: "post-the-inflection-point-of-the-exponential-function",
+        },{id: "post-2024-in-books",
+      
+        title: "2024 in Books",
+      
+      description: "All the books I read in 2022",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/books/";
+        
+      },
+    },{id: "post-the-inflection-point-of-the-exponential-function",
       
         title: "The Inflection Point of the Exponential Function",
       

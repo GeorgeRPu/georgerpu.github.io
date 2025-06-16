@@ -25,7 +25,7 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Currently, I am a Software/Developer Engineer at Amazon.
+Currently, I am an Applied Scientist at Amazon. Previously, I was a Software Developmer/Engineer (SDE) for 3 years.
 
 Previously, I was a research assistant at the [NSF Center for Big Learning](http://nsfcbl.org) at the [University of Florida](http://www.ufl.edu), where I did my undergraduate degree in Computer Science. I published papers on robotics and federated learning.
 

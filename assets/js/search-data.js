@@ -62,7 +62,7 @@ ninja.data = [{
       
         title: "2024 in Books",
       
-      description: "All the books I read in 2022",
+      description: "All the books I read in 2024",
       section: "Posts",
       handler: () => {
         

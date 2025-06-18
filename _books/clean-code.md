@@ -7,6 +7,7 @@ categories: software-engineering
 buy_link: https://amzn.to/4jWAxUg
 started: 2022-01-01
 finished: 2022-12-31
+date: 2022-12-31
 released: 2008
 stars: 2
 status: Finished

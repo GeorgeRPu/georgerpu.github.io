@@ -7,6 +7,7 @@ categories: china history
 buy_link: https://amzn.to/4n6UTgh
 started: 2021-01-01
 finished: 2021-12-31
+date: 2021-12-31
 released: 1990
 stars: 4
 status: Finished

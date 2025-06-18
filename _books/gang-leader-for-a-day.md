@@ -7,6 +7,7 @@ categories: sociology
 buy_link: https://amzn.to/45YiyJx
 started: 2021-01-01
 finished: 2021-12-31
+date: 2021-12-31
 released: 2008
 stars: 5
 status: Finished

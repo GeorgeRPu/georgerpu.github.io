@@ -7,6 +7,7 @@ categories: essay-collections
 buy_link: https://amzn.to/4n7DBzq
 started: 2024-01-01
 finished: 2024-12-31
+date: 2024-12-31
 released: 2021
 stars: 4
 status: Finished

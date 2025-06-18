@@ -7,6 +7,7 @@ categories: history
 buy_link: https://amzn.to/4lwBPXl
 started: 2024-01-01
 finished: 2024-12-31
+date: 2024-12-31
 released: 2016
 stars: 3.5
 status: Finished

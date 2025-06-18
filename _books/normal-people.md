@@ -7,6 +7,7 @@ categories: literary fiction
 buy_link: https://amzn.to/44kRFhH
 started: 2019-01-01
 finished: 2019-12-31
+date: 2019-12-31
 released: 2018
 stars: 4.5
 status: Finished

@@ -7,6 +7,7 @@ categories: sociology
 buy_link: https://amzn.to/4e8HAaT
 started: 2019-01-01
 finished: 2019-12-31
+date: 2019-12-31
 released: 2012
 stars: 4
 status: Finished

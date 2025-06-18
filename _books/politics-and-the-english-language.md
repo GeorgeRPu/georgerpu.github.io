@@ -8,6 +8,7 @@ categories: economics
 buy_link: https://amzn.to/445lnG5
 started: 2024-01-01
 finished: 2024-12-31
+date: 2024-12-31
 released: 1947
 stars: 3.5
 status: Finished

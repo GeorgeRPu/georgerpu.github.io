@@ -7,6 +7,7 @@ categories: business
 buy_link: https://amzn.to/4k0svtw
 started: 2022-01-01
 finished: 2022-12-31
+date: 2022-12-31
 released: 2015
 stars: 3
 status: Finished

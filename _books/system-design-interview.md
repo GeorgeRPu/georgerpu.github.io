@@ -7,6 +7,7 @@ categories: software-engineerin
 buy_link: https://amzn.to/4lbuyvI
 started: 2024-01-01
 finished: 2024-12-31
+date: 2024-12-31
 released: 2020
 stars: 4
 status: Finished

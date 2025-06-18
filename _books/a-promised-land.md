@@ -7,6 +7,7 @@ categories: memoir
 buy_link: https://amzn.to/3I0nRy8
 started: 2024-01-01
 finished: 2024-12-31
+date: 2024-12-31
 released: 2020
 stars: 5
 status: Finished

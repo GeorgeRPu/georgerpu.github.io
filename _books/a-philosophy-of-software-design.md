@@ -7,6 +7,7 @@ categories: software-engineering
 buy_link: https://amzn.to/442IMIm
 started: 2019-01-01
 finished: 2019-12-31
+date: 2019-12-31
 released: 2018
 stars: 5
 status: Finished

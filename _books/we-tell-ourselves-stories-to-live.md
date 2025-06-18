@@ -7,6 +7,7 @@ categories: essay-collection literary fiction
 buy_link: https://amzn.to/4lhSrlv
 started: 2018-01-01
 finished: 2018-12-31
+date: 2018-12-31
 released: 2006
 stars: 5
 status: Finished

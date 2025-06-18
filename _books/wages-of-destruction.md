@@ -7,6 +7,7 @@ categories: economics history
 buy_link: https://amzn.to/4e4wmnM
 started: 2022-01-01
 finished: 2022-12-31
+date: 2022-12-31
 released: 2007
 stars: 3.5
 status: Finished

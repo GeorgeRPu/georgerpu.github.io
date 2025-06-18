@@ -8,6 +8,7 @@ categories: economics history
 buy_link: https://amzn.to/3TsenhB
 started: 2024-01-01
 finished: 2024-12-31
+date: 2024-12-31
 released: 2023
 stars: 4
 status: Finished

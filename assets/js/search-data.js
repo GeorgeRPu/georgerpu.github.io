@@ -333,11 +333,61 @@ ninja.data = [{
           window.location.href = "/blog/2019/the-cantor-set-minus-itself/";
         
       },
-    },{id: "books-a-philosophy-of-software-design",
+    },{id: "books-we-tell-ourselves-stories-in-order-to-live",
+          title: 'We Tell Ourselves Stories in Order to Live',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/we-tell-ourselves-stories-to-live/";
+            },},{id: "books-a-philosophy-of-software-design",
           title: 'A Philosophy of Software Design',
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/a-philosophy-of-software-design/";
+            },},{id: "books-normal-people",
+          title: 'Normal People',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/normal-people/";
+            },},{id: "books-privilege",
+          title: 'Privilege',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/privilege/";
+            },},{id: "books-gang-leader-for-a-day",
+          title: 'Gang Leader for a Day',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/gang-leader-for-a-day/";
+            },},{id: "books-the-search-for-modern-china",
+          title: 'The Search for Modern China',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/the-search-for-modern-china/";
+            },},{id: "books-this-is-china-the-first-5-000-years",
+          title: 'This is China: The First 5,000 Years',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/this-is-china/";
+            },},{id: "books-clean-code",
+          title: 'Clean Code',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/clean-code/";
+            },},{id: "books-crashed",
+          title: 'Crashed',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/crashed/";
+            },},{id: "books-extreme-ownership",
+          title: 'Extreme Ownership',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/extreme-ownership/";
+            },},{id: "books-wages-of-destruction",
+          title: 'Wages of Destruction',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/wages-of-destruction/";
             },},{id: "books-a-promised-land",
           title: 'A Promised Land',
           description: "",
@@ -353,31 +403,11 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/chip-war/";
-            },},{id: "books-clean-code",
-          title: 'Clean Code',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/clean-code/";
-            },},{id: "books-crashed",
-          title: 'Crashed',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/crashed/";
             },},{id: "books-designing-data-intensive-applications",
           title: 'Designing Data Intensive Applications',
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/designing-data-intensive-applications/";
-            },},{id: "books-extreme-ownership",
-          title: 'Extreme Ownership',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/extreme-ownership/";
-            },},{id: "books-gang-leader-for-a-day",
-          title: 'Gang Leader for a Day',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/gang-leader-for-a-day/";
             },},{id: "books-intermezzo",
           title: 'Intermezzo',
           description: "",
@@ -388,11 +418,6 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/let-me-tell-you-what-i-mean/";
-            },},{id: "books-normal-people",
-          title: 'Normal People',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/normal-people/";
             },},{id: "books-ours-was-the-shining-future",
           title: 'Ours Was the Shining Future',
           description: "",
@@ -403,11 +428,6 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/politics-and-the-english-language/";
-            },},{id: "books-privilege",
-          title: 'Privilege',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/privilege/";
             },},{id: "books-sorry-i-39-m-late-i-didn-39-t-want-to-come",
           title: 'Sorry I&amp;#39;m Late, I Didn&amp;#39;t Want to Come',
           description: "",
@@ -428,26 +448,6 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the-anthroprocene-reviewed/";
-            },},{id: "books-the-search-for-modern-china",
-          title: 'The Search for Modern China',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/the-search-for-modern-china/";
-            },},{id: "books-this-is-china-the-first-5-000-years",
-          title: 'This is China: The First 5,000 Years',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/this-is-china/";
-            },},{id: "books-wages-of-destruction",
-          title: 'Wages of Destruction',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/wages-of-destruction/";
-            },},{id: "books-we-tell-ourselves-stories-in-order-to-live",
-          title: 'We Tell Ourselves Stories in Order to Live',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/we-tell-ourselves-stories-to-live/";
             },},{id: "news-communication-efficient-federated-learning-via-dataset-distillation-was-accepted-to-neurips-2020-spicyfl",
           title: 'Communication-efficient federated learning via dataset distillation was accepted to NeurIPS 2020 SpicyFL!',
           description: "",

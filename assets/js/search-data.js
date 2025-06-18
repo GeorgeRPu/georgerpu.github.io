@@ -333,7 +333,122 @@ ninja.data = [{
           window.location.href = "/blog/2019/the-cantor-set-minus-itself/";
         
       },
-    },{id: "news-communication-efficient-federated-learning-via-dataset-distillation-was-accepted-to-neurips-2020-spicyfl",
+    },{id: "books-a-philosophy-of-software-design",
+          title: 'A Philosophy of Software Design',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/a-philosophy-of-software-design/";
+            },},{id: "books-a-promised-land",
+          title: 'A Promised Land',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/a-promised-land/";
+            },},{id: "books-best-minds",
+          title: 'Best Minds',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/best-minds/";
+            },},{id: "books-chip-war",
+          title: 'Chip War',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/chip-war/";
+            },},{id: "books-clean-code",
+          title: 'Clean Code',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/clean-code/";
+            },},{id: "books-crashed",
+          title: 'Crashed',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/crashed/";
+            },},{id: "books-designing-data-intensive-applications",
+          title: 'Designing Data Intensive Applications',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/designing-data-intensive-applications/";
+            },},{id: "books-extreme-ownership",
+          title: 'Extreme Ownership',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/extreme-ownership/";
+            },},{id: "books-gang-leader-for-a-day",
+          title: 'Gang Leader for a Day',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/gang-leader-for-a-day/";
+            },},{id: "books-intermezzo",
+          title: 'Intermezzo',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/intermezzo/";
+            },},{id: "books-let-me-tell-you-what-i-mean",
+          title: 'Let Me Tell You What I Mean',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/let-me-tell-you-what-i-mean/";
+            },},{id: "books-normal-people",
+          title: 'Normal People',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/normal-people/";
+            },},{id: "books-ours-was-the-shining-future",
+          title: 'Ours Was the Shining Future',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/ours-was-the-shining-future/";
+            },},{id: "books-politics-and-the-english-language",
+          title: 'Politics and the English Language',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/politics-and-the-english-language/";
+            },},{id: "books-privilege",
+          title: 'Privilege',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/privilege/";
+            },},{id: "books-sorry-i-39-m-late-i-didn-39-t-want-to-come",
+          title: 'Sorry I&amp;#39;m Late, I Didn&amp;#39;t Want to Come',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/sorry-im-late-i-didnt-want-to-come/";
+            },},{id: "books-spqr-a-history-of-ancient-rome",
+          title: 'SPQR: A History of Ancient Rome',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/spqr/";
+            },},{id: "books-system-design-interview",
+          title: 'System Design Interview',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/system-design-interview/";
+            },},{id: "books-the-anthropocene-reviewed",
+          title: 'The Anthropocene Reviewed',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/the-anthroprocene-reviewed/";
+            },},{id: "books-the-search-for-modern-china",
+          title: 'The Search for Modern China',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/the-search-for-modern-china/";
+            },},{id: "books-this-is-china-the-first-5-000-years",
+          title: 'This is China: The First 5,000 Years',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/this-is-china/";
+            },},{id: "books-wages-of-destruction",
+          title: 'Wages of Destruction',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/wages-of-destruction/";
+            },},{id: "books-we-tell-ourselves-stories-in-order-to-live",
+          title: 'We Tell Ourselves Stories in Order to Live',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/we-tell-ourselves-stories-to-live/";
+            },},{id: "news-communication-efficient-federated-learning-via-dataset-distillation-was-accepted-to-neurips-2020-spicyfl",
           title: 'Communication-efficient federated learning via dataset distillation was accepted to NeurIPS 2020 SpicyFL!',
           description: "",
           section: "News",},{id: "news-my-senior-project-was-featured-in-the-university-of-florida-news",

@@ -2,7 +2,7 @@
 layout: book-review
 title: Ours Was the Shining Future
 author: David Leonhardt
-cover: https://m.media-amazon.com/images/I/41dJlGYczWL._SY445_SX342_PQ29_.jpg
+cover: assets/img/book_covers/ours-was-the-shining-future-cover.jpg
 olid: OL48681147M
 categories: economics history
 buy_link: https://amzn.to/3TsenhB

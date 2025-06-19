@@ -2,7 +2,7 @@
 layout: book-review
 title: Politics and the English Language
 author: George Orwell
-cover: https://m.media-amazon.com/images/I/41VLird110L._SY445_SX342_PQ29_.jpg
+cover: assets/img/book_covers/politics-and-the-english-language-cover.jpg
 olid: OL6890752M
 categories: economics
 buy_link: https://amzn.to/445lnG5

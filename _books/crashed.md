@@ -2,7 +2,7 @@
 layout: book-review
 title: Crashed
 author: Adam Tooze
-cover: https://m.media-amazon.com/images/I/41iJuV2VqKL._SY445_SX342_PQ29_.jpg
+cover: assets/img/book_covers/crashed-cover.jpg
 olid: OL28707934M
 categories: economics history
 buy_link: https://amzn.to/3HMtpwj

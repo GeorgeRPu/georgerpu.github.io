@@ -1,6 +1,6 @@
 ---
 layout: book-review
-title: "SPQR: A History of Ancient Rome"
+title: "SPQR"
 author: Mary Beard
 olid: OL35638281M
 categories: history

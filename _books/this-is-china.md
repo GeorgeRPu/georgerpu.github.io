@@ -1,8 +1,8 @@
 ---
 layout: book-review
-title: "This is China: The First 5,000 Years"
+title: "This is China"
 author: Haiwang Yuan (Editor), Ronald G. Knapp (Editor), Margot E. Landman (Editor), Gregory Veeck (Editor)
-cover: https://m.media-amazon.com/images/I/51STnPU9iTL._SY445_SX342_PQ29_.jpg
+cover: assets/img/book_covers/this-is-china-cover.jpg
 olid: OL24523658M
 categories: china history
 buy_link: https://amzn.to/445H0WZ

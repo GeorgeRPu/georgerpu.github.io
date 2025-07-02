@@ -363,8 +363,8 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the-search-for-modern-china/";
-            },},{id: "books-this-is-china-the-first-5-000-years",
-          title: 'This is China: The First 5,000 Years',
+            },},{id: "books-this-is-china",
+          title: 'This is China',
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/this-is-china/";
@@ -433,8 +433,8 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/sorry-im-late-i-didnt-want-to-come/";
-            },},{id: "books-spqr-a-history-of-ancient-rome",
-          title: 'SPQR: A History of Ancient Rome',
+            },},{id: "books-spqr",
+          title: 'SPQR',
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/spqr/";
@@ -456,6 +456,9 @@ ninja.data = [{
           description: "",
           section: "News",},{id: "news-i-have-been-promoted-to-software-development-engineer-ii-sde-ii-at-amazon-i-would-like-to-thank-my-colleagues-mentors-and-managers-whose-feedback-and-support-is-as-responsible-for-any-success-as-much-as-my-own-efforts",
           title: 'I have been promoted to Software Development Engineer II (SDE II) at Amazon!...',
+          description: "",
+          section: "News",},{id: "news-our-aws-blog-post-showcasing-some-of-my-team-s-work-has-been-published-thanks-to-my-coauthor-and-manager-for-her-help-with-the-writing-and-publishing-process-to-the-amazon-neptune-team-for-the-suggestion-to-write-a-blog-post-and-support-and-to-my-fellow-engineers-for-their-contributions-to-the-project-this-is-a-great-example-of-how-we-can-use-graphs-to-enhance-trustworthiness-and-reliability-of-online-shopping",
+          title: 'Our AWS blog post showcasing some of my team’s work has been published!...',
           description: "",
           section: "News",},{id: "news-i-am-now-an-applied-scientist-ii-as-ii-at-amazon-this-has-been-a-longstanding-dream-of-mine-and-i-am-so-excited-that-this-could-happen-i-would-like-to-express-my-gratitude-to-the-mentors-and-managers-who-have-guided-and-sponsored-me-without-whom-this-would-not-have-been-possible",
           title: 'I am now an Applied Scientist II (AS II) at Amazon! This has...',

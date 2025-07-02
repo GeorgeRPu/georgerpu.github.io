@@ -2,7 +2,7 @@
 layout: book-review
 title: Clean Code
 author: Robert C. Martin
-olid: OL26222911M
+olid: OL16900934M
 categories: software-engineering
 buy_link: https://amzn.to/4jWAxUg
 started: 2022-01-01

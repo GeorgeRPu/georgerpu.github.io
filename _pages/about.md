@@ -27,7 +27,7 @@ latest_posts:
 
 Currently, I am an Applied Scientist at Amazon. Previously, I was a Software Developmer/Engineer (SDE) for 3 years.
 
-Previously, I was a research assistant at the [NSF Center for Big Learning](http://nsfcbl.org) at the [University of Florida](http://www.ufl.edu), where I did my undergraduate degree in Computer Science. I published papers on robotics and federated learning.
+Previously, I was a research assistant at the [NSF Center for Big Learning](https://iucrc.nsf.gov/centers/center-for-big-data-learning/) at the [University of Florida](http://www.ufl.edu), where I did my undergraduate degree in Computer Science. I published papers on robotics and federated learning.
 
 I am broadly interested in all aspects of deep learning, particularly deep reinforcement learning, robust and scalable intelligent systems, and its applications in robotics. I blog about these topics at <https://georgerpu.github.io/blog/> along with other computer science topics, mathematics (my first :heart:), and whatever else I find interesting that week.
 

@@ -13,7 +13,7 @@ stars: 5
 status: Finished
 ---
 
-*A Philosophy of Software Design* derives from Ousterhout's attempts to teach software design to students at Stanford. From 3 iterations of CS190 comes a few general and coherent principles. *A Philosophy of Software Design* is not only a philosophy; there are some helpful rules of thumb towards the end. But the main contribution of the book is a perspective, synthesized from teaching experience, on good software design and how to achieve it.
+_A Philosophy of Software Design_ derives from Ousterhout's attempts to teach software design to students at Stanford. From 3 iterations of CS190 comes a few general and coherent principles. _A Philosophy of Software Design_ is not only a philosophy; there are some helpful rules of thumb towards the end. But the main contribution of the book is a perspective, synthesized from teaching experience, on good software design and how to achieve it.
 
 1. **Software design is about managing complexity.** Complexity is defined as anything that makes a program difficult to understand. Good software design becomes a purely conceptual activity. Good software design elegant like a good physical theory explaining a wide range of phenomena with few universal constants.
 
@@ -27,4 +27,4 @@ Some of these contradict other bits of advice floating around. For example, most
 
 ---
 
-[^3]: "Functions should not be 100 lines long. Functions should hardly ever be 20 lines long." - *Clean Code*, page 34
+[^3]: "Functions should not be 100 lines long. Functions should hardly ever be 20 lines long." - _Clean Code_, page 34

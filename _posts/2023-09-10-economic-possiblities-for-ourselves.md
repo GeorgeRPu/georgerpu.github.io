@@ -10,7 +10,7 @@ tags: economics
 citation: true
 ---
 
-In 1930, during the depths of the Great Depression, John Maynard Keynes wrote a famous essay ["Economic Possibilities for Our Grandchildren"](http://www.econ.yale.edu/smith/econ116a/keynes1.pdf) that took the long view of economic history. While large portions of the British and US populations were struggling to find work due to financial crisis, Keynes worried about *technological unemployment* and its impact on an unprepared society. Most of the essay is focused on the forthcoming social changes necessary to adapt to this problem.
+In 1930, during the depths of the Great Depression, John Maynard Keynes wrote a famous essay ["Economic Possibilities for Our Grandchildren"](http://www.econ.yale.edu/smith/econ116a/keynes1.pdf) that took the long view of economic history. While large portions of the British and US populations were struggling to find work due to financial crisis, Keynes worried about _technological unemployment_ and its impact on an unprepared society. Most of the essay is focused on the forthcoming social changes necessary to adapt to this problem.
 
 ## Predictions
 

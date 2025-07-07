@@ -29,16 +29,16 @@ The connecting peer sends a handshake message.
 
 Once both sides handshake, they begin sending regular messages. Their format is a 4-byte length not including itself, a 1-byte type, and a variable length payload. The file sharing protocol is tit-for-tat: the peers sending the most pieces are unchoked, while the remaining neighbors are choked (no pieces transferred). In addition to these, a random neighbor is optimistically unchoked periodically.
 
-| Message            | Payload                                                 | When sent                                                    |
-| ------------------ | ------------------------------------------------------- | ------------------------------------------------------------ |
-| 0 - choke          |                                                         | Periodically                                                 |
-| 1 - unchoke        |                                                         | Periodically                                                 |
-| 2 - interested     |                                                         | In response to have/bitfield if peer                      |
-| 3 - not interested |                                                         | Same as interested                                           |
-| 4 - have           | 32 bit index of piece just downloaded                   | To neighbors after downloading piece                         |
-| 5 - bitfield       | Bitarray of pieces the peer possesses                   | As first message                                             |
-| 6 - request        | 32 bit index of desired piece, begin and length offsets | In response to unchoke or piece                              |
-| 7 - piece          | 32 bit index of piece just sent, file piece             | In response to request; may be pipelined                     |
+| Message            | Payload                                                 | When sent                                                                                   |
+| ------------------ | ------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| 0 - choke          |                                                         | Periodically                                                                                |
+| 1 - unchoke        |                                                         | Periodically                                                                                |
+| 2 - interested     |                                                         | In response to have/bitfield if peer                                                        |
+| 3 - not interested |                                                         | Same as interested                                                                          |
+| 4 - have           | 32 bit index of piece just downloaded                   | To neighbors after downloading piece                                                        |
+| 5 - bitfield       | Bitarray of pieces the peer possesses                   | As first message                                                                            |
+| 6 - request        | 32 bit index of desired piece, begin and length offsets | In response to unchoke or piece                                                             |
+| 7 - piece          | 32 bit index of piece just sent, file piece             | In response to request; may be pipelined                                                    |
 | 8 - cancel         | same as request                                         | If downloading same piece from multiple peers, cancel other downloads after first completes |
 
 More details can be found at <https://www.bittorrent.org/beps/bep_0003.html>.
@@ -48,6 +48,7 @@ For the project, there are a few simplifications.
 1. **No torrents, no trackers**. The peers are started simultaneously with peer ID, hostname, and port information stored in a `PeerInfo.txt` file. The fourth field `hasFile` is 1 if the peer starts with the entire file and 0 otherwise. All peers connect and handshake with each other.
 
    The remaining configuration parameters—unchoking interval, optimistic unchoking interval, piece size—are stored in `Common.cfg` as `key=value` pairs on separate lines.
+
 2. **Request-piece**. Requests only has index as the payload. Only one piece is sent following a request. There is no cancel message.
 
 ## First Attempt
@@ -556,7 +557,7 @@ public class StartPeers {
 
 There are a number of problems with this first attempted implementation.
 
-1. **Peer**. The Peer class is nearly 400 lines with multiple methods ~50 lines. Worse, the Peer class has 3 inner classes that concurrently act on the peer's state. This results in a large number of ConcurrentHashMaps and [ConcurrentHashMap.newKeySet()](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html#newKeySet())'s. Un-thread-safe objects must be protected using `synchronized`. This is incredibly complicated and makes debugging/extending the existing Peer class difficult.
+1. **Peer**. The Peer class is nearly 400 lines with multiple methods ~50 lines. Worse, the Peer class has 3 inner classes that concurrently act on the peer's state. This results in a large number of ConcurrentHashMaps and [ConcurrentHashMap.newKeySet()](<https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html#newKeySet()>)'s. Un-thread-safe objects must be protected using `synchronized`. This is incredibly complicated and makes debugging/extending the existing Peer class difficult.
 2. **Message**. The Message class is longer than it needs to be. Notably, all the non-handshake messages share a common pattern: length prefix, type byte, and payload. Even the handshake message can be shoehorned into this tripartite format. A "length" prefix of P2PFILESHARINGPROJ, 10 empty type bytes, and a 4 byte payload of the peer ID. The Message class is littered with magic numbers. For example, the type codes $0, 1, \dots, 7$ appear multiple times instead of descriptive variable names.
 
 ### MessageType
@@ -959,7 +960,7 @@ public class Connection implements Runnable {
 We reimplement Attempt 2 in Python to see how code changes using a different language with different libraries and different customs. Some superficial (for our use case) differences are
 
 - the use of lowercase_snake_case instead of CamelCase
-- private methods are denoted by a leading _
+- private methods are denoted by a leading \_
 - type declaration are not required
 
 Typically, unimplemented functions are written as
@@ -1278,7 +1279,7 @@ Instead of a main function, Python scripts are executed top to bottom. This hold
 print(__name__)
 ```
 
- the output will be
+the output will be
 
 ```
 B

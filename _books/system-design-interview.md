@@ -13,16 +13,16 @@ stars: 4
 status: Finished
 ---
 
-*System Design Interview* is the resource for preparing for system design interviews. It was also the first resource for system design interviews, written by Xu after failing to find a satisfactory system design interview preparation resource for his own study. I cannot speak on its utility for system design interviews as I have not participated in many. However, I do believe that is an underrated resource for junior software engineers learning how to design software systems.
+_System Design Interview_ is the resource for preparing for system design interviews. It was also the first resource for system design interviews, written by Xu after failing to find a satisfactory system design interview preparation resource for his own study. I cannot speak on its utility for system design interviews as I have not participated in many. However, I do believe that is an underrated resource for junior software engineers learning how to design software systems.
 
-*System Design Interview* presents a 4 step framework for system design interviews.
+_System Design Interview_ presents a 4 step framework for system design interviews.
 
 1. Understand the problem and establish the design scope.
 2. Propose high-level design and get buy-in.
 3. Design deep-dive.
 4. Wrap-up.
 
-These match the steps of gathering requirements, high level design + review, low level design + review, and implementation when actually designing software. Thus, the 12 case studies in *System Design Interview* are also 12 examples of design documents. I especially like the case studies "Design Rate Limiter", "Design Consistent Hashing", and "Design Google Drive". Each case study has detailed but clear diagrams that make me feel like I can implement the system Xu has designed. Each chapter has links to learn more.
+These match the steps of gathering requirements, high level design + review, low level design + review, and implementation when actually designing software. Thus, the 12 case studies in _System Design Interview_ are also 12 examples of design documents. I especially like the case studies "Design Rate Limiter", "Design Consistent Hashing", and "Design Google Drive". Each case study has detailed but clear diagrams that make me feel like I can implement the system Xu has designed. Each chapter has links to learn more.
 
 I have a few qualms with the book.
 

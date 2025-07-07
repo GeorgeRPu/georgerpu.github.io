@@ -13,7 +13,7 @@ stars: 2
 status: Finished
 ---
 
-*Clean Code* is the pre-eminant book on programming, ranked first in many lists of the books every programmer should read. It is the [number one best seller on Amazon in the Software Design & Engineering](https://www.amazon.com/gp/bestsellers/books/491316/ref=zg_b_bs_491316_1) category yet has also received anti-recommendations in recent years by [bloggers](https://qntm.org/clean) and other [authors](https://web.stanford.edu/~ouster/cgi-bin/aposd2ndEdExtract.pdf). Given my current job as a software developer, I decided to read *Clean Code* to make my own opinion. I review each chapter individually.
+_Clean Code_ is the pre-eminant book on programming, ranked first in many lists of the books every programmer should read. It is the [number one best seller on Amazon in the Software Design & Engineering](https://www.amazon.com/gp/bestsellers/books/491316/ref=zg_b_bs_491316_1) category yet has also received anti-recommendations in recent years by [bloggers](https://qntm.org/clean) and other [authors](https://web.stanford.edu/~ouster/cgi-bin/aposd2ndEdExtract.pdf). Given my current job as a software developer, I decided to read _Clean Code_ to make my own opinion. I review each chapter individually.
 
 Certain chapters are written with/by other authors.
 
@@ -29,7 +29,7 @@ The second chapter can be summarized "don't make your names too long" and "don't
 
 The most opinionated rule in the whole book is
 
-> The first rule of functions should be small. The second rule is that *they should be smaller than that* [emphasis in original].
+> The first rule of functions should be small. The second rule is that _they should be smaller than that_ [emphasis in original].
 
 This makes no sense to me. Isn't extracting every few lines of code to a function is equivalent to commenting every few lines? Martin calls comments a necessary evil. Why should writing a psuedo-comment in a function name be considered a success? In my short career, I have read long classes filled with similarly named but slightly different methods like `render` in Listing 3-7. It is not a fun experience.
 
@@ -41,9 +41,9 @@ Otherwise, the advice in the chapter is good. The number of function arguments s
 
 Martin hates comments.
 
->  Comments are always failures
+> Comments are always failures
 
-(which negatively influences his philosophy around functions and classes). I mostly agree, mainly since old comments tend to linger in the code base, even if more for sociological reasons than practical ones.  Good comments are valuable though. I hope Martin's statements doesn't deter readers from attempting to write good comments.
+(which negatively influences his philosophy around functions and classes). I mostly agree, mainly since old comments tend to linger in the code base, even if more for sociological reasons than practical ones. Good comments are valuable though. I hope Martin's statements doesn't deter readers from attempting to write good comments.
 
 Martin's classification of good and bad comments looks good to me. His advice against HTML comments is out of date as IDES/editors render stylistic markings now when hovering over the documented entity.
 
@@ -62,7 +62,7 @@ Essentially, Martin argues that object oriented and procedural code are complime
 
 #### 7. Error Handling - Michael Feathers
 
-Overall, this chapter covers the basics of clean error handling in Java. The "Don't Pass Null" section hits on a core idea from [*A Philosophy of Software Design*](https://georgerpu.github.io/blog/2019/books/)—defining errors away. Adjusting code so that it never returns an error is the cleanest error handling.
+Overall, this chapter covers the basics of clean error handling in Java. The "Don't Pass Null" section hits on a core idea from [_A Philosophy of Software Design_](https://georgerpu.github.io/blog/2019/books/)—defining errors away. Adjusting code so that it never returns an error is the cleanest error handling.
 
 As for passing `null`s, the solution is better language design. Languages post 2008 often disallow ordinary objects from being `null`. Only nullable types can be `null`. The compiler can check whether nullable types are being assigned to non-nullable types and throw a compile time exception when there is a risk of a `NullPointerException`.
 
@@ -72,7 +72,7 @@ This chapter advocates wrapping external dependencies in a module `m`. Applicati
 
 #### 9. Unit Tests
 
-Martin advocates for test driven development (TDD) where tests are written first. Only after a test is written, the developer is allowed to write production code to make the test pass[^3].  Given that TDD is not widely practiced and that its efficacy at building better software is contested by [empirical](https://neverworkintheory.org/2012/01/25/realizing-quality-improvement-through-test-driven-development.html) [academic](https://neverworkintheory.org/2016/10/05/test-driven-development.html) [research](https://neverworkintheory.org/2021/09/16/analyzing-the-effects-of-tdd-in-github.html), TDD material probably should have been cut to keep the chapter relevant to as broad of an audience as possible.
+Martin advocates for test driven development (TDD) where tests are written first. Only after a test is written, the developer is allowed to write production code to make the test pass[^3]. Given that TDD is not widely practiced and that its efficacy at building better software is contested by [empirical](https://neverworkintheory.org/2012/01/25/realizing-quality-improvement-through-test-driven-development.html) [academic](https://neverworkintheory.org/2016/10/05/test-driven-development.html) [research](https://neverworkintheory.org/2021/09/16/analyzing-the-effects-of-tdd-in-github.html), TDD material probably should have been cut to keep the chapter relevant to as broad of an audience as possible.
 
 The chapter also gives the strange advice to invent a domain specific language just for testing. Personally, I prefer Listing 9-3—which the author calls bad—to Listing 9-4. The name `wayTooCold` is not a verb phrase; I find it hard to interpret the 5 character string representation of `hw`'s state.
 
@@ -120,7 +120,7 @@ Another chapter refactoring code. `SerialDate` is a class deep inside the no lon
 
 #### 17. Smells and Heuristics
 
-This is the best chapter in the book. It summarizes the content of all the previous chapters in $5 + 4 + 36 + 3 + 7 + 9 = 64$ principles. Some principles like *G4: Overridden Safeties* are mentioned in the rest of the book. After reading the entire book (minus the Appendix), I would recommend newbie programmers just read Chapter 17. Overall, the book isn't as bad as the naysayers claim, but there is questionable information. After reading Chapter 17, I would then recommend newbies read *A Philosophy of Software Design*.
+This is the best chapter in the book. It summarizes the content of all the previous chapters in $5 + 4 + 36 + 3 + 7 + 9 = 64$ principles. Some principles like _G4: Overridden Safeties_ are mentioned in the rest of the book. After reading the entire book (minus the Appendix), I would recommend newbie programmers just read Chapter 17. Overall, the book isn't as bad as the naysayers claim, but there is questionable information. After reading Chapter 17, I would then recommend newbies read _A Philosophy of Software Design_.
 
 ---
 

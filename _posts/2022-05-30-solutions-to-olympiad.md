@@ -77,13 +77,16 @@ F''(x) &= \sum_{n=2}^{\infty} f_n \frac{x^{n-2}}{(n - 2)!}
 $$
 
 We can reindex the bottom 2 sums by placing $n$ by $n + 1$ and $n + 2$ respectively.
+
 $$
 \begin{align*}
 F'(x) &= \sum_{n=0}^{\infty} f_{n+1} \frac{x^n}{n!} \\
 F''(x) &= \sum_{n=0}^{\infty} f_{n+2} \frac{x^n}{n!}
 \end{align*}
 $$
+
 Thus,
+
 $$
 F''(x) = \sum_{n=0}^{\infty} f_{n+2} \frac{x^n}{n!} = \sum_{n=0}^{\infty} (f_{n+1} + f_n) \frac{x^n}{n!} = F'(x) + F(x).
 $$

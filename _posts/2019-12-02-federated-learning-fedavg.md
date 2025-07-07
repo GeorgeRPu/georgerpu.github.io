@@ -9,7 +9,7 @@ toc:
   sidebar: left
 scholar:
   bibliography: 2019-12-02-federated-learning-fedavg.bib
-  bibliography_template: {{ reference }}
+  bibliography_template: { { reference } }
   group_by: none
 citation: true
 ---
@@ -27,6 +27,7 @@ $$
 Here $\ell(\hat{y}, y)$ is the per-example loss; it measures the difference between the label $y$ and the prediction $\hat{y}$. A **server** coordinates the learning process; it usually has no data of its own. The goal is to train a global model $f$ which minimizes the total loss $L = \sum_{k=1}^{K} L_k$. For now, we assume all models have the same architecture but different parameters.
 
 Let's look at some possible applications of federated learning.
+
 - **Word completion** {% cite mcmahan2017federated %}. Smartphone keyboards attempt to autocomplete words based on the characters typed. Each Android phone has its own record of typed characters and the finished word. Because pooling data from millions of phones is invasive and expensive, Google uses federated learning to learn a universal word prediction model.
 - **Illness prediction**. Hospitals are required by law to keep patient information private. However, a group of small hospitals want to use their collective data to train a neural network which can guess ailments based on symptoms. The hospitals decide to use federated learning to learn a collective model without sharing sensitive data.
 
@@ -99,7 +100,7 @@ $$
 \theta \gets \sum_{k=1}^{K} \left(\frac{\theta}{K} - \eta \nabla L_k(\theta)\right)
 $$
 
-Having the server update the parameters using the aggregated gradient is equivalent to the clients perform the update, then "averaging" the parameters on the server later. If the clients can perform multiple updates, then the server will need to average less frequently, reducing  communication costs.
+Having the server update the parameters using the aggregated gradient is equivalent to the clients perform the update, then "averaging" the parameters on the server later. If the clients can perform multiple updates, then the server will need to average less frequently, reducing communication costs.
 
 ```python
 rounds = # number of communication rounds
@@ -128,7 +129,7 @@ $$
 L\left(\frac{1}{K} \sum_{k=1}^{K} \theta_k\right) \not\leq L(\theta_j) \qquad 0 \leq j \leq K
 $$
 
-Training 2 neural networks from *different* initialized parameters demonstrates this. The averaged parameters do worse than before. However, this is not the case when training 2 neural networks from the *same* initialization. In fact, plotting the loss resulting from different weighted averages of the parameters reveals a nice U-shaped graph.
+Training 2 neural networks from _different_ initialized parameters demonstrates this. The averaged parameters do worse than before. However, this is not the case when training 2 neural networks from the _same_ initialization. In fact, plotting the loss resulting from different weighted averages of the parameters reveals a nice U-shaped graph.
 
 {% include figure.liquid path="assets/img/2019-12-02/convex-loss.png" class="img-fluid rounded z-depth-1" zoomable=true %}
 Figure 1 from {% cite mcmahan2017communication %}.

@@ -109,5 +109,5 @@ Some actors may sign contracts with studios to appear in a certain studio produc
 ---
 
 [^1]: Codd borrowed the term from mathematics. A relation is a subset of the Cartesian product $\prod_{\alpha \in A} X_\alpha$.
-[^2]: Some movies are remade with the same title. See *A Star is Born* ([1937](), [1954](), [1976](), [2018]())
+[^2]: Some movies are remade with the same title. See _A Star is Born_ ([1937](), [1954](), [1976](), [2018]())
 [^3]: Film making is an incredibly expensive craft. Blockbuster movies have budgets in the hundreds of millions. We can safely assume directors + studios can release at most 1 movie a year.

@@ -14,7 +14,7 @@ stars: 2
 status: Finished
 ---
 
-*This is China* is short book, 126 pages of content with medium sized font. It covers the history of China from the Xia dynasty[^1] to the present day. Since it is so short, not many words can be devoted to each period of Chinese history. Despite the title, *This is China* does not provide a detailed description of 5000 years of Chinese history. Instead, the book tries to portray long term historical trends and cultural achievements. On its own, I did not find *This is China* a compelling read. *This is China* would make a satisfactory history textbook for a high school or introductory college class.
+_This is China_ is short book, 126 pages of content with medium sized font. It covers the history of China from the Xia dynasty[^1] to the present day. Since it is so short, not many words can be devoted to each period of Chinese history. Despite the title, _This is China_ does not provide a detailed description of 5000 years of Chinese history. Instead, the book tries to portray long term historical trends and cultural achievements. On its own, I did not find _This is China_ a compelling read. _This is China_ would make a satisfactory history textbook for a high school or introductory college class.
 
 ---
 

@@ -448,6 +448,36 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the-anthroprocene-reviewed/";
+            },},{id: "books-abundance",
+          title: 'Abundance',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/abundance/";
+            },},{id: "books-foreverland",
+          title: 'Foreverland',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/foreverland/";
+            },},{id: "books-hidden-potential",
+          title: 'Hidden Potential',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/hidden-potential/";
+            },},{id: "books-machine-learning-system-design-interview",
+          title: 'Machine Learning System Design Interview',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/machine-learning-system-design-interview/";
+            },},{id: "books-a-self-portrait-in-black-and-white",
+          title: 'A Self Portrait in Black and White',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/self-portrait-in-black-and-white/";
+            },},{id: "books-the-war-of-art",
+          title: 'The War of Art',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/the-war-of-art/";
             },},{id: "news-communication-efficient-federated-learning-via-dataset-distillation-was-accepted-to-neurips-2020-spicyfl",
           title: 'Communication-efficient federated learning via dataset distillation was accepted to NeurIPS 2020 SpicyFL!',
           description: "",

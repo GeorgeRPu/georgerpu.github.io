@@ -478,6 +478,11 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the-war-of-art/";
+            },},{id: "books-why-we-39-re-polarized",
+          title: 'Why We&amp;#39;re Polarized',
+          description: "",
+          section: "Books",handler: () => {
+              window.location.href = "/books/why-we're-polarized/";
             },},{id: "news-communication-efficient-federated-learning-via-dataset-distillation-was-accepted-to-neurips-2020-spicyfl",
           title: 'Communication-efficient federated learning via dataset distillation was accepted to NeurIPS 2020 SpicyFL!',
           description: "",

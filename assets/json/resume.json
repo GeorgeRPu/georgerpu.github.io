@@ -176,7 +176,16 @@
     {
       "name": "AI/ML",
       "level": "",
-      "keywords": ["Agents", "LLM Evaluation", "Deep Learning", "Graph Neural Networks", "Prompt Engineering", "RAG", "Tabular Machine Learning", "Time Series Classification"]
+      "keywords": [
+        "Agents",
+        "LLM Evaluation",
+        "Deep Learning",
+        "Graph Neural Networks",
+        "Prompt Engineering",
+        "RAG",
+        "Tabular Machine Learning",
+        "Time Series Classification"
+      ]
     },
     {
       "name": "Cloud",

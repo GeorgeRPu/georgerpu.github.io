@@ -498,7 +498,12 @@ ninja.data = [{
           section: "News",},{id: "news-i-am-now-an-applied-scientist-ii-as-ii-at-amazon-this-has-been-a-longstanding-dream-of-mine-and-i-am-so-excited-that-this-could-happen-i-would-like-to-express-my-gratitude-to-the-mentors-and-managers-who-have-guided-and-sponsored-me-without-whom-this-would-not-have-been-possible",
           title: 'I am now an Applied Scientist II (AS II) at Amazon! This has...',
           description: "",
-          section: "News",},{id: "projects-dizviz",
+          section: "News",},{id: "projects-project-10",
+          title: 'project 10',
+          description: "A project with an introduction section",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/10_project/";
+            },},{id: "projects-dizviz",
           title: 'DizViz',
           description: "Virtual reality for first responders",
           section: "Projects",handler: () => {

@@ -1,9 +1,9 @@
 ---
 layout: page
 title: Tech Interview Prep
-description: Catalog of technical interview questions and solutions.
+description: Leetcode style interview questions and solutions. Like Neetcode, but worse.
 img:
 redirect: https://georgerpu.github.io/tech-interview-prep/
-category: fun
+category: educational
 importance: 5
 ---

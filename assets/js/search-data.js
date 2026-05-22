@@ -498,16 +498,21 @@ ninja.data = [{
           section: "News",},{id: "news-i-am-now-an-applied-scientist-ii-as-ii-at-amazon-this-has-been-a-longstanding-dream-of-mine-and-i-am-so-excited-that-this-could-happen-i-would-like-to-express-my-gratitude-to-the-mentors-and-managers-who-have-guided-and-sponsored-me-without-whom-this-would-not-have-been-possible",
           title: 'I am now an Applied Scientist II (AS II) at Amazon! This has...',
           description: "",
-          section: "News",},{id: "projects-project-10",
-          title: 'project 10',
-          description: "A project with an introduction section",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/10_project/";
-            },},{id: "projects-dizviz",
+          section: "News",},{id: "projects-dizviz",
           title: 'DizViz',
           description: "Virtual reality for first responders",
           section: "Projects",handler: () => {
               window.location.href = "/projects/dizviz/";
+            },},{id: "projects-the-missing-semester-of-your-ml-education",
+          title: 'The Missing Semester of Your ML Education',
+          description: "Classes and online courses teach you ML theory and how to train different kinds of models, but there&#39;s a whole set of practical skills that are rarely covered: exploratory data analysis, ML system design, ML ops, and more. This website aims to fill that gap, modeled after MIT&#39;s Missing Semester (https://missing.csail.mit.edu/).",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/missing-semester-ml/";
+            },},{id: "projects-ml-interview-prep",
+          title: 'ML Interview Prep',
+          description: "One stop shop for machine learning roles in industry (ML Engineer, Data Scientist, Research Engineer) to prepare for interviews, including ML specific coding, ML breadth, and ML system design questions, and behavioral questions.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/ml-interview-prep/";
             },},{id: "projects-opendoors",
           title: 'OpenDoors',
           description: "Indoor navigation for the visually impaired",
@@ -515,7 +520,7 @@ ninja.data = [{
               window.location.href = "/projects/opendoors/";
             },},{id: "projects-tech-interview-prep",
           title: 'Tech Interview Prep',
-          description: "Catalog of technical interview questions and solutions.",
+          description: "Leetcode style interview questions and solutions.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/tech-interview-prep/";
             },},{id: "projects-text-style-transfer",

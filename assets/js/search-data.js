@@ -505,12 +505,12 @@ ninja.data = [{
               window.location.href = "/projects/dizviz/";
             },},{id: "projects-the-missing-semester-of-your-ml-education",
           title: 'The Missing Semester of Your ML Education',
-          description: "Classes and online courses teach you ML theory and how to train different kinds of models, but there&#39;s a whole set of practical skills that are rarely covered: exploratory data analysis, ML system design, ML ops, and more. This website aims to fill that gap, modeled after MIT&#39;s Missing Semester (https://missing.csail.mit.edu/).",
+          description: "Machine learning classes in university curriculums and online emphasize theory and the algorithms behind different models but many essential skills that are rarely covered: understanding your data, organizing experiments, debugging models, evaluations beyond accuracy, and how to ship models. These skills are essential for building models that work in the real world and not just on toy datasets.This website aims to remedy that gap by covering all the topics crucial to being an effective ML practiioner, and which I wish were explicitly taught to me when I first learned ML. The course is modeled after MIT’s Missing Semester. (https://missing.csail.mit.edu/).",
           section: "Projects",handler: () => {
               window.location.href = "/projects/missing-semester-ml/";
             },},{id: "projects-ml-interview-prep",
           title: 'ML Interview Prep',
-          description: "One stop shop for machine learning roles in industry (ML Engineer, Data Scientist, Research Engineer) to prepare for interviews, including ML specific coding, ML breadth, and ML system design questions, and behavioral questions.",
+          description: "One-stop shop to prepare for machine learning interviews, including ML specific coding, ML breadth, and ML system design questions.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/ml-interview-prep/";
             },},{id: "projects-opendoors",
@@ -520,7 +520,7 @@ ninja.data = [{
               window.location.href = "/projects/opendoors/";
             },},{id: "projects-tech-interview-prep",
           title: 'Tech Interview Prep',
-          description: "Leetcode style interview questions and solutions.",
+          description: "Leetcode style interview questions and solutions. Like Neetcode, but worse.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/tech-interview-prep/";
             },},{id: "projects-text-style-transfer",

@@ -532,7 +532,7 @@ ninja.data = [{
               window.location.href = "/projects/dizviz/";
             },},{id: "projects-the-missing-semester-of-your-ml-education",
           title: 'The Missing Semester of Your ML Education',
-          description: "Machine learning classes in university curriculums and online emphasize theory and the algorithms behind different models but many essential skills that are rarely covered: understanding your data, organizing experiments, debugging models, evaluations beyond accuracy, and how to ship models. These skills are essential for building models that work in the real world and not just on toy datasets.This website aims to remedy that gap by covering all the topics crucial to being an effective ML practiioner, and which I wish were explicitly taught to me when I first learned ML. The course is modeled after MIT’s Missing Semester. (https://missing.csail.mit.edu/).",
+          description: "Machine learning classes emphasize theory and the algorithms behind different models but many essential skills that are rarely covered. This website aims to remedy that gap by covering all the topics which I wish were explicitly taught when I first learned ML.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/missing-semester-ml/";
             },},{id: "projects-ml-interview-prep",

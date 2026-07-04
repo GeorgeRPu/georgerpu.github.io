@@ -58,7 +58,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/books/";
           },
-        },{id: "post-2024-in-books",
+        },{id: "post-2024-in-film",
+      
+        title: "2024 in Film",
+      
+      description: "All the movies I watched in 2024",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/film/";
+        
+      },
+    },{id: "post-2024-in-books",
       
         title: "2024 in Books",
       
@@ -67,6 +78,17 @@ ninja.data = [{
       handler: () => {
         
           window.location.href = "/blog/2024/books/";
+        
+      },
+    },{id: "post-aws-networking-basics",
+      
+        title: "AWS Networking Basics",
+      
+      description: "With AWS CDK Examples",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/aws-networking/";
         
       },
     },{id: "post-the-inflection-point-of-the-exponential-function",
@@ -498,7 +520,12 @@ ninja.data = [{
           section: "News",},{id: "news-i-am-now-an-applied-scientist-ii-as-ii-at-amazon-this-has-been-a-longstanding-dream-of-mine-and-i-am-so-excited-that-this-could-happen-i-would-like-to-express-my-gratitude-to-the-mentors-and-managers-who-have-guided-and-sponsored-me-without-whom-this-would-not-have-been-possible",
           title: 'I am now an Applied Scientist II (AS II) at Amazon! This has...',
           description: "",
-          section: "News",},{id: "projects-dizviz",
+          section: "News",},{id: "projects-above-500",
+          title: 'Above .500',
+          description: "A FiveThirtyEight-style home for sports models.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/above-five-hundred/";
+            },},{id: "projects-dizviz",
           title: 'DizViz',
           description: "Virtual reality for first responders",
           section: "Projects",handler: () => {
@@ -518,6 +545,11 @@ ninja.data = [{
           description: "Indoor navigation for the visually impaired",
           section: "Projects",handler: () => {
               window.location.href = "/projects/opendoors/";
+            },},{id: "projects-should-i-become",
+          title: 'Should I Become...?',
+          description: "Career comparison tool that calculates how soon each profession reaches financial independence (FIRE).",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/should-i-become/";
             },},{id: "projects-tech-interview-prep",
           title: 'Tech Interview Prep',
           description: "Leetcode style interview questions and solutions. Like Neetcode, but worse.",

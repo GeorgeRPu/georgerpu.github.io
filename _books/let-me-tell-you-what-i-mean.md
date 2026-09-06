@@ -25,7 +25,7 @@ she would later write in _Pacific Distances_ in _After Henry_. Despite her insec
 
 > In many ways
 >
-> I stole the title not only because the worlds sounded right but because they seemed to sum up, in a no-nonsense, kind of way all I have to tell you.
+> I stole the title not only because the words sounded right but because they seemed to sum up, in a no-nonsense, kind of way all I have to tell you.
 >
 > In short
 >
@@ -37,7 +37,7 @@ she would later write in _Pacific Distances_ in _After Henry_. Despite her insec
 
 At the end, like many Didion essays, she has one more punch, a final idea she wants to stick in your head. Writing is a process of discovery, powered by a deep impulse to construct meaning and impose narrative on experience. We tell ourselves stories in order to live.
 
-I don't think _Let Me Tell You What I Mean_ is Didion's best work. That title has claimed long ago by either _Slouching Towards Bethlehem_ or _The White Album_ although my favorite is _After Henry_, specifically the opening elegy for longtime editor Henry Robbins. But it is a good work, buoyed by the large number of essays from 1960s when Didion was, frankly, better. It is an essential work that every Didion fan should own.
+I don't think _Let Me Tell You What I Mean_ is Didion's best work. That title has been claimed long ago by either _Slouching Towards Bethlehem_ or _The White Album_ (although my favorite is _After Henry_), specifically the opening elegy for longtime editor Henry Robbins. But it is a good work, buoyed by the large number of essays from 1960s when Didion was, frankly, better. It is an essential work that every Didion fan should own.
 
 ---
 

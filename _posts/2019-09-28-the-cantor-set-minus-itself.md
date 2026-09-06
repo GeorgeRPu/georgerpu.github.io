@@ -2,7 +2,7 @@
 layout: post
 title: "The Cantor Set Minus Itself"
 date: 2019-09-28
-description: "A proof of that the Cantor Set minus itself is [0, 1]"
+description: "A proof that the Cantor Set minus itself is [0, 1]"
 giscus_comments: true
 toc:
   sidebar: left
@@ -49,7 +49,7 @@ $$
 
 So how do we prove that $C + C = [0, 2]$? The key is in alternate construction of the Cantor set. Write every real number in $[0, 1]$ as its ternary expansion $0.x_1x_2x_3\dots$ where $x_n = 0, 1, 2$. Note that this expansion is not unique. Similar to how $0.\bar{9}_{10} = 1$, so too does $0.\bar{2}_3 = 1$ (from now on, all number are in base 3). By removing the middle third of $[0, 1]$, we remove the numbers between $0.1$ and $0.2 = 0.\bar{1}$. These numbers all have a $1$ in the $x_1$ position. Repeating ad infinitum, we see that the Cantor set consists only of numbers whose ternary expansion does not include a $1$.
 
-Finally, we ready for the proof. Let $z \in [-1, 1]$.
+We are ready for the proof. Let $z \in [-1, 1]$.
 
 $$
 z = \pm 0.z_1z_2z_3\dots

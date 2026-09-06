@@ -10,7 +10,7 @@ tags: writing
 citation: true
 ---
 
-Four years ago, I published [my first blog post](https://georgerpu.github.io/blog/2019/the-cantor-set-minus-itself/). It was a simple proof that $C - C = [0, 1]$ where $C$ is the Cantor set. Since then I have published over a dozen posts about mostly mathematics and programming, but also the [book's I've read](https://georgerpu.github.io/blog/tag/reading/) and [economics](https://georgerpu.github.io/blog/2023/economic-possiblities-for-ourselves/). Blogging has been my most consistent[^1] side project or hobby in the past 4 years.
+Four years ago, I published [my first blog post](https://georgerpu.github.io/blog/2019/the-cantor-set-minus-itself/). It was a simple proof that $C - C = [0, 1]$ where $C$ is the Cantor set. Since then I have published over a dozen posts about mostly mathematics and programming, but also the [books I've read](https://georgerpu.github.io/blog/tag/books/) and [economics](https://georgerpu.github.io/blog/2023/economic-possibilities-for-ourselves/). Blogging has been my most consistent[^1] side project or hobby in the past 4 years.
 
 I started blogging because many of the AI researchers I looked up to had blogs. Blogging was a way to, dare I say, promote myself. Most of my early posts were related to the AI research I was doing while still an undergraduate. I switched from other themes to my current theme [al-folio](https://github.com/alshedivat/al-folio), designed for academics. I am not sure if this strategy ever worked. I still haven't setup any analytics to track blog viewership. Very quickly, my blog topics diversified. Blogging became an excuse to learn things well, as I would need to write about them. Blogging is also a way to publish my thoughts and opinions, not just factual information. I continue to blog for these reasons, but most of all, I blog because I find it fun.
 
@@ -25,7 +25,7 @@ As for me, I have tried posting once every 2 months, 6 times a year, for the pas
 
 ## My Favorite Posts That I Wrote
 
-1. <https://georgerpu.github.io/blog/2023/economic-possiblities-for-ourselves/>
+1. <https://georgerpu.github.io/blog/2023/economic-possibilities-for-ourselves/>
 2. <https://georgerpu.github.io/blog/2022/federated-learning-beyond/>
 3. <https://georgerpu.github.io/blog/2020/crdt/>
 4. <https://georgerpu.github.io/blog/2021/floc/>

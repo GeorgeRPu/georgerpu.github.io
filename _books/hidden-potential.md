@@ -13,7 +13,7 @@ stars: 4
 status: Finished
 ---
 
-I have always been a skeptical of self-help books. What could a self-help book tell you besides the obvious? Work hard, don’t procrastinate, save for retirement—I didn’t need to buy a book to know these things. For most people, the hard part of self-improvement isn’t in what-to-do but the follow-through[^c]. When I saw _Hidden Potential_ prominently displayed in an airport bookshop, my first instinct was to dismiss it, but, for whatever reason, my gaze lingered. I saw an endorsement from Serena Williams.
+I have always been skeptical of self-help books. What could a self-help book tell you besides the obvious? Work hard, don’t procrastinate, save for retirement—I didn’t need to buy a book to know these things. For most people, the hard part of self-improvement isn’t in what-to-do but the follow-through[^c]. When I saw _Hidden Potential_ prominently displayed in an airport bookshop, my first instinct was to dismiss it, but, for whatever reason, my gaze lingered. I saw an endorsement from Serena Williams.
 
 > This brilliant book will shatter your assumptions about what it takes to improve and succeed. I wish I could go back in time and gift it to my younger self. It would’ve helped me find a more joyful path to progress.
 

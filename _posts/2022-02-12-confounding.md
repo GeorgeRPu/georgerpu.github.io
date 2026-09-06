@@ -2,7 +2,7 @@
 layout: post
 title: "How To Control For Confounding Variables"
 date: 2022-02-12
-description: "Seperating signal from noise"
+description: "Separating signal from noise"
 giscus_comments: true
 mermaid:
   enabled: true
@@ -15,11 +15,11 @@ citation: true
 
 The goal of any science is to rigorously determine causal relationships between variables. In many sciences, usually social sciences, this is very difficult due to the high number of variables. Psychology studies the human mind—the most complex physical system in the universe—whose activity is determined by the interactions of 100 billion neurons. Economics and political science and sociology study the interactions of millions of irrational actors called humans.
 
-**Example** (Tutoring). Suppose we want to investigate the impact of tutoring on high school grades. We collect data by surveying students the amount of after school tutoring they receive and their report cards. Plotting the data shows a clear linear trend; grades are proportional to tutoring hours. However, there are alternative explanations for this pattern. Wealthier households can pay for more tutoring but also reside in wealthier neighborhoods with more school.
+**Example** (Tutoring). Suppose we want to investigate the impact of tutoring on high school grades. We collect data by surveying students the amount of after school tutoring they receive and their report cards. Plotting the data shows a clear linear trend; grades are proportional to tutoring hours. However, there are alternative explanations for this pattern. Wealthier households can pay for more tutoring but also reside in wealthier neighborhoods with better schools.
 
-**Example** (Cancer). Suppose we want to investigate the impact of eating 30g of fiber per day on colon cancer. We collect data by surveying adults 60 and older their average daily fiber intake and whether they have colon cancer. Fitting a logistic regression to the data shows that the probability of colon cancer decreases with the consumption of fiber. However, there are altnerative explanations for this pattern. Healthier individuals often have a diet richer in fiber. Their overall better health may be preventing colon cancer.
+**Example** (Cancer). Suppose we want to investigate the impact of eating 30g of fiber per day on colon cancer. We collect data by surveying adults 60 and older their average daily fiber intake and whether they have colon cancer. Fitting a logistic regression to the data shows that the probability of colon cancer decreases with the consumption of fiber. However, there are alternative explanations for this pattern. Healthier individuals often have a diet richer in fiber. Their overall better health may be preventing colon cancer.
 
-Variables like household wealth are called **confounders**. More formally, a variable $Z$ (household wealth, health) is confounding if it casually influences the **independent variable** $X$ (tutoring, fiber intake) and the **dependent variable** $Y$ (high school grades, cancer rates). Confounders muddle the true relationship between $X$ and $Y$. Hence the quote
+Variables like household wealth are called **confounders**. More formally, a variable $Z$ (household wealth, health) is confounding if it causally influences the **independent variable** $X$ (tutoring, fiber intake) and the **dependent variable** $Y$ (high school grades, cancer rates). Confounders muddle the true relationship between $X$ and $Y$. Hence the quote
 
 > Correlation does not equal causation.
 
@@ -56,7 +56,7 @@ Often, controlled experiments are unethical or impractical. In an **observation 
 
 ### Stratification
 
-**Stratification** is like a post-experiment matching. Subjects with similar confounding variable values $Z$ are grouped into strata. Any differences of the dependent variable $Y$ within strata are can attributed due to the independent variable $X$ alone. Similar to matching, stratification cannot account for unknown confounding variables. Moreover, as the number of confounding variables increases, the number of strata needed increases exponentially.
+**Stratification** is like a post-experiment matching. Subjects with similar confounding variable values $Z$ are grouped into strata. Any differences of the dependent variable $Y$ within strata can be attributed to the independent variable $X$ alone. Similar to matching, stratification cannot account for unknown confounding variables. Moreover, as the number of confounding variables increases, the number of strata needed increases exponentially.
 
 **Example** (Tutoring). After surveying data from 1000 students, we break them into 10 household income buckets. Students are placed in each bucket based on their household income.
 
@@ -80,9 +80,9 @@ Compared to stratification which exponentially increases the number of strata as
 
 ## Propensity Score Matching
 
-A **propensity score** is the probability of a subject being in the treatment group given the background characteristics $\Pr(X = 1 \mid Z = z)$. We can fit a model that estimates propensity scores based any confounding variables. Each subject who received the treatment is matched to a subject who received the comparator with an equivalent propensity score.
+A **propensity score** is the probability of a subject being in the treatment group given the background characteristics $\Pr(X = 1 \mid Z = z)$. We can fit a model that estimates propensity scores based on any confounding variables. Each subject who received the treatment is matched to a subject who received the comparator with an equivalent propensity score.
 
-Because propensity scores combine multiple confounders into a single summary score, these methods are preferred when the treatment of interest is common and outcome of interest are rare, a setting where multivariable outcome models are susceptible to overfitting.
+Because propensity scores combine multiple confounders into a single summary score, these methods are preferred when the treatment of interest is common and outcomes of interest are rare, a setting where multivariable outcome models are susceptible to overfitting.
 
 **Example** (Tutoring). We fit a linear regression model that estimates tutoring hours based on household income and other variables like parent education to our survey data. We match students who have high tutoring hours with students who have low tutoring hours but equal propensity score.
 

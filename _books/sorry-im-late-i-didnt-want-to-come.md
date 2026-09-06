@@ -21,7 +21,7 @@ At the beginning of the book, Pan has the same mentality. Then, her friends move
 
 > I finally found them. Here they all are. Just kidding, they’ve always been easy to find. They’re so loud.
 
-Each of these activities is its own chapter. I found the first half of the book super engaging, listening to Pan overcome her extreme shyness, she once cried at her own surprise birthday party because there was too many people, to end up striking up a conversation with an elderly French man. The second half of the book was less interesting. There are 3 chapters about standup comedy. Despite Pan trying to spin the tale otherwise, I am not convinced Pan enjoyed her trip to Portugal to try psychedelics.
+Each of these activities is its own chapter. I found the first half of the book super engaging, listening to Pan overcome her extreme shyness, she once cried at her own surprise birthday party because there were too many people, to end up striking up a conversation with an elderly French man. The second half of the book was less interesting. There are 3 chapters about standup comedy. Despite Pan trying to spin the tale otherwise, I am not convinced Pan enjoyed her trip to Portugal to try psychedelics.
 
 The book has so many takeaways about social relations. Listing them all is beyond the scope of this post. But _Sorry I'm Late, I Didn't Want to Come_ had 2 philosophical takeaways that I wanted to write down:
 

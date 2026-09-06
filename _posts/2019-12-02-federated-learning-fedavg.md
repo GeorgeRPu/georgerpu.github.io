@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Federated Learning: FedAvg (1/4)"
-date: 2019-09-28
+date: 2019-12-02
 description: "An introduction to federated learning"
 giscus_comments: true
 tags: artificial-intelligence
@@ -100,7 +100,12 @@ $$
 \theta \gets \sum_{k=1}^{K} \left(\frac{\theta}{K} - \eta \nabla L_k(\theta)\right)
 $$
 
-Having the server update the parameters using the aggregated gradient is equivalent to the clients perform the update, then "averaging" the parameters on the server later. If the clients can perform multiple updates, then the server will need to average less frequently, reducing communication costs.
+Having the server update the parameters using the aggregated gradient is equivalent to:
+
+1. the clients performing the update,
+2. then "averaging" the parameters on the server later.
+
+If the clients can perform multiple updates, then the server will need to average less frequently, reducing communication costs.
 
 ```python
 rounds = # number of communication rounds
@@ -136,7 +141,7 @@ Figure 1 from {% cite mcmahan2017communication %}.
 
 ## Limitations
 
-FedAvg works well when the client datasets are IID—identically and independently—distributed {% cite mcmahan2017communication %}. (Note that the accuracy figures are made monotonic. If $a_1, a_2, \dots$ are the actual accuracies, then the plotted value at time $t$ is $\max_{s \leq t}(a_s)$.) Returning to the Illness Prediction example, the hospital's dataset would be IID if all contained the same types of diagnoses. So hospital A's dataset cannot consist of mostly flu examples while hospital B has low amounts of flu cases. However, when data is non-IID, it's performance suffers. In particular, actual accuracy can vary wildly between communication rounds.
+FedAvg works well when the client datasets are IID—identically and independently—distributed {% cite mcmahan2017communication %}. (Note that the accuracy figures are made monotonic. If $a_1, a_2, \dots$ are the actual accuracies, then the plotted value at time $t$ is $\max_{s \leq t}(a_s)$.) Returning to the Illness Prediction example, the hospital's dataset would be IID if all contained the same types of diagnoses. So hospital A's dataset cannot consist of mostly flu examples while hospital B has low amounts of flu cases. However, when data is non-IID, its performance suffers. In particular, actual accuracy can vary wildly between communication rounds.
 
 Another issue is the number of hyperparameters to manage. There is the proportion of clients which participate each round $C$, the number of epochs $E$, and the batch size $B$. While moderate values of each do fine ($C \approx 0.1, E \approx 5, B \approx 10$), there is a complex interplay between them.
 

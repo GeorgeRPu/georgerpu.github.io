@@ -19,7 +19,7 @@ _Wages of Destruction_ is an incredibly dense and long book about the German eco
 - Did Hitler help Germany exit the Great Depression?
 - Why did Hitler go to war in 1939 with Western Europe?
 - Why was Germany so successful in 1940-1941?
-- How was Germany able to surivive another 3.5 years after the failure of December 1941?
+- How was Germany able to survive another 3.5 years after the failure of December 1941?
 - Why dedicate valuable resources to genocide?
 - How effective was Anglo-American bombing of German industry and cities?
 

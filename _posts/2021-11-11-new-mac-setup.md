@@ -58,7 +58,7 @@ brew install --cask github
 
 ## Java
 
-Maybe the popular programming language for individuals and enterprises.
+Maybe the most popular programming language for individuals and enterprises.
 
 Install using Homebrew.
 
@@ -158,7 +158,7 @@ brew install --cask iterm2
 
 ### Monitor Control
 
-Allow you to control the brightness of external monitors using the brightness keys on your keyboard or a brightness slider in the menu bar.
+Allows you to control the brightness of external monitors using the brightness keys on your keyboard or a brightness slider in the menu bar.
 
 Install using Homebrew.
 

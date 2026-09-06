@@ -6,7 +6,7 @@ description: "Tips from a 2-time SwampHacks winner"
 giscus_comments: true
 toc:
   sidebar: left
-tag: programming
+tags: programming
 citation: true
 ---
 
@@ -16,7 +16,7 @@ The main event at a hackathon, however, is the hacking: you have 24/36/48 hours 
 
 ## 1. Find a Diverse Team
 
-Hackathons allow teams of up to 4 when submitting projects; your team should have at least 3 members. Judges do not take team size into consideration when evaluating presentations, and prizes are per person. More importantly, the skillset of each team member should be disjoint. There is no point having two web developers, mobile developers, or machine learning (ML) practitioners. Dividing tasks is difficult, especially when there is no existing structure. Doubling up on one skill means missing out on another crucial skills.
+Hackathons allow teams of up to 4 when submitting projects; your team should have at least 3 members. Judges do not take team size into consideration when evaluating presentations, and prizes are per person. More importantly, the skillset of each team member should be disjoint. There is no point having two web developers, mobile developers, or machine learning (ML) practitioners. Dividing tasks is difficult, especially when there is no existing structure. Doubling up on one skill means missing out on another crucial skill.
 
 The best way to find a diverse team at a hackathon is to make one beforehand. However, it is definitely possible to build balanced teams during the event. Most hackathons use a Slack workspace to communicate, with a dedicated channel for team building. There will be requests for people with specific skills.
 
@@ -24,7 +24,7 @@ The best way to find a diverse team at a hackathon is to make one beforehand. Ho
 
 ## 2. Come Up With a Strong Concept
 
-The most crucial element to winning any prize is the strength of your idea. There is no point building beautiful, sophisticated, fast application that provides no user benefit or duplicates an existing product. It is critical that the idea of your project is stronger than your execution. Judges are sympathetic to the fact that 24/36/48 hours is not enough time to build a fully realized application. They are much harsher on poorly conceived projects.
+The most crucial element to winning any prize is the strength of your idea. There is no point building a beautiful, sophisticated, fast application that provides no user benefit or duplicates an existing product. It is critical that the idea of your project is stronger than your execution. Judges are sympathetic to the fact that 24/36/48 hours is not enough time to build a fully realized application. They are much harsher on poorly conceived projects.
 
 Spend at least a few hours thinking about your idea, but no more than 33% of the entire duration. Any later risks not having enough time to build anything meaningful. Use prizes as inspiration. If you need to tackle a specific problem, think of a technological solution. If there are technology requirements, think of what it might let you build. Your project should target several prizes to optimize your odds of winning.
 
@@ -32,7 +32,7 @@ Spend at least a few hours thinking about your idea, but no more than 33% of the
 
 ## 3. Build a Compelling Demo
 
-While it is not necessary to build a fully flushed out demo, you should implement the core functionality. There should be enough features that judges can envision the production-ready application: how a user would interact with it, how it would convenience user's lives, how it could positively impact society. The demo should be impressive, flashy even.
+While it is not necessary to build a fully flushed out demo, you should implement the core functionality. There should be enough features that judges can envision the production-ready application: how a user would interact with it, how it would convenience users' lives, how it could positively impact society. The demo should be impressive, flashy even.
 
 > At SwampHacks IV, we built an [Android app](https://devpost.com/software/opendoors) that would buzz if the camera was pointed at a door. There was a noticeable delay between pointing the camera and the phone buzzing. The classification was only 70% reliable. However, it was easy to overlook these flaws. Judges even offered their own suggestions such as buzzing more frequently the closer the door.
 

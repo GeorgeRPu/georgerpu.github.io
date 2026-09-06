@@ -35,11 +35,11 @@ Only one of these predictions has been met.
 
 ## What Happened?
 
-Keynes accurately predicted the degree of economic growth over the coming century. Why did the other predictions—about changes to society—provide inaccurate? For that answer, we need to turn from economics to sociology, politics, and history.
+Keynes accurately predicted the degree of economic growth over the coming century. Why did the other predictions—about changes to society—prove inaccurate? For that answer, we need to turn from economics to sociology, politics, and history.
 
 ### Prediction 2
 
-The struggle of sustenance, i.e. poverty, has remained in the lives of those in advanced economies. In fact, [the poverty rate is decoupled from GDP growth](https://www.nytimes.com/2014/06/05/upshot/growth-has-been-good-for-decades-so-why-hasnt-poverty-declined.html). The US poverty rate has oscillated between 10% to 15% for decades, with only 1 big reduction due to the Great Society programs of the 1960s. Keynes' assumption that GDP growth therefore less poverty is false.
+The struggle of sustenance, i.e. poverty, has remained in the lives of those in advanced economies. In fact, [the poverty rate is decoupled from GDP growth](https://www.nytimes.com/2014/06/05/upshot/growth-has-been-good-for-decades-so-why-hasnt-poverty-declined.html). The US poverty rate has oscillated between 10% and 15% for decades, with only 1 big reduction due to the Great Society programs of the 1960s. Keynes' assumption "GDP growth therefore less poverty" is false.
 
 {% include figure.liquid path="assets/img/2023-09-10/us-poverty-rate.png" class="img-fluid" %}
 
@@ -59,7 +59,7 @@ Economic growth has made the elimination of poverty possible or near possible. T
 
 ### Prediction 3
 
-Working hours and economic growth are not correlated. Higher productivity only makes lower working hours possible, by reducing the minimum number of working hours needs to produce at subsistence level, not inevitable. Previous economic transformations have caused working hours to increase, not decrease.
+Working hours and economic growth are not correlated. Higher productivity only makes lower working hours possible, by reducing the minimum number of working hours needed to produce at subsistence level, not inevitable. Previous economic transformations have caused working hours to increase, not decrease.
 
 Working hours in the factories of the early Industrial Revolution were much higher than on farms. It was not uncommon for factory workers to participate in 80-100 hour work weeks spread across >5 days. [In medieval Europe, peasants worked only during the growing season in the Spring, Summer, and Fall but intensely: 120 12 hour days a year for a probable total of 1,440 hours annually](https://groups.csail.mit.edu/mac/users/rauch/worktime/hours_workweek.html). Farm and factory work are very different but [artisans, which factories replaced, only worked 8-9 hours per day for <2/3 of the year](https://groups.csail.mit.edu/mac/users/rauch/worktime/hours_workweek.html).
 Thus, the 40 hour workweek is merely a return to the labor norms of the medieval era. However, [the Agricultural Revolution, the greatest economic advance before the Industrial Revolution, itself caused working hours to increase from hunter-gatherer societies](https://www.nature.com/articles/s41562-019-0610-x). Thus, despite the scientific and technological advances of the past 12,000 years, the average person in modern society has less leisure time than their Stone Age ancestors[^2].
@@ -74,7 +74,7 @@ Given that Predictions 2 and 3 have not come true, Keynes' cultural prediction c
 
 > But beware! The time for all this is not yet. For at least another hundred years we must pretend to ourselves and to every one that fair is foul and foul is fair; for foul is useful and fair is not. Avarice and usury and precaution must be our gods for a little longer still. For only they can lead us out of the tunnel of economic necessity into daylight.
 
-In the US, since ~1980[^3] there has been a disturbing trend towards greater works. The centrality of work in people's lives rose in the late 20th century as social capital and organized religion declined. The decline left a void that work stepped in to fill. [Americans view work as more essential to a fulfilling life than romantic relationships or having children](https://www.pewresearch.org/short-reads/2020/02/14/more-than-half-of-americans-say-marriage-is-important-but-not-essential-to-leading-a-fulfilling-life/). [American parents want these same things for their children](https://www.pewresearch.org/social-trends/2023/01/24/parenting-in-america-today/?te=1&nl=ross-douthat&emc=edit_rd_20230130). Richer Americans work more than poorer Americans.
+In the US, since ~1980[^3] there has been a disturbing trend towards more work. The centrality of work in people's lives rose in the late 20th century as social capital and organized religion declined. The decline left a void that work stepped in to fill. [Americans view work as more essential to a fulfilling life than romantic relationships or having children](https://www.pewresearch.org/short-reads/2020/02/14/more-than-half-of-americans-say-marriage-is-important-but-not-essential-to-leading-a-fulfilling-life/). [American parents want these same things for their children](https://www.pewresearch.org/social-trends/2023/01/24/parenting-in-america-today/?te=1&nl=ross-douthat&emc=edit_rd_20230130). Richer Americans work more than poorer Americans.
 
 This is irrational. [Research in the social sciences indicates that relationships are the most important factor in life satisfaction](https://community.thriveglobal.com/relationships-happiness-well-being-life-lessons/). Although there doesn't appear to be any primacy placed on romantic relationships over friendships or familial bonds, Americans aren't valuing those either.
 
@@ -93,7 +93,7 @@ Increases to worker productivity have made the end of poverty and sub 40 hour wo
 - The nearly 1 trillion dollar US defense budget comes at the cost of greater social spending. [A fraction of that could eliminate poverty in the US](https://prospect.org/power/much-money-take-eliminate-poverty-america/).
 - The US lacks mandated minimum vacation time legislation.
 - [Companies resist the extensive changes needed to make 4 day workweeks possible](https://www.washingtonpost.com/technology/2023/05/24/4-day-work-week-united-states/).
-- [Labor leaders tried reviving the push for fewer working hours post WW2 but found most didn't workers didn't want a shorter work week](https://eh.net/encyclopedia/hours-of-work-in-u-s-history/).
+- [Labor leaders tried reviving the push for fewer working hours post WW2 but found most workers didn't want a shorter work week](https://eh.net/encyclopedia/hours-of-work-in-u-s-history/).
 
 Keynes thought that Predictions 2 and 3 would lead to Prediction 4. In fact, Prediction 4 must take place before Predictions 2 and 3. Only by changing people's attitudes towards work and life and inequality can economic bliss be made available for everyone.
 

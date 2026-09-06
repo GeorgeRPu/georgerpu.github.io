@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Advice to New Graduates in Software Engineering"
-date: 2022-07-24
+date: 2022-07-26
 description: "Lessons from 1 year as a software engineer"
 giscus_comments: true
 toc:
@@ -31,8 +31,8 @@ Update 2023-03-25: Added more points and new section on documents.
 
 ## Getting More Done
 
-1. Success requires failure. Your skill will only grow if you are constantly using and stretching them.
-2. Improving developer experience is always worth the effort. Having good test suites, documentation, and even IDE plugins will save future time spend developing future code and fixing operational issues.
+1. Success requires failure. Your skills will only grow if you are constantly using and stretching them.
+2. Improving developer experience is always worth the effort. Having good test suites, documentation, and even IDE plugins will save future time spent developing future code and fixing operational issues.
 3. Aim to complete familiar tasks in less time. Completing simple tasks fast opens time for complex tasks.
 4. Learn your IDE. Advanced IDEs like IntelliJ contain tools that can save you hours of work[^2].
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Notes From a Conversion About the Aesthetics of Music"
+title: "Notes From a Conversation About the Aesthetics of Music"
 description: "A mathematical theory of the aesthetics of music"
 date: 2021-03-31
 giscus_comments: true
@@ -16,7 +16,7 @@ Notes from a conversation with a friend, during a long car ride, about how to ev
 
 **Feels**. The primary goal of music is to evoke an emotional (in the broadest possible sense) response. Music may have ulterior motives of communication or persuasion. Thus, better songs evoke more powerful emotional responses.
 
-**Emotional relativism**. There is no true emotional response to a music. What a human feels listening to a song, depends on their ear, experience, and cultural conditioning. For example, in Western music major chords sound happy while minor chords sound sad, but this is not universal across human cultures.
+**Emotional relativism**. There is no true emotional response to music. What a human feels listening to a song, depends on their ear, experience, and cultural conditioning. For example, in Western music major chords sound happy while minor chords sound sad, but this is not universal across human cultures.
 
 **Average**. Instead, we use the averaged emotional response (AER) from a proper listen of a recorded version of a song (for consistency) across a population at a given time.
 

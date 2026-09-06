@@ -27,11 +27,11 @@ Chapter 2 describes his courtship to Michelle, foray into the Illinois state sen
   - Chapter 11-13 focus on recovering from the Great Recession.
 - "Part 4: The Good Fight".
   - Chapter 14 covers Obama's first G20 summit.
-  - Chapter 15 covers the Obama's adjustments to the War on Terror from the Guantanmeno Bay detection center (Gitmo) to a tour of the Middle East.
-  - Chapter 16-17 covers the passage of the Affordable Care Act.
+  - Chapter 15 covers Obama's adjustments to the War on Terror from the Guantanamo Bay detention center (Gitmo) to a tour of the Middle East.
+  - Chapter 16-17 cover the passage of the Affordable Care Act.
 - "Part 5: The World as It Is" focuses on foreign policy.
   - In Chapter 18, Obama reviews Stanley McChrystal's Afghanistan plan.
-  - Chapter 19-20 covers relations with Iran and Russia and China.
+  - Chapter 19-20 cover relations with Iran and Russia and China.
   - Chapter 21 covers climate change.
 - "Part 6: In the Barrel".
   - Chapter 22 covers the sluggish recovery, the Euro crisis, and financial reform.
@@ -53,9 +53,9 @@ Chapter 11, an allusion to [_The Second Coming_](https://www.poetryfoundation.or
 
 > All the sound and fury around Dodd-Frank signified nothing more than the usual Washington scrum
 
-Chapter 22, an allusion to [_MacBeth_](https://www.poetryfoundation.org/poems/56964/speech-tomorrow-and-tomorrow-and-tomorrow)
+Chapter 22, an allusion to [_Macbeth_](https://www.poetryfoundation.org/poems/56964/speech-tomorrow-and-tomorrow-and-tomorrow)
 
-The book provides background information for everything. New characters always come with a description of their appearance. References to historical events are always come with a summary of the historical event. The book drags in places where Obama over-explains.
+The book provides background information for everything. New characters always come with a description of their appearance. References to historical events always come with a summary of the historical event. The book drags in places where Obama over-explains.
 
 The memoir also defends the less popular parts/mistakes of his presidency. Obama justifies not going after the bankers responsible for the Great Recessions by arguing that it would require a violence to the social order that would outweigh the benefits. Obama criticizes anti-Bush protesters protesting against Gitmo on the day of his inauguration, a policy that he himself was against. In general, Obama comes off as a more moderate candidate than his campaign message of hope and change implied. Obama is often unwilling to challenge the status quo to push for more radical reform.
 

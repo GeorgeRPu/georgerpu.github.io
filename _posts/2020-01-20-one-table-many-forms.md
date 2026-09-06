@@ -53,7 +53,7 @@ Any attributes included in a key are **prime**. A relation is in **second normal
 
 ## Third Normal Form
 
-A relation is in **third normal form** (3NF) if, for every FD $A_1, \dots, A_n \to B_1, \dots, B_k$, either $A_1, \dots, A_n$ is a superkey or every $B_1, \dots, B_k$ not in $\\{A_1, \dots, A_n\\}$ is prime. While `FilmHistory` is 3NF, `Movies` is not in 3NF. The attribute `studio hq` functionally depends on `studio` not prime. To transform `Movies` into 3NF, split off the studio information into `Studios`.
+A relation is in **third normal form** (3NF) if, for every FD $A_1, \dots, A_n \to B_1, \dots, B_k$, either $A_1, \dots, A_n$ is a superkey or every $B_1, \dots, B_k$ not in $\\{A_1, \dots, A_n\\}$ is prime. While `FilmHistory` is 3NF, `Movies` is not in 3NF. The attribute `studio hq` functionally depends on `studio`, which is not prime. To transform `Movies` into 3NF, split off the studio information into `Studios`.
 
 | Title      | Director       | Year | Actor             | Studio      |
 | ---------- | -------------- | ---- | ----------------- | ----------- |

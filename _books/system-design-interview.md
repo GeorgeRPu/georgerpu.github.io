@@ -3,7 +3,7 @@ layout: book-review
 title: System Design Interview
 author: Alex Xu
 olid: OL30260884M
-categories: software-engineerin
+categories: software-engineering
 buy_link: https://amzn.to/4lbuyvI
 started: 2024-01-01
 finished: 2024-12-31
@@ -13,7 +13,7 @@ stars: 4
 status: Finished
 ---
 
-_System Design Interview_ is the resource for preparing for system design interviews. It was also the first resource for system design interviews, written by Xu after failing to find a satisfactory system design interview preparation resource for his own study. I cannot speak on its utility for system design interviews as I have not participated in many. However, I do believe that is an underrated resource for junior software engineers learning how to design software systems.
+_System Design Interview_ is the resource for preparing for system design interviews. It was also the first resource for system design interviews, written by Xu after failing to find a satisfactory system design interview preparation resource for his own study. I cannot speak on its utility for system design interviews as I have not participated in many. However, it is an underrated resource for junior software engineers learning how to design software systems.
 
 _System Design Interview_ presents a 4 step framework for system design interviews.
 

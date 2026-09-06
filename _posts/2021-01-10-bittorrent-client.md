@@ -455,7 +455,7 @@ public class Peer implements Runnable {
 }
 ```
 
-The last unmentioned phase is the `unchoke` method. Unchoking is done tit-for-tat at regular intervals; the peers which have sent the most pieces are allowed to request pieces. Periodically, a choked but interested peer is optimistically unchoked. In the beginning, no pieces have been sent, so no peers will be unchoked. Instead of waiting for peers to optimistically each other, peers starting with the complete file unchoke a random subset of their interested neighbors.
+The last unmentioned phase is the `unchoke` method. Unchoking is done tit-for-tat at regular intervals; the peers which have sent the most pieces are allowed to request pieces. Periodically, a choked but interested peer is optimistically unchoked. In the beginning, no pieces have been sent, so no peers will be unchoked. Instead of waiting for peers to optimistically unchoke each other, peers starting with the complete file unchoke a random subset of their interested neighbors.
 
 ```java
 public class Peer implements Runnable {
@@ -1303,7 +1303,7 @@ if __name__ == "__main__":
 
 ---
 
-[^1]: Based on a sample size of 2 universities, attended by a friend and I.
+[^1]: Based on a sample size of 2 universities, attended by a friend and me.
 [^2]: This is actually not necessary. We could store the file entirely on disk, reading/writing each time a piece is requested/received.
 [^3]: The last two variables are renamed to `toUnchoke` and `toChoke`. The shorter names are easier to visually distinguish. The differing word is shifted to the end from the middle.
 [^4]: This is actually what was intended for the Java implementation, but [ProcessBuilder](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/ProcessBuilder.html) cannot run methods in new processes.

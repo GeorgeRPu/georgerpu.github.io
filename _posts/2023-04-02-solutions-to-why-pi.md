@@ -15,7 +15,7 @@ $$
 $$
 
 In 3Blue1Brown's latest video [Why π is in the normal distribution (beyond integral tricks)
-](https://www.youtube.com/watch?v=cy8r7WSuT1I), you can find an exercise at the [end](https://youtu.be/cy8r7WSuT1I?t=1500) that computes the $n-1$ volume of the boundary of an $n$-dimensional ball using the integral of a Guassian function. These is the solution.
+](https://www.youtube.com/watch?v=cy8r7WSuT1I), you can find an exercise at the [end](https://youtu.be/cy8r7WSuT1I?t=1500) that computes the $n-1$ volume of the boundary of an $n$-dimensional ball using the integral of a Gaussian. This is the solution.
 
 ## Part 1
 

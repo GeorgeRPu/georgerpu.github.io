@@ -44,7 +44,7 @@ timeline
     1973 : Perkin-Elmer debut the Microalign, the first projection aligner, which helps improve yields from 10% to over 50%.
     1976 : Japan starts the VLSI project to improve Japanese semiconductor manufacturing. It ends in 1980.
     1977 : Secretary of Defense Harold Brown looks to precision guided munitions (PGMs) to offset Soviet numerical advantage. : William Perry leaves electronics firm to become Undersecretary of Defense for Research and Engineering.
-    1978 : DARPA begins Assult Breaker program to integrate technologies important for PGMs. : Idaho potato billionare funds newly foundded semiconductor fab Micron. : Mead and Conway launch a revolution in chip design with electronic design automation (EDA).
+    1978 : DARPA begins Assault Breaker program to integrate technologies important for PGMs. : Idaho potato billionaire funds newly founded semiconductor fab Micron. : Mead and Conway launch a revolution in chip design with electronic design automation (EDA).
     1978 : GCA introduces the first stepper for photolithography.
     1979 : Andrew Grove becomes President of Intel. He will become CEO in 1987.
 ```
@@ -67,22 +67,22 @@ timeline
 timeline
     title 1990-2005 (America Resurgent & Taiwan/South Korea Rising)
     1990 : Huawei begins producing its own PBX switches. : Advanced RISC Machines Ltd (ARM) is founded to further develop the Acorn RISC Machine Processor.
-    1991 : US and coalition partners win Gulf War with heavy use of PGMs. :  Bell Lab scientists demonstrate the posibility of using 13.8 nm light (EUV) for lithography.
+    1991 : US and coalition partners win Gulf War with heavy use of PGMs. :  Bell Lab scientists demonstrate the possibility of using 13.8 nm light (EUV) for lithography.
     1992 : Samsung introduces first commercial 16Mbit SDRAM chip, beating incumbent Hitachi. : The Soviet Union dissolves. The US has won the Cold War.
     1993 : GCA fails. : Jensen Huang and Chris Malachowsky found Nvidia as a fabless GPU maker. : The US overtakes Japan in chip sales.
     1995 : Micron shocks Japanese chipmakers by selling older DRAM for far less.
-    1996 : Taiwan and South Korea lead in capital expendure spending as percentage of sales at 100% and 60%.
+    1996 : Taiwan and South Korea lead in capital expenditure spending as percentage of sales at 100% and 60%.
     1997 : Grove steps down as Intel CEO, having overseen a 4500% increase in market capitalization. : EUV LLC is founded as a public-private partnership to develop EUV lithography.
     1998 : Texas Instruments sells its memory business to Micron.
     2000 : Former Texas Instruments engineer Zhang Rujing founds Semiconductor Manufacturing International Corporation (SMIC) in China.
     2001 : ASML purchases Silicon Valley Group, leaving ASML the sole benefactor of EUV LLC.
-    2004 : Sony Playstation Portable is the first commerical use of a 3D IC.
+    2004 : Sony Playstation Portable is the first commercial use of a 3D IC.
 ```
 
 ```mermaid
 timeline
     title 2005-2015 (Mobile & AI)
-    2006 : Apple switchs Macs, the last major PC not using x86, to x86 Intel processors. : Intel turns down Apple request to supply microprocessors for the iPhone. Apple turns to ARM.
+    2006 : Apple switches Macs, the last major PC not using x86, to x86 Intel processors. : Intel turns down Apple request to supply microprocessors for the iPhone. Apple turns to ARM.
     2007 : Apples releases the first generation iPhone. : Nvidia develops CUDA to allow programmers to use its GPUs for general purpose computing.
     2008 : AMD goes fabless and spins off semiconductor manufacturing business into Global Foundries.
     2009 : Morris Change returns as CEO of TSMC. He puts together a Grand Alliance of companies in the semiconductor industry centered on TSMC.
@@ -96,20 +96,20 @@ timeline
 ```mermaid
 timeline
     title 2015-2023 (Chip War)
-    2015 : TSMC has >50% of the foundry market. Samsung has only 5% but is the largest chipmaker when including its own chips. : Xi Jinping announces the Made in Chinda 2025 plan which aims to boost domestic chip production by 70% over 10 years.
+    2015 : TSMC has >50% of the foundry market. Samsung has only 5% but is the largest chipmaker when including its own chips. : Xi Jinping announces the Made in China 2025 plan which aims to boost domestic chip production by 70% over 10 years.
     2016 : Google introduces its own AI accelerator TPU. : AMD agrees to license x86 chip designs to China.
     2017 : Trump takes office. His foreign policy is much more aggressive against China.
-    2018 : Global Foundries stops development of 7 nm fabrication process. The only foundaries working on 7 nm are TSMC and Samsung. : US DoJ indict Fujian Jinhua and UMC for conspiring to steal IP from Micron.
+    2018 : Global Foundries stops development of 7 nm fabrication process. The only foundries working on 7 nm are TSMC and Samsung. : US DoJ indict Fujian Jinhua and UMC for conspiring to steal IP from Micron.
     2019 : US imposes export controls on Huawei for supplying goods, technology, and services to Iran.
     2020 : COVID pandemic shifts demand and supply, resulting in global chip shortages. : US Commerce Department extends export controls, blocking Huawei from buying semiconductors.
-    2021 : Samsung announces 38 trillion KRW investment in Pyeongtaek to fabricate 5 nm logic chips. : TSMC begins construction of a fab in Arizona capable of producing 4nm chips. TSMC also approves $2.9 bilion in investment towards their Nanjing fab.
+    2021 : Samsung announces 38 trillion KRW investment in Pyeongtaek to fabricate 5 nm logic chips. : TSMC begins construction of a fab in Arizona capable of producing 4nm chips. TSMC also approves $2.9 billion in investment towards their Nanjing fab.
     2022 : PLA conducts amphibious assault drills across the Taiwan Strait.
     2023 : Dutch regulations prohibit exporting EUV lithography machines to China.
 ```
 
 I knew some of the history that Miller talks about: the invention of the semiconductor at Bell Labs, the traitorous 8, Moore's law, and the founding of Intel are Silicon Valley lore. But most of the events in the book were new to me. I didn't know how early Silicon Valley companies offshored manufacturing to Asia, how Japan overtook the US as the global leader in chipmaking, or how America—with Taiwan and South Korea—retook the crown. I certainly knew nothing about the Soviet semiconductor industry; I assumed there wasn't one. Another surprise was the centrality of semiconductors to economies and militaries by the 1980s. Then, as now, the US government made an effort to preserve the US chip industry against Japanese and Asian competition because it needed a secure supply of chips for its missiles, planes, and ships.
 
-Another theme of the book is the global semiconductor supply chain. There are the foundries that manufacture chips, the fabless semiconductor companies that design chips, the lithography and materials companies that make the machines that make the chips, and the software companies that develop electron design automation (EDA) software. Yet, due to the ever greater capital required to shrink chips, the supply chain has consolidated into a few firms in a few countries. Taiwan and South Korea are home to the biggest fabs: TSMC and Samsun. The maker of the only EUV lithography machine, ASML, is Dutch. The best chip designers and chip design software developers are American: Nvidia, AMD, Qualcomm, Cadence, Synopsys, and Mentor Graphics. In fact, in this ecosystem, Intel—historically America's leading chipmaker—is unusual for designing and fabricating its own chips.
+Another theme of the book is the global semiconductor supply chain. There are the foundries that manufacture chips, the fabless semiconductor companies that design chips, the lithography and materials companies that make the machines that make the chips, and the software companies that develop electron design automation (EDA) software. Yet, due to the ever greater capital required to shrink chips, the supply chain has consolidated into a few firms in a few countries. Taiwan and South Korea are home to the biggest fabs: TSMC and Samsung. The maker of the only EUV lithography machine, ASML, is Dutch. The best chip designers and chip design software developers are American: Nvidia, AMD, Qualcomm, Cadence, Synopsys, and Mentor Graphics. In fact, in this ecosystem, Intel—historically America's leading chipmaker—is unusual for designing and fabricating its own chips.
 
 These firms are bottlenecks in the chip supply chain and the objects of the US-China chip war. By limiting access to EDA software and lithography machines, China won't be able to design and fabricate domestic chips. Then by imposing export restrictions, China won't be able to buy the most advanced chips. Without the most advanced chips, China will be behind its rivals in technologies like AI, robotics, and big data. While these measures will hurt, I doubt China will be set so far behind. [Already, China can make 7 nm chips.](https://www.bloomberg.com/news/features/2023-09-04/look-inside-huawei-mate-60-pro-phone-powered-by-made-in-china-chip) _Chip War_ is full of examples of countries investing in their semiconductor industries, catching up, and exceeding incumbents. Why should China be so different?
 

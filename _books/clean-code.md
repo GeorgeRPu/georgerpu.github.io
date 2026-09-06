@@ -13,7 +13,7 @@ stars: 2
 status: Finished
 ---
 
-_Clean Code_ is the pre-eminant book on programming, ranked first in many lists of the books every programmer should read. It is the [number one best seller on Amazon in the Software Design & Engineering](https://www.amazon.com/gp/bestsellers/books/491316/ref=zg_b_bs_491316_1) category yet has also received anti-recommendations in recent years by [bloggers](https://qntm.org/clean) and other [authors](https://web.stanford.edu/~ouster/cgi-bin/aposd2ndEdExtract.pdf). Given my current job as a software developer, I decided to read _Clean Code_ to make my own opinion. I review each chapter individually.
+_Clean Code_ is the pre-eminent book on programming, ranked first in many lists of the books every programmer should read. It is the [number one best seller on Amazon in the Software Design & Engineering](https://www.amazon.com/gp/bestsellers/books/491316/ref=zg_b_bs_491316_1) category yet has also received anti-recommendations in recent years by [bloggers](https://qntm.org/clean) and other [authors](https://web.stanford.edu/~ouster/cgi-bin/aposd2ndEdExtract.pdf). Given my current job as a software developer, I decided to read _Clean Code_ to make my own opinion. I review each chapter individually.
 
 Certain chapters are written with/by other authors.
 
@@ -31,7 +31,7 @@ The most opinionated rule in the whole book is
 
 > The first rule of functions should be small. The second rule is that _they should be smaller than that_ [emphasis in original].
 
-This makes no sense to me. Isn't extracting every few lines of code to a function is equivalent to commenting every few lines? Martin calls comments a necessary evil. Why should writing a psuedo-comment in a function name be considered a success? In my short career, I have read long classes filled with similarly named but slightly different methods like `render` in Listing 3-7. It is not a fun experience.
+This makes no sense to me. Isn't extracting every few lines of code to a function equivalent to commenting every few lines? Martin calls comments a necessary evil. Why should writing a pseudo-comment in a function name be considered a success? In my short career, I have read long classes filled with similarly named but slightly different methods like `render` in Listing 3-7. It is not a fun experience.
 
 I agree that functions need a maximum size. Functions should not be longer than a screen. But, functions, at least those rarely called, need a minimum size limit too. Functions should do only one thing, but that thing needs to be significant. Functions incur a cost. They disrupt the linear flow of the code, increase the interface surface area, and introduce coupling between modules. Their benefit needs to be greater than the code.
 
@@ -43,7 +43,7 @@ Martin hates comments.
 
 > Comments are always failures
 
-(which negatively influences his philosophy around functions and classes). I mostly agree, mainly since old comments tend to linger in the code base, even if more for sociological reasons than practical ones. Good comments are valuable though. I hope Martin's statements doesn't deter readers from attempting to write good comments.
+(which negatively influences his philosophy around functions and classes). I mostly agree, mainly since old comments tend to linger in the code base, even if more for sociological reasons than practical ones. Good comments are valuable though. I hope Martin's statements don't deter readers from attempting to write good comments.
 
 Martin's classification of good and bad comments looks good to me. His advice against HTML comments is out of date as IDES/editors render stylistic markings now when hovering over the documented entity.
 
@@ -97,7 +97,7 @@ This is a weird chapter. It mentions 4 rules of simple design, then tries to sho
 
 #### 13. Concurrency - Brett Schuchert
 
-This chapter provides recommendations clean concurrent programming. I don't have much experience writing multithreaded code, but I really like this chapter. Java is way past version 5 now, so some of the advice may be out of date.
+This chapter provides recommendations for clean concurrent programming. I don't have much experience writing multithreaded code, but I really like this chapter. Java is way past version 5 now, so some of the advice may be out of date.
 
 #### 14. Successive Refinement
 
@@ -112,11 +112,11 @@ I find code in paper books hard to read. The refactoring of `Args` would be bett
 
 #### 15. JUnit Internals
 
-Martin refactors the class `ComparisonCompactor` from the JUnit library which creates an error message showing the difference between 2 `String`s. I like the final version more than the final implementation of `Args`. My only complaint is that Martin has a disturbing tendency to use fields like global state. One method will set a field for another method to read it. In this example it is not so bad. Each field isx written in only 1 method while being read by many others. But this tendency flares up in other listings throughout the book.
+Martin refactors the class `ComparisonCompactor` from the JUnit library which creates an error message showing the difference between 2 `String`s. I like the final version more than the final implementation of `Args`. My only complaint is that Martin has a disturbing tendency to use fields like global state. One method will set a field for another method to read it. In this example it is not so bad. Each field is written in only 1 method while being read by many others. But this tendency flares up in other listings throughout the book.
 
 #### 16. Refactoring `SerialDate`
 
-Another chapter refactoring code. `SerialDate` is a class deep inside the no longer developed [JCommon](https://www.jfree.org/jcommon/) library. Martin heavily criticizes this `SerialDate` class[^5]. This is the most realistic refactoring as Martin tries to fix a poor module than improve an already good one. It is rare to refactor good modules to become great. The chapter doesn't print the original or final version of `SerialDate` so Martin's steps are difficult to follow.
+Another chapter refactoring code. `SerialDate` is a class deep inside the no longer developed [JCommon](https://www.jfree.org/jcommon/) library. Martin heavily criticizes this `SerialDate` class[^5]. This is the most realistic refactoring as Martin tries to fix a poor module rather than improve an already good one. It is rare to refactor good modules to become great. The chapter doesn't print the original or final version of `SerialDate` so Martin's steps are difficult to follow.
 
 #### 17. Smells and Heuristics
 

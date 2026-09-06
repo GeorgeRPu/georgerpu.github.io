@@ -28,7 +28,7 @@ $$
 \sum_{n=0}^{\infty} nx^{n-1} = \sum_{n=1}^{\infty} nx^{n-1}.
 $$
 
-There are infinitely many scenarios you can roll a die before being the number 1.
+There are infinitely many scenarios you can roll a die before seeing the number 1.
 
 | Number of rolls | Scenario                       | Probability         |
 | --------------- | ------------------------------ | ------------------- |
@@ -76,7 +76,7 @@ F''(x) &= \sum_{n=2}^{\infty} f_n \frac{x^{n-2}}{(n - 2)!}
 \end{align*}
 $$
 
-We can reindex the bottom 2 sums by placing $n$ by $n + 1$ and $n + 2$ respectively.
+We can reindex the bottom 2 sums by replacing $n$ by $n + 1$ and $n + 2$ respectively.
 
 $$
 \begin{align*}

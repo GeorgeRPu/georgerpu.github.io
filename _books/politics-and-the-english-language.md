@@ -28,7 +28,7 @@ When an empire decides to bomb villages and round up civilians into concentratio
 
 > pacification
 
-It is this reason that Orwell rails so hard against bad English. It is dangerous. Good English matters it not simply because it makes for better literature or helps us communicate more clearly at work but because our freedoms depends on it. Good language, not just the English language, helps reveal truth. Bad language not only obfuscates the truth but attempts to disguise falsehoods as its opposite.
+It is this reason that Orwell rails so hard against bad English. It is dangerous. Good English matters not simply because it makes for better literature or helps us communicate more clearly at work but because our freedoms depend on it. Good language, not just the English language, helps reveal truth. Bad language not only obfuscates the truth but attempts to disguise falsehoods as its opposite.
 
 ---
 

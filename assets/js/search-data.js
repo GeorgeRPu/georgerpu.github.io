@@ -132,7 +132,7 @@ ninja.data = [{
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2023/economic-possiblities-for-ourselves/";
+          window.location.href = "/blog/2023/economic-possibilities-for-ourselves/";
         
       },
     },{id: "post-solution-to-why-π-is-in-the-normal-distribution-beyond-integral-tricks",
@@ -154,7 +154,7 @@ ninja.data = [{
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2023/quasi-netwon-bfgs/";
+          window.location.href = "/blog/2023/quasi-newton-bfgs/";
         
       },
     },{id: "post-quasi-newton-methods-1-2-sr1",
@@ -205,7 +205,7 @@ ninja.data = [{
       
         title: "How To Control For Confounding Variables",
       
-      description: "Seperating signal from noise",
+      description: "Separating signal from noise",
       section: "Posts",
       handler: () => {
         
@@ -256,9 +256,9 @@ ninja.data = [{
           window.location.href = "/blog/2021/research-code/";
         
       },
-    },{id: "post-notes-from-a-conversion-about-the-aesthetics-of-music",
+    },{id: "post-notes-from-a-conversation-about-the-aesthetics-of-music",
       
-        title: "Notes From a Conversion About the Aesthetics of Music",
+        title: "Notes From a Conversation About the Aesthetics of Music",
       
       description: "A mathematical theory of the aesthetics of music",
       section: "Posts",
@@ -348,7 +348,7 @@ ninja.data = [{
       
         title: "The Cantor Set Minus Itself",
       
-      description: "A proof of that the Cantor Set minus itself is [0, 1]",
+      description: "A proof that the Cantor Set minus itself is [0, 1]",
       section: "Posts",
       handler: () => {
         
@@ -469,7 +469,7 @@ ninja.data = [{
           title: 'The Anthropocene Reviewed',
           description: "",
           section: "Books",handler: () => {
-              window.location.href = "/books/the-anthroprocene-reviewed/";
+              window.location.href = "/books/the-anthropocene-reviewed/";
             },},{id: "books-abundance",
           title: 'Abundance',
           description: "",
@@ -511,14 +511,14 @@ ninja.data = [{
           section: "News",},{id: "news-my-senior-project-was-featured-in-the-university-of-florida-news",
           title: 'My senior project was featured in the University of Florida news!',
           description: "",
-          section: "News",},{id: "news-i-have-been-promoted-to-software-development-engineer-ii-sde-ii-at-amazon-i-would-like-to-thank-my-colleagues-mentors-and-managers-whose-feedback-and-support-is-as-responsible-for-any-success-as-much-as-my-own-efforts",
+          section: "News",},{id: "news-i-have-been-promoted-to-software-development-engineer-ii-sde-ii-at-amazon-i-would-like-to-thank-my-colleagues-mentors-and-managers-whose-feedback-and-support-are-as-responsible-as-if-not-more-than-my-own-efforts",
           title: 'I have been promoted to Software Development Engineer II (SDE II) at Amazon!...',
-          description: "",
-          section: "News",},{id: "news-our-aws-blog-post-showcasing-some-of-my-team-s-work-has-been-published-thanks-to-my-coauthor-and-manager-for-her-help-with-the-writing-and-publishing-process-to-the-amazon-neptune-team-for-the-suggestion-to-write-a-blog-post-and-support-and-to-my-fellow-engineers-for-their-contributions-to-the-project-this-is-a-great-example-of-how-we-can-use-graphs-to-enhance-trustworthiness-and-reliability-of-online-shopping",
-          title: 'Our AWS blog post showcasing some of my team’s work has been published!...',
           description: "",
           section: "News",},{id: "news-i-am-now-an-applied-scientist-ii-as-ii-at-amazon-this-has-been-a-longstanding-dream-of-mine-and-i-am-so-excited-that-this-could-happen-i-would-like-to-express-my-gratitude-to-the-mentors-and-managers-who-have-guided-and-sponsored-me-without-whom-this-would-not-have-been-possible",
           title: 'I am now an Applied Scientist II (AS II) at Amazon! This has...',
+          description: "",
+          section: "News",},{id: "news-our-aws-blog-post-showcasing-some-of-my-team-s-work-has-been-published-thanks-to-my-coauthor-and-manager-for-her-help-with-the-writing-and-publishing-process-to-the-amazon-neptune-team-for-the-suggestion-to-write-a-blog-post-and-support-and-to-my-fellow-engineers-for-their-contributions-to-the-project-this-is-a-great-example-of-how-we-can-use-graphs-to-enhance-trustworthiness-and-reliability-of-online-shopping",
+          title: 'Our AWS blog post showcasing some of my team’s work has been published!...',
           description: "",
           section: "News",},{id: "projects-above-500",
           title: 'Above .500',
@@ -532,7 +532,7 @@ ninja.data = [{
               window.location.href = "/projects/dizviz/";
             },},{id: "projects-the-missing-semester-of-your-ml-education",
           title: 'The Missing Semester of Your ML Education',
-          description: "Machine learning classes emphasize theory and the algorithms behind different models but many essential skills that are rarely covered. This website aims to remedy that gap by covering all the topics which I wish were explicitly taught when I first learned ML.",
+          description: "Machine learning classes emphasize theory and the algorithms behind different models but many essential skills are rarely covered. This website aims to remedy that gap by covering all the topics which I wish were explicitly taught when I first learned ML.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/missing-semester-ml/";
             },},{id: "projects-ml-interview-prep",

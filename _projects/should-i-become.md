@@ -5,5 +5,5 @@ description: Career comparison tool that calculates how soon each profession rea
 img:
 redirect: https://should-i-become.vercel.app
 category: fun
-importance: 10
+importance: 5
 ---

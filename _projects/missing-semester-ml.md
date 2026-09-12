@@ -6,5 +6,5 @@ description: >
 img:
 redirect: https://georgerpu.github.io/missing-semester-ml/
 category: educational
-importance: 6
+importance: 8
 ---

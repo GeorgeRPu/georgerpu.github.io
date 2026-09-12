@@ -5,5 +5,5 @@ description: Leetcode style interview questions and solutions. Like Neetcode, bu
 img:
 redirect: https://georgerpu.github.io/tech-interview-prep/
 category: educational
-importance: 5
+importance: 6
 ---

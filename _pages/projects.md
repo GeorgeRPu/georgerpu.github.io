@@ -5,7 +5,7 @@ permalink: /projects/
 description: A growing collection of my cool projects.
 nav: true
 nav_order: 3
-display_categories: [hackathon, interview prep, educational, fun]
+display_categories: [educational, fun, hackathon]
 horizontal: false
 ---
 

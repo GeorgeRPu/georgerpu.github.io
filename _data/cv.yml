@@ -1,97 +1,155 @@
-- title: General Information
-  type: map
-  contents:
-    - name: Full Name
-      value: Albert Einstein
-    - name: Date of Birth
-      value: 14th March 1879
-    - name: Languages
-      value: English, German
+cv:
+  name: George Pu
+  label: Applied Scientist
+  email: pu.george99@gmail.com
+  website: https://georgerpu.github.io
+  summary: Applied Scientist at Amazon building AI agents and ML systems at scale. Published researcher in deep learning and federated learning. 4+ years of experience spanning research, ML infrastructure, and software development.
 
-- title: Education
-  type: time_table
-  contents:
-    - title: PhD
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1905
-      description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Federal teaching diploma
-      institution: Eidgenössische Technische Hochschule, Zurich, Switzerland
-      year: 1900
-      description:
-        - Description 1.
-        - Description 2.
+  social_networks:
+    - network: GitHub
+      username: GeorgeRPu
+    - network: LinkedIn
+      username: george-r-pu
 
-- title: Experience
-  type: time_table
-  contents:
-    - title: Professor of Theoretical Physics
-      institution: Institute for Advanced Study, Princeton University
-      year: 1933 - 1955
-      description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Visiting Professor
-      institution: California Institute of Technology, Pasadena, California, US
-      year: 1933
-      description:
-        - Description 1.
-        - Description 2.
+  address:
+    city: Seattle
+    region: WA
+    countryCode: US
 
-    - title: Director
-      institution: Kaiser Wilhelm Institute for Physics, Berlin, Germany.
-      year: 1917-1933
+  sections:
+    Experience:
+      - company: Amazon, Sustainability Science and Innovation
+        position: Applied Scientist
+        location: Seattle, WA
+        start_date: 2025-07
+        highlights:
+          - Developed deep research agent that auto-generates bills of materials, extending actionable environmental impact analysis to 75% of Amazon's carbon footprint with a <30% MAPE.
+          - Led sustainability scientists to annotate hundreds of life cycle inventories/assessments, creating 2 new internal benchmarks.
 
-    - title: Professor of Theoretical Physics
-      institution: Karl-Ferdinand University, Prague, Czechoslovakia
-      year: 1911 - 1917
-      description:
+      - company: Amazon, Customer Trust
+        position: Machine Learning Engineer / Applied Scientist
+        location: Seattle, WA
+        start_date: 2024-10
+        end_date: 2025-07
+        highlights:
+          - Created time series classification models that helped reduce bad seller debt by an estimated $3 million.
+          - Trained LightGBM models to reduce investigator case load, saving an estimated $500,000 per year.
+          - Trained graph machine learning models on SageMaker.
 
-    - title: Associate Professor of Theoretical Physics
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1909 - 1911
+      - company: Amazon, Customer Trust
+        position: Software Developer/Engineer
+        location: Seattle, WA
+        start_date: 2021-07
+        end_date: 2024-10
+        highlights:
+          - Automated bad actor investigation case creation, saving 2 hours of investigator time per week.
+          - Onboarded ML models to SageMaker, saving >184 hours annually of scientist effort retraining models and batch inferencing.
+          - Designed and implemented an offline graph query execution engine over hundreds of millions of nodes on Amazon Neptune that helped stop $500,000+ in fraudulent sales; work featured on the [AWS Database Blog](https://aws.amazon.com/blogs/database/how-amazon-stores-deliver-trustworthy-shopping-and-seller-experiences-using-amazon-neptune/).
 
-- title: Open Source Projects
-  type: time_table
-  contents:
-    - title: <a href="https://github.com/alshedivat/al-folio">al-folio</a>
-      year: 2015-now
-      description: A beautiful, simple, clean, and responsive Jekyll theme for academics.
+      - company: University of Florida
+        position: Research Assistant
+        location: Gainesville, FL
+        start_date: 2017-09
+        end_date: 2021-05
+        highlights:
+          - Collaborated with a PhD student and professor to fit multi-compartment epidemiological models to Leishmaniasis data.
+          - Published 5 papers at top venues (IROS, NeurIPS) with over 250+ citations.
 
-- title: Honors and Awards
-  type: time_table
-  contents:
-    - year: 1921
-      items:
-        - Nobel Prize in Physics
-        - Matteucci Medal
-    - year: 2029
-      items:
-        - Max Planck Medal
+    Education:
+      - institution: University of Florida
+        location: Gainesville, FL
+        url: https://www.ufl.edu/
+        area: Computer Science
+        studyType: B.S.
+        start_date: 2017-08
+        end_date: 2021-05
+        highlights:
+          - GPA 3.8/4.0
 
-- title: Academic Interests
-  type: nested_list
-  contents:
-    - title: Topic 1.
-      items:
-        - Description 1.
-        - Description 2.
-    - title: Topic 2.
-      items:
-        - Description 1.
-        - Description 2.
+    Publications:
+      - title: "Seeing Through Walls: Real-Time Digital Twin Modeling of Indoor Spaces"
+        authors:
+          - George Pu
+          - Paul Wei
+          - Amanda Aribe
+          - James Boultinghouse
+          - Nhi Dinh
+          - Fang Xu
+          - Jing Du
+        publisher: 2021 Winter Simulation Conference
+        releaseDate: 2021-12
+        url: https://ieeexplore.ieee.org/abstract/document/9715364
+        summary: George Pu, Paul Wei, Amanda Aribe, James Boultinghouse, Nhi Dinh, Fang Xu, Jing Du.
 
-- title: Other Interests
-  type: list
-  contents:
-    - <u>Hobbies:</u> Hobby 1, Hobby 2, etc.
+      - title: Communication-Efficient Federated Learning via Dataset Distillation
+        authors:
+          - Yanlin Zhou*
+          - George Pu*
+          - Xiyao Ma
+          - Xiaolin Li
+          - Dapeng Wu
+        publisher: 2020 NeurIPS Workshop on Scalability, Privacy, and Security in Federated Learning (SpicyFL)
+        releaseDate: 2020-12
+        summary: Yanlin Zhou\*, George Pu\*, Xiyao Ma, Xiaolin Li, Dapeng Wu. (\* equal contribution)
+
+      - title: Adaptive Leader-Follower Formation Control and Obstacle Avoidance via Deep Reinforcement Learning
+        authors:
+          - Yanlin Zhou*
+          - Fan Lu*
+          - George Pu*
+          - Xiyao Ma
+          - Runhan Sun
+          - Hsi-Yuan Chen
+          - Xiaolin Li
+        publisher: 2019 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)
+        releaseDate: 2019-11
+        url: https://ieeexplore.ieee.org/document/8967561
+        summary: Yanlin Zhou\*, Fan Lu\*, George Pu\*, Xiyao Ma, Runhan Sun, Hsi-Yuan Chen, Xiaolin Li. (\* equal contribution)
+
+    Skills:
+      - name: Languages
+        icon: fa-solid fa-code
+        keywords:
+          - Java
+          - Javascript
+          - Python
+          - SQL
+          - Typescript
+
+      - name: Python Packages
+        icon: fa-brands fa-python
+        keywords:
+          - AutoGluon
+          - Langchain
+          - Matplotlib
+          - Numpy
+          - Pandas
+          - Polars
+          - PyTorch
+          - Scikit-learn
+          - Tensorflow
+
+      - name: AI/ML
+        icon: fa-solid fa-brain
+        keywords:
+          - Agents
+          - LLM Evaluation
+          - Deep Learning
+          - Graph Neural Networks
+          - Prompt Engineering
+          - RAG
+          - Tabular Machine Learning
+          - Time Series Classification
+
+      - name: Cloud
+        icon: fa-brands fa-aws
+        keywords:
+          - AWS
+          - Bedrock
+          - CloudWatch
+          - DynamoDB
+          - IAM
+          - Neptune
+          - S3
+          - SageMaker
+          - Step Functions

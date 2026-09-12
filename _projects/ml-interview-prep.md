@@ -5,5 +5,5 @@ description: One-stop shop to prepare for machine learning interviews, including
 img:
 redirect: https://github.com/GeorgeRPu/ml-interview-prep
 category: educational
-importance: 7
+importance: 3
 ---

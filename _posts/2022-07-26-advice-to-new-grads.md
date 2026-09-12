@@ -51,4 +51,5 @@ Update 2023-03-25: Added more points and new section on documents.
 ---
 
 [^1]: This is much easier to do when you first join a team/company.
+
 [^2]: Some good ones are Optimize Imports and the Refactoring tools.

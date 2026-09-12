@@ -1304,6 +1304,9 @@ if __name__ == "__main__":
 ---
 
 [^1]: Based on a sample size of 2 universities, attended by a friend and me.
+
 [^2]: This is actually not necessary. We could store the file entirely on disk, reading/writing each time a piece is requested/received.
+
 [^3]: The last two variables are renamed to `toUnchoke` and `toChoke`. The shorter names are easier to visually distinguish. The differing word is shifted to the end from the middle.
+
 [^4]: This is actually what was intended for the Java implementation, but [ProcessBuilder](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/ProcessBuilder.html) cannot run methods in new processes.

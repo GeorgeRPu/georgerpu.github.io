@@ -100,6 +100,9 @@ Keynes thought that Predictions 2 and 3 would lead to Prediction 4. In fact, Pre
 ---
 
 [^1]: See Bowling Alone: The Collapse and Revival of American Community.
+
 [^2]: Agriculture also reduced the quality of life for most people. Hunter-gatherers were taller than their farming cousins.
+
 [^3]: This year shows up a lot in the economic history of the US as it represents the shift from the New Deal to the neoliberal era.
+
 [^4]: Naturally, economists will seek economic answers to questions.

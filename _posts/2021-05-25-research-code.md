@@ -132,4 +132,5 @@ Whenever possible, code should be made public. The code to generate the plots ar
 ---
 
 [^1]: You can use `printf` to output the console, but it is not recommended over using `std::cout`.
+
 [^2]: Machine learning models contain a number of parameters which are adjusted during training. The hyper in hyperparameter distinguishes values, like learning rate, which do not change over the course of training from model parameters.
